@@ -15,8 +15,12 @@ const Tag = styled.span`
 const CategoryBadge = styled.span<{color?:string}>`
   padding:6px 10px;border-radius:999px;font-size:12px;color:#fff;background:${p=>p.color || '#2563eb'};
 `
+const Reading = styled.span`
+  color:#6b7280;font-size:13px;margin-left:8px;
+`
 export default function PostCard({post}:{post:any}){
   const category = post.meta?.category || post.category
+  const reading = post.readingTime || post.meta?.readingTime
   return (
     <Card>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12}}>
@@ -25,10 +29,14 @@ export default function PostCard({post}:{post:any}){
       </div>
       <Meta>
         <span>{post.date}</span>
+        {reading ? <Reading>{reading}</Reading> : null}
         {post.meta?.tags?.map((t:string)=> <Tag key={t}>{t}</Tag>)}
       </Meta>
-      <p style={{color:'#374151',marginTop:12,flex:1}}>{post.description}</p>
-      <div style={{marginTop:12}}><Link href={`/posts/${post.slug}`}>Read →</Link></div>
+      <p style={{color:'#374151',marginTop:12,flex:1,lineHeight:1.6,fontSize:15}}>{post.description}</p>
+      <div style={{marginTop:12,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+        <Link href={`/posts/${post.slug}`}>Read →</Link>
+        <div style={{color:'#9ca3af',fontSize:13}}>{/* placeholder for extra actions */}</div>
+      </div>
     </Card>
   )
 }
