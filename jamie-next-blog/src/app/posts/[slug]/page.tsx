@@ -1,5 +1,5 @@
 import { getPostBySlug } from '@/lib/posts'
-import { serialize } from 'next-mdx-remote/mdx'
+import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import React from 'react'
 
