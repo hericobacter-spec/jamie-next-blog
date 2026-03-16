@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "skills": {
+    "sonoscli": {
+      "version": "1.0.0",
+      "installedAt": 1771725374159
+    },
+    "microsoft-excel": {
+      "version": "1.0.3",
+      "installedAt": 1771725632684
+    },
+    "youtube-watcher": {
+      "version": "1.0.0",
+      "installedAt": 1771726993885
+    },
+    "gog": {
+      "version": "1.0.0",
+      "installedAt": 1771734224177
+    },
+    "nano-banana-pro": {
+      "version": "1.0.1",
+      "installedAt": 1771762730131
+    },
+    "system-resource-monitor": {
+      "version": "1.0.0",
+      "installedAt": 1771769143077
+    },
+    "playwright-scraper-skill": {
+      "version": "1.2.0",
+      "installedAt": 1771769986698
+    },
+    "obsidian": {
+      "version": "1.0.0",
+      "installedAt": 1772033018521
+    },
+    "macos-calendar": {
+      "version": "1.2.0",
+      "installedAt": 1773034007410
+    },
+    "exa-web-search-free": {
+      "version": "1.0.1",
+      "installedAt": 1773038727717
+    },
+    "arxiv-watcher": {
+      "version": "1.0.0",
+      "installedAt": 1773038729906
+    }
+  }
+}

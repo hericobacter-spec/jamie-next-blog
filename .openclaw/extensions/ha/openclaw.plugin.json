@@ -1,0 +1,11 @@
+{
+  "id": "ha",
+  "name": "Home Assistant quick commands",
+  "description": "Adds /ha command to toggle HA entities via REST API.",
+  "version": "0.1.0",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

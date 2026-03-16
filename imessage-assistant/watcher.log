@@ -1,0 +1,558 @@
+[2026-03-12 23:35:36] starting watcher: /opt/homebrew/bin/imsg watch --json --debounce 500ms
+[2026-03-12 23:36:44] inbound sender=+821030141521 text=오늘일전
+[2026-03-12 23:36:44] replied sender=+821030141521 action=fallback
+[2026-03-12 23:36:47] inbound sender=+821030141521 text=아직 이해하지 못한 요청입니다. 예: 우유 추가 / 목록 보여줘 / 오늘 일정 / 오늘 날씨 / 30분 뒤에 약 먹으라고 알려줘
+[2026-03-12 23:37:01] replied sender=+821030141521 action=schedule_today
+[2026-03-12 23:37:01] inbound sender=+821030141521 text=오늘일정
+[2026-03-12 23:37:16] replied sender=+821030141521 action=schedule_today
+[2026-03-12 23:37:16] inbound sender=+821030141521 text=📅 오늘 일정
+• 13:00 QMS 업무 논의 @회의실 D
+• 15:00 품질기획팀 Bi-weekly @품질본부장님 집무실
+[2026-03-12 23:37:30] replied sender=+821030141521 action=schedule_today
+[2026-03-12 23:37:31] inbound sender=+821030141521 text=📅 오늘 일정
+• 13:00 QMS 업무 논의 @회의실 D
+• 15:00 품질기획팀 Bi-weekly @품질본부장님 집무실
+[2026-03-12 23:37:44] replied sender=+821030141521 action=schedule_today
+[2026-03-12 23:37:45] inbound sender=+821030141521 text=📅 오늘 일정
+• 13:00 QMS 업무 논의 @회의실 D
+• 15:00 품질기획팀 Bi-weekly @품질본부장님 집무실
+[2026-03-12 23:37:58] replied sender=+821030141521 action=schedule_today
+[2026-03-12 23:37:59] inbound sender=+821030141521 text=📅 오늘 일정
+• 13:00 QMS 업무 논의 @회의실 D
+• 15:00 품질기획팀 Bi-weekly @품질본부장님 집무실
+[2026-03-12 23:38:08] replied sender=+821030141521 action=schedule_today
+[2026-03-12 23:38:09] inbound sender=+821030141521 text=오늘 일정 알려줘
+[2026-03-12 23:38:17] replied sender=+821030141521 action=schedule_today
+[2026-03-12 23:42:08] starting watcher: /opt/homebrew/bin/imsg watch --json --debounce 500ms --since-rowid 56287
+[2026-03-12 23:42:43] inbound sender=hericobacter@live.com text=오늘 날씨
+[2026-03-12 23:42:43] ignored sender=hericobacter@live.com
+[2026-03-12 23:46:20] starting watcher: /opt/homebrew/bin/imsg watch --json --debounce 500ms --since-rowid 56290
+[2026-03-12 23:49:32] starting poller last_rowid=56292
+[2026-03-12 23:51:46] polled sender=+821030141521 is_from_me=1 text=오늘 날씨
+[2026-03-12 23:51:48] replied sender=+821030141521 action=weather_today
+[2026-03-12 23:52:48] polled sender=+821025587752 is_from_me=0 text=오늘 날씨
+[2026-03-12 23:52:49] replied sender=+821025587752 action=weather_today
+[2026-03-12 23:53:20] polled sender=hericobacter@live.com is_from_me=1 text=내일 날씨
+[2026-03-12 23:53:22] reply failed sender=hericobacter@live.com action=weather_today error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 16, in send_imessage
+    raise ValueError('recipient must be E.164 format, e.g. +821030141521')
+ValueError: recipient must be E.164 format, e.g. +821030141521
+[2026-03-13 09:09:43] starting poller last_rowid=56302
+[2026-03-13 09:09:53] starting poller last_rowid=56302
+[2026-03-13 09:10:03] starting poller last_rowid=56302
+[2026-03-13 09:10:13] starting poller last_rowid=56302
+[2026-03-13 09:10:23] starting poller last_rowid=56302
+[2026-03-13 09:10:33] starting poller last_rowid=56302
+[2026-03-13 09:10:43] starting poller last_rowid=56302
+[2026-03-13 09:10:54] starting poller last_rowid=56302
+[2026-03-13 09:11:04] starting poller last_rowid=56302
+[2026-03-13 09:11:14] starting poller last_rowid=56302
+[2026-03-13 09:11:24] starting poller last_rowid=56302
+[2026-03-13 09:11:34] starting poller last_rowid=56302
+[2026-03-13 09:11:44] starting poller last_rowid=56302
+[2026-03-13 09:11:54] starting poller last_rowid=56302
+[2026-03-13 09:12:04] starting imsg history poller
+[2026-03-13 09:12:04] history poller error=command failed: ['/opt/homebrew/bin/imsg', 'chats', '--limit', '50', '--json']
+[2026-03-13 09:12:09] history poller error=command failed: ['/opt/homebrew/bin/imsg', 'chats', '--limit', '50', '--json']
+[2026-03-13 09:12:14] history poller error=command failed: ['/opt/homebrew/bin/imsg', 'chats', '--limit', '50', '--json']
+[2026-03-13 09:12:20] history poller error=command failed: ['/opt/homebrew/bin/imsg', 'chats', '--limit', '50', '--json']
+[2026-03-13 09:12:25] history poller error=command failed: ['/opt/homebrew/bin/imsg', 'chats', '--limit', '50', '--json']
+[2026-03-13 09:12:29] starting imsg history poller
+[2026-03-13 09:12:29] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=📅 오늘 일정
+• 13:00 QMS 업무 논의 @회의실 D
+• 15:00 품질기획팀 Bi-weekly @품질본부장님 집무실
+[2026-03-13 09:12:32] starting imsg history poller
+[2026-03-13 09:12:33] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=📅 오늘 일정
+• 13:00 QMS 업무 논의 @회의실 D
+• 15:00 품질기획팀 Bi-weekly @품질본부장님 집무실
+[2026-03-13 09:13:09] reply failed sender=+821030141521 action=schedule_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1980, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 일정 조회 중 오류가 발생했습니다: Command \'[\'osascript\', \'-e\', \'\\\\nset todayStart to current date\\\\nset hours of todayStart to 0\\\\nset minutes of todayStart to 0\\\\nset seconds of todayStart to 0\\\\nset tomorrowStart to todayStart + (24 * 60 * 60)\\\\n\\\\ntell application \\"Calendar\\"\\\\n\\\\tset outputLines to {}\\\\n\\\\trepeat with cal in calendars\\\\n\\\\t\\\\trepeat with ev in (every event of cal whose start date ≥ todayStart and start date < tomorrowStart)\\\\n\\\\t\\\\t\\\\tset evStart to start date of ev\\\\n\\\\t\\\\t\\\\tset hh to text -2 thru -1 of (\\"0\\" & (hours of evStart as integer))\\\\n\\\\t\\\\t\\\\tset mm to text -2 thru -1 of (\\"0\\" & (minutes of evStart as integer))\\\\n\\\\t\\\\t\\\\tset loc to location of ev\\\\n\\\\t\\\\t\\\\tif loc is missing value then set loc to \\"\\"\\\\n\\\\t\\\\t\\\\tset end of outputLines to (hh & \\":\\" & mm & \\"\\\\\\\\t\\" & (summary of ev) & \\"\\\\\\\\t\\" & loc)\\\\n\\\\t\\\\tend repeat\\\\n\\\\tend repeat\\\\nend tell\\\\nset AppleScript\\\\\'s text item delimiters to linefeed\\\\nreturn outputLines as text\\\\n\']\' timed out after 20 seconds" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:13:10] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=날씨는?
+[2026-03-13 09:13:13] reply failed sender=+821030141521 action=schedule_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 일정 조회 중 오류가 발생했습니다: Command \'[\'osascript\', \'-e\', \'\\\\nset todayStart to current date\\\\nset hours of todayStart to 0\\\\nset minutes of todayStart to 0\\\\nset seconds of todayStart to 0\\\\nset tomorrowStart to todayStart + (24 * 60 * 60)\\\\n\\\\ntell application \\"Calendar\\"\\\\n\\\\tset outputLines to {}\\\\n\\\\trepeat with cal in calendars\\\\n\\\\t\\\\trepeat with ev in (every event of cal whose start date ≥ todayStart and start date < tomorrowStart)\\\\n\\\\t\\\\t\\\\tset evStart to start date of ev\\\\n\\\\t\\\\t\\\\tset hh to text -2 thru -1 of (\\"0\\" & (hours of evStart as integer))\\\\n\\\\t\\\\t\\\\tset mm to text -2 thru -1 of (\\"0\\" & (minutes of evStart as integer))\\\\n\\\\t\\\\t\\\\tset loc to location of ev\\\\n\\\\t\\\\t\\\\tif loc is missing value then set loc to \\"\\"\\\\n\\\\t\\\\t\\\\tset end of outputLines to (hh & \\":\\" & mm & \\"\\\\\\\\t\\" & (summary of ev) & \\"\\\\\\\\t\\" & loc)\\\\n\\\\t\\\\tend repeat\\\\n\\\\tend repeat\\\\nend tell\\\\nset AppleScript\\\\\'s text item delimiters to linefeed\\\\nreturn outputLines as text\\\\n\']\' timed out after 20 seconds" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:13:13] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=날씨는?
+[2026-03-13 09:13:16] starting imsg history poller
+[2026-03-13 09:13:34] reply failed sender=+821030141521 action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:13:34] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=오늘 날씨는?
+[2026-03-13 09:13:55] reply failed sender=+821030141521 action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:13:56] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=오늘 날씨
+[2026-03-13 09:14:17] reply failed sender=+821030141521 action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:14:17] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=내일 일정
+[2026-03-13 09:14:37] replied sender=+821030141521 action=schedule_error
+[2026-03-13 09:14:38] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=오늘 날씨
+[2026-03-13 09:14:38] replied sender=+821030141521 action=weather_error
+[2026-03-13 09:14:39] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=오늘 날씨
+[2026-03-13 09:14:40] replied sender=+821030141521 action=weather_error
+[2026-03-13 09:14:41] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=0 text=오늘 날씨
+[2026-03-13 09:14:41] replied sender=hericobacter@live.com action=weather_error
+[2026-03-13 09:14:42] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=0 text=오늘 날씨
+[2026-03-13 09:14:42] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=��[자비스 테스트] 일정 조회 중 오류가 발생했습니다: Command '['osascript', '-e', '\nset todayStart to current date\nset hours of todayStart to 0\nset minutes of todayStart to 0\nset seconds of todayStart to 0\nset tomorrowStart to todayStart + (24 * 60 * 60)\n\ntell application "Calendar"\n\tset outputLines to {}\n\trepeat with cal in calendars\n\t\trepeat with ev in (every event of cal whose start date ≥ todayStart and start date < tomorrowStart)\n\t\t\tset evStart to start date of ev\n\t\t\tset hh to text -2 thru -1 of ("0" & (hours of evStart as integer))\n\t\t\tset mm to text -2 thru -1 of ("0" & (minutes of evStart as integer))\n\t\t\tset loc to location of ev\n\t\t\tif loc is missing value then set loc to ""\n\t\t\tset end of outputLines to (hh & ":" & mm & "\\t" & (summary of ev) & "\\t" & loc)\n\t\tend repeat\n\tend repeat\nend tell\nset AppleScript\'s text item delimiters to linefeed\nreturn outputLines as text\n']' timed out after 20 seconds
+[2026-03-13 09:14:43] replied sender=hericobacter@live.com action=weather_error
+[2026-03-13 09:14:43] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=0 text=내일 일정
+[2026-03-13 09:15:22] reply failed sender=+821030141521 action=schedule_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1980, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 일정 조회 중 오류가 발생했습니다: Command \'[\'osascript\', \'-e\', \'\\\\nset todayStart to current date\\\\nset hours of todayStart to 0\\\\nset minutes of todayStart to 0\\\\nset seconds of todayStart to 0\\\\nset tomorrowStart to todayStart + (24 * 60 * 60)\\\\n\\\\ntell application \\"Calendar\\"\\\\n\\\\tset outputLines to {}\\\\n\\\\trepeat with cal in calendars\\\\n\\\\t\\\\trepeat with ev in (every event of cal whose start date ≥ todayStart and start date < tomorrowStart)\\\\n\\\\t\\\\t\\\\tset evStart to start date of ev\\\\n\\\\t\\\\t\\\\tset hh to text -2 thru -1 of (\\"0\\" & (hours of evStart as integer))\\\\n\\\\t\\\\t\\\\tset mm to text -2 thru -1 of (\\"0\\" & (minutes of evStart as integer))\\\\n\\\\t\\\\t\\\\tset loc to location of ev\\\\n\\\\t\\\\t\\\\tif loc is missing value then set loc to \\"\\"\\\\n\\\\t\\\\t\\\\tset end of outputLines to (hh & \\":\\" & mm & \\"\\\\\\\\t\\" & (summary of ev) & \\"\\\\\\\\t\\" & loc)\\\\n\\\\t\\\\tend repeat\\\\n\\\\tend repeat\\\\nend tell\\\\nset AppleScript\\\\\'s text item delimiters to linefeed\\\\nreturn outputLines as text\\\\n\']\' timed out after 20 seconds" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:15:23] reply failed sender=hericobacter@live.com action=schedule_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "hericobacter@live.com" of targetService\n\tsend "[자비스 테스트] 일정 조회 중 오류가 발생했습니다: Command \'[\'osascript\', \'-e\', \'\\\\nset todayStart to current date\\\\nset hours of todayStart to 0\\\\nset minutes of todayStart to 0\\\\nset seconds of todayStart to 0\\\\nset tomorrowStart to todayStart + (24 * 60 * 60)\\\\n\\\\ntell application \\"Calendar\\"\\\\n\\\\tset outputLines to {}\\\\n\\\\trepeat with cal in calendars\\\\n\\\\t\\\\trepeat with ev in (every event of cal whose start date ≥ todayStart and start date < tomorrowStart)\\\\n\\\\t\\\\t\\\\tset evStart to start date of ev\\\\n\\\\t\\\\t\\\\tset hh to text -2 thru -1 of (\\"0\\" & (hours of evStart as integer))\\\\n\\\\t\\\\t\\\\tset mm to text -2 thru -1 of (\\"0\\" & (minutes of evStart as integer))\\\\n\\\\t\\\\t\\\\tset loc to location of ev\\\\n\\\\t\\\\t\\\\tif loc is missing value then set loc to \\"\\"\\\\n\\\\t\\\\t\\\\tset end of outputLines to (hh & \\":\\" & mm & \\"\\\\\\\\t\\" & (summary of ev) & \\"\\\\\\\\t\\" & loc)\\\\n\\\\t\\\\tend repeat\\\\n\\\\tend repeat\\\\nend tell\\\\nset AppleScript\\\\\'s text item delimiters to linefeed\\\\nreturn outputLines as text\\\\n\']\' timed out after 20 seconds" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:15:24] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=0 text=내일 일정
+[2026-03-13 09:15:28] history sender=+821030141521 actual_sender=+821030141521 is_from_me=0 text=오늘날씨
+[2026-03-13 09:15:49] reply failed sender=+821030141521 action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1980, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:16:04] reply failed sender=hericobacter@live.com action=schedule_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "hericobacter@live.com" of targetService\n\tsend "[자비스 테스트] 일정 조회 중 오류가 발생했습니다: Command \'[\'osascript\', \'-e\', \'\\\\nset todayStart to current date\\\\nset hours of todayStart to 0\\\\nset minutes of todayStart to 0\\\\nset seconds of todayStart to 0\\\\nset tomorrowStart to todayStart + (24 * 60 * 60)\\\\n\\\\ntell application \\"Calendar\\"\\\\n\\\\tset outputLines to {}\\\\n\\\\trepeat with cal in calendars\\\\n\\\\t\\\\trepeat with ev in (every event of cal whose start date ≥ todayStart and start date < tomorrowStart)\\\\n\\\\t\\\\t\\\\tset evStart to start date of ev\\\\n\\\\t\\\\t\\\\tset hh to text -2 thru -1 of (\\"0\\" & (hours of evStart as integer))\\\\n\\\\t\\\\t\\\\tset mm to text -2 thru -1 of (\\"0\\" & (minutes of evStart as integer))\\\\n\\\\t\\\\t\\\\tset loc to location of ev\\\\n\\\\t\\\\t\\\\tif loc is missing value then set loc to \\"\\"\\\\n\\\\t\\\\t\\\\tset end of outputLines to (hh & \\":\\" & mm & \\"\\\\\\\\t\\" & (summary of ev) & \\"\\\\\\\\t\\" & loc)\\\\n\\\\t\\\\tend repeat\\\\n\\\\tend repeat\\\\nend tell\\\\nset AppleScript\\\\\'s text item delimiters to linefeed\\\\nreturn outputLines as text\\\\n\']\' timed out after 20 seconds" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:16:04] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=1 text=내일 날씨
+[2026-03-13 09:16:25] reply failed sender=hericobacter@live.com action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "hericobacter@live.com" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:16:26] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=0 text=내일 날씨
+[2026-03-13 09:16:46] reply failed sender=hericobacter@live.com action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "hericobacter@live.com" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:16:47] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=0 text=오늘 날씨
+[2026-03-13 09:17:08] reply failed sender=hericobacter@live.com action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "hericobacter@live.com" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:17:08] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=0 text=오늘날씨
+[2026-03-13 09:17:29] reply failed sender=hericobacter@live.com action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "hericobacter@live.com" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:17:30] history sender=+821025587752 actual_sender=+821025587752 is_from_me=0 text=죄송합니다. 지금은 통화할 수 없습니다.
+[2026-03-13 09:17:50] reply failed sender=+821025587752 action=fallback error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821025587752" of targetService\n\tsend "아직 이해하지 못한 요청입니다. 예: 우유 추가 / 목록 보여줘 / 오늘 일정 / 오늘 날씨 / 30분 뒤에 약 먹으라고 알려줘" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:17:51] history sender=+821025587752 actual_sender=+821025587752 is_from_me=0 text=그룹채팅창이야?
+[2026-03-13 09:18:11] reply failed sender=+821025587752 action=fallback error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821025587752" of targetService\n\tsend "아직 이해하지 못한 요청입니다. 예: 우유 추가 / 목록 보여줘 / 오늘 일정 / 오늘 날씨 / 30분 뒤에 약 먹으라고 알려줘" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:18:11] history sender=+821025587752 actual_sender=+821025587752 is_from_me=0 text=오늘 날씨
+[2026-03-13 09:18:32] reply failed sender=+821025587752 action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821025587752" of targetService\n\tsend "날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:18:37] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=��[자비스 테스트] 일정 조회 중 오류가 발생했습니다: Command '['osascript', '-e', '\nset todayStart to current date\nset hours of todayStart to 0\nset minutes of todayStart to 0\nset seconds of todayStart to 0\nset tomorrowStart to todayStart + (24 * 60 * 60)\n\ntell application "Calendar"\n\tset outputLines to {}\n\trepeat with cal in calendars\n\t\trepeat with ev in (every event of cal whose start date ≥ todayStart and start date < tomorrowStart)\n\t\t\tset evStart to start date of ev\n\t\t\tset hh to text -2 thru -1 of ("0" & (hours of evStart as integer))\n\t\t\tset mm to text -2 thru -1 of ("0" & (minutes of evStart as integer))\n\t\t\tset loc to location of ev\n\t\t\tif loc is missing value then set loc to ""\n\t\t\tset end of outputLines to (hh & ":" & mm & "\\t" & (summary of ev) & "\\t" & loc)\n\t\tend repeat\n\tend repeat\nend tell\nset AppleScript\'s text item delimiters to linefeed\nreturn outputLines as text\n']' timed out after 20 seconds
+[2026-03-13 09:19:17] reply failed sender=+821030141521 action=schedule_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 일정 조회 중 오류가 발생했습니다: Command \'[\'osascript\', \'-e\', \'\\\\nset todayStart to current date\\\\nset hours of todayStart to 0\\\\nset minutes of todayStart to 0\\\\nset seconds of todayStart to 0\\\\nset tomorrowStart to todayStart + (24 * 60 * 60)\\\\n\\\\ntell application \\"Calendar\\"\\\\n\\\\tset outputLines to {}\\\\n\\\\trepeat with cal in calendars\\\\n\\\\t\\\\trepeat with ev in (every event of cal whose start date ≥ todayStart and start date < tomorrowStart)\\\\n\\\\t\\\\t\\\\tset evStart to start date of ev\\\\n\\\\t\\\\t\\\\tset hh to text -2 thru -1 of (\\"0\\" & (hours of evStart as integer))\\\\n\\\\t\\\\t\\\\tset mm to text -2 thru -1 of (\\"0\\" & (minutes of evStart as integer))\\\\n\\\\t\\\\t\\\\tset loc to location of ev\\\\n\\\\t\\\\t\\\\tif loc is missing value then set loc to \\"\\"\\\\n\\\\t\\\\t\\\\tset end of outputLines to (hh & \\":\\" & mm & \\"\\\\\\\\t\\" & (summary of ev) & \\"\\\\\\\\t\\" & loc)\\\\n\\\\t\\\\tend repeat\\\\n\\\\tend repeat\\\\nend tell\\\\nset AppleScript\\\\\'s text item delimiters to linefeed\\\\nreturn outputLines as text\\\\n\']\' timed out after 20 seconds" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:19:17] history sender=+821030141521 actual_sender=+821030141521 is_from_me=0 text=오늘날씨
+[2026-03-13 09:19:38] reply failed sender=+821030141521 action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:25:26] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=1 text=내일 날씨
+[2026-03-13 09:25:26] history sender=hericobacter@live.com actual_sender=hericobacter@live.com is_from_me=1 text=내일 날씨
+[2026-03-13 09:25:47] reply failed sender=hericobacter@live.com action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "hericobacter@live.com" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:25:48] reply failed sender=hericobacter@live.com action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1980, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "hericobacter@live.com" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:25:53] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=내일 날씨
+[2026-03-13 09:25:53] history sender=+821030141521 actual_sender=+821030141521 is_from_me=1 text=내일 날씨
+[2026-03-13 09:26:13] reply failed sender=+821030141521 action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds
+[2026-03-13 09:26:14] reply failed sender=+821030141521 action=weather_error error=Traceback (most recent call last):
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 41, in <module>
+    raise SystemExit(main())
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 37, in main
+    return send_imessage(args.to, args.text)
+  File "/Users/jamie/.openclaw/workspace/imessage-assistant/send_reply.py", line 25, in send_imessage
+    result = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 507, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1134, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1980, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 1178, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['osascript', '-e', '\ntell application "Messages"\n\tset targetService to 1st service whose service type = iMessage\n\tset targetBuddy to participant "+821030141521" of targetService\n\tsend "[자비스 테스트] 날씨 조회 중 오류가 발생했습니다: Expecting value: line 1 column 1 (char 0)" to targetBuddy\nend tell\n']' timed out after 20 seconds

@@ -1,0 +1,13 @@
+{
+  "id": "imsg",
+  "name": "iMessage/SMS via imsg",
+  "description": "Adds /imsg command backed by steipete/imsg CLI.",
+  "version": "0.1.0",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "imsgPath": { "type": "string" }
+    }
+  }
+}
