@@ -20,6 +20,11 @@ const CTAButton = styled.a`
 const Section = styled.section`
   padding:36px 0;
 `
+export const metadata = {
+  title: 'Jamie Next Blog',
+  description: 'A refined starter blog — MDX-driven, fast, and minimal.'
+}
+
 export default function Home(){
   const all = getAllPosts()
   const posts = all.slice(0,8)

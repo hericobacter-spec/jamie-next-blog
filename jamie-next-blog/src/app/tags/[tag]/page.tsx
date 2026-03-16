@@ -3,6 +3,10 @@ import { getAllPosts } from '@/lib/posts'
 import PostCard from '@/components/PostCard'
 import Link from 'next/link'
 
+export async function generateMetadata({ params }:{params:{tag:string}}){
+  return { title: `Tag: ${params.tag} - Jamie Next Blog`, description: `Posts tagged with ${params.tag}` }
+}
+
 export default function TagPage({ params }: { params: { tag: string } }){
   const all = getAllPosts()
   const tag = params.tag

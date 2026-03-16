@@ -4,6 +4,11 @@ import PostCard from '@/components/PostCard'
 import React from 'react'
 import CategoriesClient from '@/components/CategoriesClient'
 
+export const metadata = {
+  title: 'Posts - Jamie Next Blog',
+  description: 'All posts'
+}
+
 export default function Posts({ searchParams } : { searchParams: { category?: string } }){
   const all = getAllPosts()
   const tags = Array.from(new Set(all.flatMap((p:any)=> p?.meta?.tags || [])))

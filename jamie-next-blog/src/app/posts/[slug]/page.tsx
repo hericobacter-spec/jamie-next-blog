@@ -34,6 +34,27 @@ function extractHeadings(content:string){
   return headings
 }
 
+export async function generateMetadata({ params } : { params: { slug: string }}){
+  const post = getPostBySlug(params.slug)
+  if(!post) return {}
+  const p = post.meta || {}
+  return {
+    title: p.title || post.slug,
+    description: p.description || post.description || '',
+    openGraph: {
+      title: p.title,
+      description: p.description,
+      images: p.thumbnail ? [{ url: p.thumbnail }] : undefined,
+      url: `https://example.com/posts/${post.slug}`
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: p.title,
+      description: p.description
+    }
+  }
+}
+
 export default async function PostPage({ params }: { params: { slug: string } }){
   const post = getPostBySlug(params.slug)
   if(!post) return <div>Not found</div>
