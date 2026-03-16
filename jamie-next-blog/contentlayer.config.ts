@@ -7,7 +7,8 @@ export const Post = defineDocumentType(() => ({
   fields: {
     title: { type: 'string', required: true },
     date: { type: 'date', required: true },
-    excerpt: { type: 'string', required: false },
+    description: { type: 'string', required: false },
+    tags: { type: 'list', of: { type: 'string' }, required: false },
     slug: { type: 'string', required: false }
   },
   computedFields: {
@@ -18,4 +19,9 @@ export const Post = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: 'posts',
   documentTypes: [Post],
+  disableImportAliasWarning: true,
+  mdx: {
+    remarkPlugins: [],
+    rehypePlugins: []
+  }
 })

@@ -9,12 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@mdx-js/react": "^3.1.1",
     "@types/styled-components": "^5.1.36",
     "contentlayer": "^0.3.4",
     "giscus": "^1.6.0",
     "gray-matter": "^4.0.3",
     "next": "16.1.6",
     "next-contentlayer": "^0.3.4",
+    "next-mdx-remote": "^6.0.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "reading-time": "^1.5.0",
