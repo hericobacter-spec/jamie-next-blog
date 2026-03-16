@@ -26,7 +26,9 @@ export default function Home(){
             <div style={{color:'#6b7280'}}>{all.length} posts</div>
           </div>
           <div style={{marginTop:8}}>
-            {/* categories */}
+            <React.Suspense fallback={<div /> }>
+              <CategoriesClient tags={tags} />
+            </React.Suspense>
           </div>
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:20,marginTop:12}}>
             {posts.map((p:any)=> <PostCard key={p.slug} post={p} />)}
