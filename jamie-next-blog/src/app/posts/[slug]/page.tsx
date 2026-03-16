@@ -43,7 +43,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
     <Article>
       <h1 style={{marginBottom:8}}>{post.meta.title}</h1>
       <Meta>
-        <span>{post.meta.category || post.category}</span>
+        <span>{post.meta?.category || (post as any).category}</span>
         <span>·</span>
         <span>{new Date(post.meta.date).toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'})}</span>
         <span>·</span>
