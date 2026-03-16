@@ -1,15 +1,37 @@
 {
-  "name": "workspace",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "jamie-next-blog",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "playwright": "^1.58.2"
+    "@mdx-js/react": "^3.1.1",
+    "@types/styled-components": "^5.1.36",
+    "contentlayer": "^0.3.4",
+    "giscus": "^1.6.0",
+    "gray-matter": "^4.0.3",
+    "next": "16.1.6",
+    "next-contentlayer": "^0.3.4",
+    "next-mdx-remote": "^6.0.0",
+    "prism-react-renderer": "^2.4.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-scroll-to-top": "^3.1.0",
+    "reading-time": "^1.5.0",
+    "styled-components": "^6.3.11"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

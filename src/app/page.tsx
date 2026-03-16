@@ -8,7 +8,9 @@ const Hero = styled.section`
 `
 
 export default function Home(){
-  const posts = getAllPosts().slice(0,4)
+  const all = getAllPosts()
+  const posts = all.slice(0,8)
+  const tags = Array.from(new Set(all.flatMap((p:any)=> p?.meta?.tags || [])))
   return (
     <div>
       <Hero>
@@ -17,12 +19,24 @@ export default function Home(){
           <p style={{fontSize:18,color:'#374151',maxWidth:700}}>A refined starter blog inspired by yiyb-blog. Posts below are MDX-driven and styled with Styled-Components.</p>
         </div>
       </Hero>
-      <section style={{padding:'40px 0'}}>
+      <section style={{padding:'24px 0'}}>
         <div className="container">
-          <h2 style={{fontSize:28,marginBottom:16}}>Latest posts</h2>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:20}}>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <h2 style={{fontSize:28,marginBottom:16}}>All posts</h2>
+            <div style={{color:'#6b7280'}}>{all.length} posts</div>
+          </div>
+          <div style={{marginTop:8}}>
+            {/* categories */}
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:20,marginTop:12}}>
             {posts.map((p:any)=> <PostCard key={p.slug} post={p} />)}
           </div>
+        </div>
+      </section>
+      <section style={{padding:'24px 0',borderTop:'1px solid #eef2f7'}}>
+        <div className="container">
+          <h3>Contact</h3>
+          <p>Find me on: <a href="#">GitHub</a> • <a href="#">LinkedIn</a> • <a href="#">Instagram</a></p>
         </div>
       </section>
     </div>
