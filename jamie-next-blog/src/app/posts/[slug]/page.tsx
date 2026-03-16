@@ -37,8 +37,8 @@ function extractHeadings(content:string){
 export async function generateMetadata({ params } : { params: { slug: string }}){
   const post = getPostBySlug(params.slug)
   if(!post) return {}
-  const p = post.meta || {}
-  const desc = (p && (p.description || p.excerpt)) || post.description || ''
+  const p:any = post.meta || {}
+  const desc = (p && (p.description || p.excerpt)) || (post as any).description || ''
   return {
     title: p.title || post.slug,
     description: desc,
