@@ -2,6 +2,6 @@
 import React from 'react'
 import Categories from './Categories'
 
-export default function CategoriesClient({tags}:{tags:string[]}){
+export default function CategoriesClient(){
   return <Categories />
 }
