@@ -1,7 +1,9 @@
+import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { getAllPosts } from '@/lib/posts'
 import PostCard from '@/components/PostCard'
+import CategoriesClient from '@/components/CategoriesClient'
 
 const Hero = styled.section`
   background:linear-gradient(180deg,#ffffff, #f8fafc);padding:80px 0 40px;
