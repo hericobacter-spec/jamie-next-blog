@@ -9,6 +9,8 @@ const GlobalStyle = createGlobalStyle`
     --font-sans: ${theme.fonts.sans};
     --font-serif: ${theme.fonts.serif};
   }
+  :root{--font-inter: var(--font-inter); --font-merri: var(--font-merri)}
+  body{font-family: var(--font-inter), ${theme.fonts.sans};}
   html,body,#root{height:100%;}
   body{
     margin:0;

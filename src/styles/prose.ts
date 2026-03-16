@@ -4,10 +4,15 @@ const prose = css`
   .prose {
     color: #0f172a;
   }
-  .prose h1{font-size:32px;margin:0 0 16px;font-weight:700}
+  .prose h1{font-size:34px;margin:0 0 18px;font-weight:700}
   .prose h2{font-size:26px;margin:24px 0 12px;font-weight:700}
   .prose h3{font-size:20px;margin:20px 0 10px;font-weight:600}
-  .prose p{margin:12px 0;color:#374151}
+  .prose p{margin:14px 0;color:#374151}
+  @media (max-width:640px){
+    .prose{font-size:16px}
+    .prose h1{font-size:28px}
+    .prose h2{font-size:22px}
+  }
   .prose ul,.prose ol{margin:12px 0 12px 20px}
   .prose blockquote{border-left:4px solid #e6edf3;padding:12px 16px;color:#374151;background:#fbfcfd;border-radius:4px}
   .prose hr{border:none;border-top:1px solid #e6edf3;margin:28px 0}
