@@ -38,19 +38,20 @@ export async function generateMetadata({ params } : { params: { slug: string }})
   const post = getPostBySlug(params.slug)
   if(!post) return {}
   const p = post.meta || {}
+  const desc = (p && (p.description || p.excerpt)) || post.description || ''
   return {
     title: p.title || post.slug,
-    description: p.description || post.description || '',
+    description: desc,
     openGraph: {
       title: p.title,
-      description: p.description,
+      description: desc,
       images: p.thumbnail ? [{ url: p.thumbnail }] : undefined,
       url: `https://example.com/posts/${post.slug}`
     },
     twitter: {
       card: 'summary_large_image',
       title: p.title,
-      description: p.description
+      description: desc
     }
   }
 }
