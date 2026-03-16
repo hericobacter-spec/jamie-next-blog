@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function CodeBlock({ children, className }: Props) {
-  const language = className?.replace(/language-/, '') || 'js';
+  const language = (className?.replace(/language-/, '') || 'js') as any;
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
