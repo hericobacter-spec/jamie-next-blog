@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0"><channel><title>Jamie Next Blog</title><link>https://example.com</link><description>Latest posts</description><item>
+<rss version="2.0"><channel><title>Jamie Next Blog</title><link>https://jamie-next-blog.vercel.app</link><description>Latest posts</description><item>
 <title><![CDATA[Welcome to Jamie's New Blog]]></title>
-<link>https://example.com/posts/first-post</link>
+<link>https://jamie-next-blog.vercel.app/posts/first-post</link>
 <description><![CDATA[첫 번째 포스트입니다]]></description>
 <pubDate>Mon, 16 Mar 2026 00:00:00 GMT</pubDate>
 </item></channel></rss>

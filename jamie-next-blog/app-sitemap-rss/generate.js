@@ -15,7 +15,7 @@ function getAllPosts(){
 }
 
 function generateSitemap(){
-  const siteUrl = 'https://example.com'
+  const siteUrl = 'https://jamie-next-blog.vercel.app'
   const posts = getAllPosts()
   const pages = [ '/', '/posts']
   const tags = new Set()
@@ -27,7 +27,7 @@ function generateSitemap(){
 }
 
 function generateRSS(){
-  const siteUrl = 'https://example.com'
+  const siteUrl = 'https://jamie-next-blog.vercel.app'
   const posts = getAllPosts().sort((a,b)=> new Date(b.meta.date)-new Date(a.meta.date))
   const items = posts.map(p=>`<item>
 <title><![CDATA[${p.meta.title}]]></title>

@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node ./app-sitemap-rss/generate.js",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate:seo": "node ./app-sitemap-rss/generate.js"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",

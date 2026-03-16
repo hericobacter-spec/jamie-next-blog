@@ -2,7 +2,7 @@ export function siteMeta(){
   return {
     title: 'Jamie Next Blog',
     description: 'A refined starter blog — MDX-driven, fast, and minimal. I write about engineering, food, AI experiments, and daily life.',
-    siteUrl: 'https://example.com'
+    siteUrl: 'https://jamie-next-blog.vercel.app'
   }
 }
 
