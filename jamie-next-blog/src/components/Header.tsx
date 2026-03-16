@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import React, { useEffect, useState } from 'react'
 
 const Wrap = styled.header`
-  background: ${p=>p.theme.colors.bg};
-  border-bottom: 1px solid ${p=>p.theme.colors.surface};
+  background: ${(p:any)=>p.theme.colors.bg};
+  border-bottom: 1px solid ${(p:any)=>p.theme.colors.surface};
 `
 const Inner = styled.div`
   max-width:960px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;
@@ -16,11 +16,11 @@ const Nav = styled.nav`
   @media (max-width:640px){gap:12px}
 `
 const Logo = styled.div`
-  font-weight:700;font-size:20px;color:${p=>p.theme.colors.primary};
+  font-weight:700;font-size:20px;color:${(p:any)=>p.theme.colors.primary};
   @media (max-width:640px){font-size:18px}
 `
 const Toggle = styled.button`
-  background:transparent;border:1px solid ${p=>p.theme.colors.surface};padding:6px 8px;border-radius:8px;color:${p=>p.theme.colors.primary};cursor:pointer;font-size:14px
+  background:transparent;border:1px solid ${(p:any)=>p.theme.colors.surface};padding:6px 8px;border-radius:8px;color:${(p:any)=>p.theme.colors.primary};cursor:pointer;font-size:14px
 `
 export default function Header(){
   const [mode,setMode] = useState<'light'|'dark'>('light')
