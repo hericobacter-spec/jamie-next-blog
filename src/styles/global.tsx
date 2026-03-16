@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
   a{color:var(--color-accent);}
   .container{max-width:960px;margin:0 auto;padding:0 24px}
   .prose{line-height:1.75;font-size:18px}
+  /* include prose module */
 `
 
 export default GlobalStyle
