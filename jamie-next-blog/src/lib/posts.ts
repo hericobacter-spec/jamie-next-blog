@@ -18,10 +18,13 @@ export function getAllPosts(){
   }).sort((a:any,b:any)=> new Date(b.date).valueOf() - new Date(a.date).valueOf())
 }
 
+import readingTime from 'reading-time'
+
 export function getPostBySlug(slug:string){
   const full = path.join(postsDir, `${slug}.mdx`)
   if(!fs.existsSync(full)) return null
   const raw = fs.readFileSync(full,'utf8')
   const { data, content } = matter(raw)
-  return { slug, meta: data, content }
+  const rt = readingTime(content)
+  return { slug, meta: data, content, readingTime: rt.text }
 }
