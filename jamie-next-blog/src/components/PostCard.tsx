@@ -12,10 +12,17 @@ const Meta = styled.div`
 const Tag = styled.span`
   background:#f1f5f9;color:#0f172a;padding:4px 8px;border-radius:999px;font-size:12px;
 `
+const CategoryBadge = styled.span<{color?:string}>`
+  padding:6px 10px;border-radius:999px;font-size:12px;color:#fff;background:${p=>p.color || '#2563eb'};
+`
 export default function PostCard({post}:{post:any}){
+  const category = post.meta?.category || post.category
   return (
     <Card>
-      <h3 style={{margin:0,fontSize:18}}><Link href={`/posts/${post.slug}`}>{post.title}</Link></h3>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12}}>
+        <h3 style={{margin:0,fontSize:18}}><Link href={`/posts/${post.slug}`}>{post.title}</Link></h3>
+        {category ? <CategoryBadge color={category==='Foodie'? '#fb923c' : category==='A.I'? '#7c3aed' : category==='Life'? '#10b981' : '#2563eb'}>{category}</CategoryBadge> : null}
+      </div>
       <Meta>
         <span>{post.date}</span>
         {post.meta?.tags?.map((t:string)=> <Tag key={t}>{t}</Tag>)}
