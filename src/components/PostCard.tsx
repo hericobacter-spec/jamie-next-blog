@@ -13,7 +13,7 @@ export default function PostCard({post}:{post:any}){
     <Card>
       <h3 style={{margin:0,fontSize:18}}><Link href={`/posts/${post.slug}`}>{post.title}</Link></h3>
       <Meta>{post.date} • {post.description}</Meta>
-      <div style={{marginTop:'auto',marginTop:12}}><Link href={`/posts/${post.slug}`}>Read →</Link></div>
+      <div style={{marginTop:12}}><Link href={`/posts/${post.slug}`}>Read →</Link></div>
     </Card>
   )
 }
