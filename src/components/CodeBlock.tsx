@@ -1,19 +1,50 @@
-import React from 'react'
-import styled from 'styled-components'
+"use client";
+import React, { useState } from 'react';
+import Highlight, { defaultProps } from 'prism-react-renderer';
+import theme from 'prism-react-renderer/themes/nightOwl';
 
-const Pre = styled.pre`
-  background: #0f172a; color: #f8fafc; padding:16px; border-radius:8px; overflow:auto; font-size:14px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
-`
-const Inline = styled.code`
-  background:#f3f4f6;padding:2px 6px;border-radius:4px;font-family:ui-monospace,monospace;font-size:90%;
-`
-export default function CodeBlock({className, children}:{className?:string; children:any}){
-  // simple fallback code block styling for now; can be upgraded to prism/shiki later
+type Props = {
+  children: string;
+  className?: string;
+};
+
+export default function CodeBlock({ children, className }: Props) {
+  const language = (className?.replace(/language-/, '') || 'js') as any;
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(children);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch (e) {
+      console.error('Copy failed', e);
+    }
+  };
+
   return (
-    <Pre>
-      <code>{String(children).trim()}</code>
-    </Pre>
-  )
+    <div style={{ position: 'relative', margin: '1rem 0' }}>
+      <Highlight {...defaultProps} theme={theme} code={children.trim()} language={language}>
+        {({ className: innerClass, style, tokens, getLineProps, getTokenProps }) => (
+          <pre className={innerClass} style={{ ...style, padding: '1rem', overflowX: 'auto', borderRadius: 8, position: 'relative' }}>
+            <span style={{position:'absolute',left:8,top:8,background:'rgba(0,0,0,0.2)',color:'#fff',padding:'4px 8px',borderRadius:6,fontSize:12}}>{language}</span>
+            <button
+              onClick={copy}
+              style={{ position: 'absolute', right: 8, top: 8, padding: '6px 8px', fontSize: 12 }}
+            >
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </pre>
+        )}
+      </Highlight>
+    </div>
+  );
 }
 
-export const InlineCode = ({children}:{children:any}) => <Inline>{children}</Inline>

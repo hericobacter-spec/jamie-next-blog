@@ -1,9 +1,11 @@
+"use client"
 import Link from 'next/link'
 import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
 
 const Wrap = styled.header`
-  background: white;
-  border-bottom: 1px solid #e6edf3;
+  background: ${(p:any)=>p.theme.colors.bg};
+  border-bottom: 1px solid ${(p:any)=>p.theme.colors.surface};
 `
 const Inner = styled.div`
   max-width:960px;margin:0 auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;
@@ -14,10 +16,24 @@ const Nav = styled.nav`
   @media (max-width:640px){gap:12px}
 `
 const Logo = styled.div`
-  font-weight:700;font-size:20px;
+  font-weight:700;font-size:20px;color:${(p:any)=>p.theme.colors.primary};
   @media (max-width:640px){font-size:18px}
 `
+const Toggle = styled.button`
+  background:transparent;border:1px solid ${(p:any)=>p.theme.colors.surface};padding:6px 8px;border-radius:8px;color:${(p:any)=>p.theme.colors.primary};cursor:pointer;font-size:14px
+`
 export default function Header(){
+  const [mode,setMode] = useState<'light'|'dark'>('light')
+  useEffect(()=>{
+    const saved = (typeof window !== 'undefined') && localStorage.getItem('theme')
+    if(saved === 'dark') setMode('dark')
+  },[])
+  const toggle = () => {
+    const next = mode === 'light' ? 'dark' : 'light'
+    setMode(next)
+    if(typeof window !== 'undefined') localStorage.setItem('theme', next)
+    document.documentElement.setAttribute('data-theme', next)
+  }
   return (
     <Wrap>
       <Inner>
@@ -25,6 +41,7 @@ export default function Header(){
         <Nav>
           <Link href="/posts">Posts</Link>
           <Link href="/about">About</Link>
+          <Toggle onClick={toggle}>{mode==='light' ? 'Dark' : 'Light'}</Toggle>
         </Nav>
       </Inner>
     </Wrap>
