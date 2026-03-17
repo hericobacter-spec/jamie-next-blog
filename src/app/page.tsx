@@ -32,8 +32,8 @@ export default function Home(){
             <h1 style={{fontSize:56,margin:0,lineHeight:1.02}}>Jamie Next Blog</h1>
             <p style={{fontSize:18,color:'#374151',maxWidth:640,marginTop:12}}>A refined starter blog — MDX-driven, fast, and minimal. I write about engineering, food, AI experiments, and daily life.</p>
             <CTAs>
-              <Link href="/posts" passHref><CTAButton>Posts</CTAButton></Link>
-              <Link href="/about" passHref><CTAButton style={{background:'#4b5563'}}>About</CTAButton></Link>
+              <CTAButtonLink href="/posts">Posts</CTAButtonLink>
+              <CTAButtonLink href="/about" style={{background:'#4b5563'}}>About</CTAButtonLink>
             </CTAs>
           </div>
           <div style={{width:260,height:160,background:'#f8fafc',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',color:'#6b7280'}}>Hero image</div>
