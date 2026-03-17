@@ -27,13 +27,7 @@ const components = {
   code: ({className, children}:any)=> <CodeBlock className={className}>{children}</CodeBlock>
 }
 
-export const dynamicParams = false
 
-export async function generateStaticParams(){
-  const { getPostSlugs } = await import('@/lib/posts')
-  const slugs = getPostSlugs()
-  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
-}
 
 function extractHeadings(content:string){
   const lines = content.split('\n')
@@ -50,21 +44,9 @@ function extractHeadings(content:string){
   return headings
 }
 
-export const dynamicParams = false
 
-export async function generateStaticParams(){
-  const { getPostSlugs } = await import('@/lib/posts')
-  const slugs = getPostSlugs()
-  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
-}
 
-export const dynamicParams = false
 
-export async function generateStaticParams(){
-  const { getPostSlugs } = await import('@/lib/posts')
-  const slugs = getPostSlugs()
-  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
-}
 
 export async function generateMetadata({ params } : { params: { slug: string }}){
 
@@ -90,13 +72,7 @@ export async function generateMetadata({ params } : { params: { slug: string }})
   }
 }
 
-export const dynamicParams = false
 
-export async function generateStaticParams(){
-  const { getPostSlugs } = await import('@/lib/posts')
-  const slugs = getPostSlugs()
-  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
-}
 
 export default async function PostPage({ params }: { params: { slug: string } }){
 
