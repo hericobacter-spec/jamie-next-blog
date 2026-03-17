@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import styled from 'styled-components'
+import ThemeToggle from './ThemeToggle'
 
 const Wrap = styled.header`
   background: white;
@@ -18,16 +19,6 @@ const Logo = styled.div`
   @media (max-width:640px){font-size:18px}
 `
 export default function Header(){
-  const toggle = ()=>{
-    try{
-      const cur = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
-      const next = cur === 'dark' ? 'light' : 'dark'
-      localStorage.setItem('theme', next)
-      // notify ThemeProviderClient
-      window.dispatchEvent(new CustomEvent('theme-change', { detail: { mode: next }}))
-      document.documentElement.setAttribute('data-theme', next)
-    }catch(e){/* ignore */}
-  }
   return (
     <Wrap>
       <Inner>
