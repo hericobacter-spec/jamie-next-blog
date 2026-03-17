@@ -19,9 +19,20 @@ export default function ThemeProviderClient({ children }:{children:React.ReactNo
   useEffect(()=>{
     const saved = (typeof window !== 'undefined') && localStorage.getItem('theme')
     if(saved === 'dark') setMode('dark')
+    // listen for external toggles from Header button
+    const handler = (e:any)=>{
+      const m = e?.detail?.mode || (localStorage.getItem('theme')==='dark' ? 'dark' : 'light')
+      setMode(m)
+    }
+    window.addEventListener('theme-change', handler as EventListener)
+    return ()=> window.removeEventListener('theme-change', handler as EventListener)
   },[])
   useEffect(()=>{
     if(typeof window !== 'undefined') localStorage.setItem('theme', mode)
+  },[mode])
+  useEffect(()=>{
+    // keep data-theme attr in sync immediately
+    if(typeof document !== 'undefined') document.documentElement.setAttribute('data-theme', mode)
   },[mode])
   return (
     <ThemeProvider theme={mode==='light'? light : dark}>
