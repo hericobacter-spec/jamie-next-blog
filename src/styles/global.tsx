@@ -15,8 +15,8 @@ const GlobalStyle = createGlobalStyle`
   body{
     margin:0;
     font-family: var(--font-sans);
-    background: ${theme.colors.surface};
-    color: ${theme.colors.primary};
+    background: var(--background);
+    color: var(--foreground);
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
   }
