@@ -20,7 +20,9 @@ const components = {
 }
 
 export default async function PostPage({ params }: { params: { slug: string } }){
-  const post = getPostBySlug(params.slug)
+  // In App Router params may be a Promise; await to unwrap before use
+  const resolved = await params as { slug: string }
+  const post = getPostBySlug(resolved.slug)
   if(!post) return <div>Not found</div>
   const mdxSource = await serialize(post.content || '')
   return (
