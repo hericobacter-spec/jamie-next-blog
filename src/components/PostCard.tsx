@@ -30,7 +30,7 @@ export default function PostCard({post}:{post:any}){
       <Meta>
         <span>{post.date}</span>
         {reading ? <Reading>{reading}</Reading> : null}
-        {post.meta?.tags?.map((t:string)=> <Tag key={t}><Link href={`/tags/${encodeURIComponent(t)}`}>{t}</Link></Tag>)}
+        {post.meta?.tags?.map((t:string)=> <Tag key={t}>{t}</Tag>)}
       </Meta>
       <p style={{color:'#374151',marginTop:12,flex:1,lineHeight:1.6,fontSize:15}}>{post.description}</p>
       <div style={{marginTop:12,display:'flex',justifyContent:'space-between',alignItems:'center'}}>

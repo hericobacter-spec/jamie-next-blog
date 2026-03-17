@@ -5,7 +5,6 @@ import matter from 'gray-matter'
 const postsDir = path.join(process.cwd(),'posts')
 
 export function getPostSlugs(){
-  if(!fs.existsSync(postsDir)) return []
   return fs.readdirSync(postsDir).filter(f => f.endsWith('.mdx') || f.endsWith('.md'))
 }
 
@@ -22,11 +21,8 @@ export function getAllPosts(){
 import readingTime from 'reading-time'
 
 export function getPostBySlug(slug:string){
-  // Resolve by scanning postsDir filenames to tolerate .mdx or .md and case
-  const slugs = getPostSlugs()
-  const match = slugs.find(f => f.replace(/\.mdx?$/,'') === slug)
-  if(!match) return null
-  const full = path.join(postsDir, match)
+  const full = path.join(postsDir, `${slug}.mdx`)
+  if(!fs.existsSync(full)) return null
   const raw = fs.readFileSync(full,'utf8')
   const { data, content } = matter(raw)
   const rt = readingTime(content)
