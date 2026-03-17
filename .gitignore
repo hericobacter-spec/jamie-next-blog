@@ -43,3 +43,6 @@ next-env.d.ts
 /test-screenshots/
 /recovery-screenshots/
 /prod-screenshots/
+/recovery-screenshots/
+/test-screenshots/
+/prod-screenshots/
