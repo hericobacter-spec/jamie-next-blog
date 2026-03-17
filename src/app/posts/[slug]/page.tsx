@@ -19,9 +19,9 @@ const components = {
   code: ({className, children}:any)=> <CodeBlock className={className}>{children}</CodeBlock>
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }){
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }){
   // In App Router params may be a Promise; await to unwrap before use
-  const resolved = await params as { slug: string }
+  const resolved = await params
   const post = getPostBySlug(resolved.slug)
   if(!post) return <div>Not found</div>
   const mdxSource = await serialize(post.content || '')
