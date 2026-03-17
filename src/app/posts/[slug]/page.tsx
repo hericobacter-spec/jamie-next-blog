@@ -128,7 +128,7 @@ export default async function PostPage({
       <div style={{ display: 'flex', gap: 24 }}>
         <div style={{ flex: 1 }}>
           <div className="prose mt-6">
-            <MDXRemote {...mdxSource} />
+            <div>{post.content}</div>
           </div>
         </div>
 
