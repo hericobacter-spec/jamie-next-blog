@@ -34,7 +34,24 @@ function extractHeadings(content:string){
   return headings
 }
 
+export const dynamicParams = false
+
+export async function generateStaticParams(){
+  const { getPostSlugs } = await import('@/lib/posts')
+  const slugs = getPostSlugs()
+  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
+}
+
+export const dynamicParams = false
+
+export async function generateStaticParams(){
+  const { getPostSlugs } = await import('@/lib/posts')
+  const slugs = getPostSlugs()
+  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
+}
+
 export async function generateMetadata({ params } : { params: { slug: string }}){
+
 
   const post = getPostBySlug(params.slug)
   if(!post) return {}
