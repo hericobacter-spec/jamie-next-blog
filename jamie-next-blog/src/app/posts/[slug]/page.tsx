@@ -34,7 +34,25 @@ function extractHeadings(content:string){
   return headings
 }
 
+export const dynamicParams = false
+
+export async function generateStaticParams(){
+  const { getPostSlugs } = await import('@/lib/posts')
+  const slugs = getPostSlugs()
+  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
+}
+
+export const dynamicParams = false
+
+export async function generateStaticParams(){
+  const { getPostSlugs } = await import('@/lib/posts')
+  const slugs = getPostSlugs()
+  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
+}
+
 export async function generateMetadata({ params } : { params: { slug: string }}){
+
+
   const post = getPostBySlug(params.slug)
   if(!post) return {}
   const p:any = post.meta || {}
@@ -56,7 +74,16 @@ export async function generateMetadata({ params } : { params: { slug: string }})
   }
 }
 
+export const dynamicParams = false
+
+export async function generateStaticParams(){
+  const { getPostSlugs } = await import('@/lib/posts')
+  const slugs = getPostSlugs()
+  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
+}
+
 export default async function PostPage({ params }: { params: { slug: string } }){
+
   const post = getPostBySlug(params.slug)
   if(!post) return <div>Not found</div>
   const mdxSource = await serialize(post.content || '')
