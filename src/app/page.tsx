@@ -14,7 +14,7 @@ const HeroInner = styled.div`
 const CTAs = styled.div`
   display:flex;gap:12px;margin-top:12px;
 `
-const CTAButton = styled.a`
+const CTAButtonLink = styled(Link)`
   padding:10px 14px;border-radius:8px;background:#111827;color:#fff;text-decoration:none;font-weight:600;
 `
 const Section = styled.section`
