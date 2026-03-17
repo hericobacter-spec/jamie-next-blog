@@ -11,9 +11,7 @@ export const dynamicParams = false
 
 export async function generateStaticParams() {
   const slugs = getPostSlugs()
-  return slugs.map((s) => ({
-    slug: s.replace(/\.mdx?$/, ''),
-  }))
+  return slugs.map((s) => ({ slug: s.replace(/\.mdx?$/, '') }))
 }
 
 const Article = styled.article`
@@ -60,19 +58,13 @@ function extractHeadings(content: string) {
   return headings
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const { slug } = params
   const post = getPostBySlug(slug)
-
   if (!post) return {}
 
   const meta: any = post.meta || {}
-  const desc =
-    meta.description || meta.excerpt || (post as any).description || ''
+  const desc = meta.description || meta.excerpt || (post as any).description || ''
 
   return {
     title: meta.title || post.slug,
@@ -91,17 +83,11 @@ export async function generateMetadata({
   }
 }
 
-export default async function PostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
+export default async function PostPage({ params }: { params: { slug: string } }) {
+  const { slug } = params
   const post = getPostBySlug(slug)
 
-  if (!post) {
-    return <div>Not found</div>
-  }
+  if (!post) return <div>Not found</div>
 
   const mdxSource = await serialize(post.content || '')
   const headings = extractHeadings(post.content || '')
@@ -154,10 +140,7 @@ export default async function PostPage({
                 >
                   {headings.map((h) => (
                     <li key={h.id} style={{ marginLeft: (h.level - 2) * 8 }}>
-                      <a
-                        href={`#${h.id}`}
-                        style={{ color: '#2563eb', textDecoration: 'none' }}
-                      >
+                      <a href={`#${h.id}`} style={{ color: '#2563eb', textDecoration: 'none' }}>
                         {h.text}
                       </a>
                     </li>
