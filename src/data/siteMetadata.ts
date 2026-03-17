@@ -12,7 +12,6 @@ const siteMetadata = {
   instagram: '',
   threads: '',
   medium: '',
-,
   stickyNav: false,
   headerTitle: 'Jamie Blog',
 }
