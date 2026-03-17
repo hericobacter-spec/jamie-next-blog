@@ -2,21 +2,21 @@ import Link from 'next/link'
 import styled from 'styled-components'
 
 const Card = styled.article`
-  background:white;border:1px solid #e6edf3;border-radius:10px;padding:20px;transition:transform .12s,box-shadow .12s;display:flex;flex-direction:column;height:100%;
+  background: var(--card-bg); border:1px solid rgba(15,23,42,0.06); border-radius:10px;padding:20px;transition:transform .12s,box-shadow .12s;display:flex;flex-direction:column;height:100%;
   &:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(15,23,42,0.08)}
   @media (max-width:640px){padding:16px}
 `
 const Meta = styled.div`
-  color:#6b7280;font-size:13px;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;
+  color:var(--muted);font-size:13px;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;
 `
 const Tag = styled.span`
-  background:#f1f5f9;color:#0f172a;padding:4px 8px;border-radius:999px;font-size:12px;
+  background:var(--code-bg);color:var(--foreground);padding:4px 8px;border-radius:999px;font-size:12px;
 `
 const CategoryBadge = styled.span<{color?:string}>`
   padding:6px 10px;border-radius:999px;font-size:12px;color:#fff;background:${p=>p.color || '#2563eb'};
 `
 const Reading = styled.span`
-  color:#6b7280;font-size:13px;margin-left:8px;
+  color:var(--muted);font-size:13px;margin-left:8px;
 `
 export default function PostCard({post}:{post:any}){
   const category = post.meta?.category || post.category
@@ -30,9 +30,9 @@ export default function PostCard({post}:{post:any}){
       <Meta>
         <span>{post.date}</span>
         {reading ? <Reading>{reading}</Reading> : null}
-        {post.meta?.tags?.map((t:string)=> <Tag key={t}><Link href={`/tags/${encodeURIComponent(t)}`}>{t}</Link></Tag>)}
+        {post.meta?.tags?.map((t:string)=> <Tag key={t}>{t}</Tag>)}
       </Meta>
-      <p style={{color:'#374151',marginTop:12,flex:1,lineHeight:1.6,fontSize:15}}>{post.description}</p>
+      <p style={{color:'var(--foreground)',marginTop:12,flex:1,lineHeight:1.6,fontSize:15}}>{post.description}</p>
       <div style={{marginTop:12,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
         <Link href={`/posts/${post.slug}`}>Read →</Link>
         <div style={{color:'#9ca3af',fontSize:13}}>{/* placeholder for extra actions */}</div>

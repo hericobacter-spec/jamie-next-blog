@@ -1,195 +1,35 @@
+import { getPostBySlug } from '@/lib/posts'
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemote } from 'next-mdx-remote'
 import React from 'react'
 import styled from 'styled-components'
-
-import { getPostBySlug, getPostSlugs } from '@/lib/posts'
 import prose from '@/styles/prose'
-
-export const dynamicParams = false
-
-export async function generateStaticParams() {
-  const slugs = getPostSlugs()
-  return slugs.map((s) => ({
-    slug: s.replace(/\.mdx?$/, ''),
-  }))
-}
+import CodeBlock from '@/components/CodeBlock'
 
 const Article = styled.article`
-  max-width: 780px;
-  margin: 40px auto;
-  padding: 24px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.03);
+  max-width:780px;margin:40px auto;padding:24px;background:white;border-radius:8px;box-shadow:0 4px 18px rgba(15,23,42,0.03);
   ${prose}
-
-  @media (max-width: 768px) {
-    margin: 20px auto;
-    padding: 18px;
-    border-radius: 0;
-    box-shadow: none;
-  }
 `
 
 const Meta = styled.div`
-  color: #6b7280;
-  font-size: 14px;
-  margin-bottom: 18px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  align-items: center;
+  color:#6b7280;font-size:14px;margin-bottom:18px;
 `
-
-const ContentLayout = styled.div`
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-
-  @media (max-width: 900px) {
-    flex-direction: column;
-    gap: 16px;
-  }
-`
-
-const MainContent = styled.div`
-  flex: 1;
-  min-width: 0;
-  width: 100%;
-`
-
-const TocAside = styled.aside`
-  width: 220px;
-  flex: 0 0 220px;
-
-  @media (max-width: 900px) {
-    width: 100%;
-    flex: none;
-    display: none; /* hide TOC on small screens */
-  }
-`
-
-
-function extractHeadings(content: string) {
-  const lines = content.split('\n')
-  const headings: { text: string; id: string; level: number }[] = []
-
-  for (const line of lines) {
-    const match = line.match(/^(##+?)\s+(.*)/)
-    if (match) {
-      const level = match[1].length
-      const text = match[2].replace(/`/g, '').trim()
-      const id = text.toLowerCase().replace(/[^a-z0-9가-힣]+/g, '-')
-      headings.push({ text, id, level })
-    }
-  }
-
-  return headings
+const components = {
+  pre: (props:any)=> <div {...props} />,
+  code: ({className, children}:any)=> <CodeBlock className={className}>{children}</CodeBlock>
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-  const post = getPostBySlug(slug)
-
-  if (!post) return {}
-
-  const meta: any = post.meta || {}
-  const desc =
-    meta.description || meta.excerpt || (post as any).description || ''
-
-  return {
-    title: meta.title || post.slug,
-    description: desc,
-    openGraph: {
-      title: meta.title || post.slug,
-      description: desc,
-      images: meta.thumbnail ? [{ url: meta.thumbnail }] : undefined,
-      url: `https://jamie-next-blog.vercel.app/posts/${post.slug}`,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: meta.title || post.slug,
-      description: desc,
-    },
-  }
-}
-
-export default async function PostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-  const post = getPostBySlug(slug)
-
-  if (!post) {
-    return <div>Not found</div>
-  }
-
-  const mdxSource = await /*serialize removed*/(post.content || '')
-  const headings = extractHeadings(post.content || '')
-
+export default async function PostPage({ params }: { params: { slug: string } }){
+  const post = getPostBySlug(params.slug)
+  if(!post) return <div>Not found</div>
+  const mdxSource = await serialize(post.content || '')
   return (
     <Article>
-      <h1 style={{ marginBottom: 8 }}>{post.meta.title}</h1>
-
-      <Meta>
-        <span>{post.meta?.category || (post as any).category}</span>
-        <span>·</span>
-        <span>
-          {new Date(post.meta.date).toLocaleDateString('en-US', {
-            month: 'short',
-            day: '2-digit',
-            year: 'numeric',
-          })}
-        </span>
-        <span>·</span>
-        <span>{post.readingTime}</span>
-        {post.meta.tags ? <span>· {post.meta.tags.join(', ')}</span> : null}
-      </Meta>
-
-      <ContentLayout>
-        <MainContent>
-          <div className="prose mt-6">
-            <pre style={ {whiteSpace: 'pre-wrap'} }>{post.content}</pre>
-          </div>
-        </MainContent>
-
-        <TocAside>
-          <div style={{ position: 'sticky', top: 80 }}>
-            <h4 style={{ marginTop: 0, fontSize: 14, color: '#6b7280' }}>
-              On this page
-            </h4>
-
-            <nav style={{ fontSize: 14 }}>
-              {headings.length === 0 ? (
-                <div style={{ color: '#9ca3af' }}>No headings</div>
-              ) : (
-                <ul
-                  style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    display: 'flex',flexDirection: 'column',
-                    gap: 6,
-                  }}
-                >
-                  {headings.map((h) => (
-                    <li key={h.id} style={{ marginLeft: (h.level - 2) * 8 }}>
-                      <a href={`#${h.id}`} style={{ color: '#2563eb', textDecoration: 'none' }}>
-                        {h.text}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </nav>
-          </div>
-        </TocAside>
-      </ContentLayout>
+      <h1 style={{marginBottom:8}}>{post.meta.title}</h1>
+      <Meta>{post.meta.date} • {post.readingTime} {post.meta.tags? '• '+post.meta.tags.join(', '): ''}</Meta>
+      <div className="prose mt-6">
+        <MDXRemote {...mdxSource} components={components} />
+      </div>
     </Article>
   )
 }

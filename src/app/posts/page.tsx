@@ -4,16 +4,13 @@ import PostCard from '@/components/PostCard'
 import React from 'react'
 import CategoriesClient from '@/components/CategoriesClient'
 
-export const metadata = {
-  title: 'Posts - Jamie Next Blog',
-  description: 'All posts'
-}
-
-export default function Posts({ searchParams } : { searchParams: { category?: string } }){
+export default async function Posts({ searchParams } : { searchParams: { category?: string } }){
+  // Next may provide searchParams as a pending value in some runtimes — normalize by awaiting
+  const params = await searchParams as { category?: string } | undefined
   const all = getAllPosts()
   const tags = Array.from(new Set(all.flatMap((p:any)=> p?.meta?.tags || [])))
-  const category = searchParams?.category
-  const filtered = category && category !== 'All' ? all.filter((p:any)=> p?.category === category || p?.meta?.category === category) : all
+  const category = params?.category
+  const filtered = category && category !== 'All' ? all.filter((p:any)=> (p?.category === category) || (p?.meta && p.meta.category === category)) : all
   return (
     <div style={{maxWidth:960,margin:'0 auto',padding:24}}>
       <h1 style={{fontSize:32,fontWeight:700,marginBottom:16}}>Posts</h1>

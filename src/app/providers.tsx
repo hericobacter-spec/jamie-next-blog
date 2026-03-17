@@ -1,4 +1,4 @@
-import ThemeProviderClient from '@/components/ThemeProviderClient'
+import ThemeProviderClient from "@/components/ThemeProviderClient"
 
 export function Providers({ children }: { children: React.ReactNode }){
   return (
@@ -7,4 +7,5 @@ export function Providers({ children }: { children: React.ReactNode }){
     </ThemeProviderClient>
   )
 }
+
 export default Providers
