@@ -26,7 +26,7 @@ export default function CodeBlock({ children, className }: Props) {
     <div style={{ position: 'relative', margin: '1rem 0' }}>
       <Highlight {...defaultProps} theme={theme} code={children.trim()} language={language}>
         {({ className: innerClass, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={innerClass} style={{ ...style, padding: '1rem', overflowX: 'auto', borderRadius: 8 }}>
+          <pre className={innerClass} style={{ ...style, padding: '1rem', overflowX: 'auto', borderRadius: 8, background:'var(--code-bg)', color:'var(--foreground)' }}>
             <button
               onClick={copy}
               style={{ position: 'absolute', right: 8, top: 8, padding: '6px 8px', fontSize: 12 }}
