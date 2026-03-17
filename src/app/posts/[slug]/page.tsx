@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { MDXRemote } from 'next-mdx-remote'
+import { serialize } from 'next-mdx-remote/serialize'
 
 import { getPostBySlug, getPostSlugs } from '@/lib/posts'
 import prose from '@/styles/prose'
@@ -68,9 +70,9 @@ const TocAside = styled.aside`
   }
 `
 
-
 function extractHeadings(content: string) {
-  const lines = content.split('\n')
+  const lines = content.split('
+')
   const headings: { text: string; id: string; level: number }[] = []
 
   for (const line of lines) {
@@ -86,19 +88,13 @@ function extractHeadings(content: string) {
   return headings
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const { slug } = params
   const post = getPostBySlug(slug)
-
   if (!post) return {}
 
   const meta: any = post.meta || {}
-  const desc =
-    meta.description || meta.excerpt || (post as any).description || ''
+  const desc = meta.description || meta.excerpt || (post as any).description || ''
 
   return {
     title: meta.title || post.slug,
@@ -117,29 +113,23 @@ export async function generateMetadata({
   }
 }
 
-export default async function PostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
+export default async function PostPage({ params }: { params: { slug: string } }) {
+  const { slug } = params
   const post = getPostBySlug(slug)
 
-  if (!post) {
-    return <div>Not found</div>
-  }
+  if (!post) return <div>Not found</div>
 
-  const mdxSource = await /*serialize removed*/(post.content || '')
+  const mdxSource = await serialize(post.content || '')
   const headings = extractHeadings(post.content || '')
 
   return (
     <Article>
-      <h1 style={{ marginBottom: 8 }}>{post.meta.title}</h1>
+      <h1 style={{ marginBottom: 12, fontSize: 40, fontWeight: 800 }}>{post.meta.title}</h1>
 
       <Meta>
-        <span>{post.meta?.category || (post as any).category}</span>
+        <span style={{ fontSize: 14, color: '#6b7280' }}>{post.meta?.category || (post as any).category}</span>
         <span>·</span>
-        <span>
+        <span style={{ fontSize: 14, color: '#6b7280' }}>
           {new Date(post.meta.date).toLocaleDateString('en-US', {
             month: 'short',
             day: '2-digit',
@@ -147,14 +137,14 @@ export default async function PostPage({
           })}
         </span>
         <span>·</span>
-        <span>{post.readingTime}</span>
-        {post.meta.tags ? <span>· {post.meta.tags.join(', ')}</span> : null}
+        <span style={{ fontSize: 14, color: '#6b7280' }}>{post.readingTime}</span>
+        {post.meta.tags ? <span style={{ fontSize: 14, color: '#6b7280' }}>· {post.meta.tags.join(', ')}</span> : null}
       </Meta>
 
       <ContentLayout>
         <MainContent>
           <div className="prose mt-6">
-            <pre style={ {whiteSpace: 'pre-wrap'} }>{post.content}</pre>
+            <MDXRemote {...mdxSource} />
           </div>
         </MainContent>
 
@@ -173,7 +163,8 @@ export default async function PostPage({
                     listStyle: 'none',
                     padding: 0,
                     margin: 0,
-                    display: 'flex',flexDirection: 'column',
+                    display: 'flex',
+                    flexDirection: 'column',
                     gap: 6,
                   }}
                 >
