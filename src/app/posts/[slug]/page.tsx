@@ -6,6 +6,14 @@ import styled from 'styled-components'
 import prose from '@/styles/prose'
 import CodeBlock from '@/components/CodeBlock'
 
+export const dynamicParams = false
+
+export async function generateStaticParams(){
+  const { getPostSlugs } = await import('@/lib/posts')
+  const slugs = getPostSlugs()
+  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
+}
+
 const Article = styled.article`
   max-width:780px;margin:40px auto;padding:24px;background:white;border-radius:8px;box-shadow:0 4px 18px rgba(15,23,42,0.03);
   ${prose}
@@ -17,6 +25,14 @@ const Meta = styled.div`
 const components = {
   pre: (props:any)=> <div {...props} />,
   code: ({className, children}:any)=> <CodeBlock className={className}>{children}</CodeBlock>
+}
+
+export const dynamicParams = false
+
+export async function generateStaticParams(){
+  const { getPostSlugs } = await import('@/lib/posts')
+  const slugs = getPostSlugs()
+  return slugs.map(s=> ({ slug: s.replace(/\.mdx?$/,'') }))
 }
 
 function extractHeadings(content:string){
