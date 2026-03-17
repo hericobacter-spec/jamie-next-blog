@@ -1,0 +1,122 @@
+{
+  "pages": {
+    "/": {
+      "url": "http://localhost:3001/",
+      "ok": true,
+      "details": {
+        "title": "Jamie Next Blog",
+        "hasArticle": true,
+        "hasCode": false
+      },
+      "screenshot": "test-screenshots/e2ehome.png"
+    },
+    "/posts": {
+      "url": "http://localhost:3001/posts",
+      "ok": true,
+      "details": {
+        "title": "Jamie Next Blog",
+        "hasArticle": true,
+        "hasCode": false
+      },
+      "screenshot": "test-screenshots/e2e_posts.png"
+    },
+    "/posts/first-post": {
+      "url": "http://localhost:3001/posts/first-post",
+      "ok": true,
+      "details": {
+        "title": "Jamie Next Blog",
+        "hasArticle": true,
+        "hasCode": true
+      },
+      "screenshot": "test-screenshots/e2e_posts_first_post.png"
+    }
+  },
+  "console": [
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "log",
+      "text": "[HMR] connected"
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "log",
+      "text": "[HMR] connected"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "log",
+      "text": "[HMR] connected"
+    },
+    {
+      "type": "error",
+      "text": "A props object containing a \"key\" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} /> {key: someKey, className: ..., children: ..., style: ...} span {className: ..., children: ..., style: ...} span"
+    },
+    {
+      "type": "error",
+      "text": "A props object containing a \"key\" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} /> {key: someKey, className: ..., style: ..., children: ...} div {className: ..., style: ..., children: ...} div"
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "log",
+      "text": "[HMR] connected"
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "log",
+      "text": "[HMR] connected"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "log",
+      "text": "[HMR] connected"
+    },
+    {
+      "type": "error",
+      "text": "A props object containing a \"key\" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} /> {key: someKey, className: ..., children: ..., style: ...} span {className: ..., children: ..., style: ...} span"
+    },
+    {
+      "type": "error",
+      "text": "A props object containing a \"key\" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} /> {key: someKey, className: ..., style: ..., children: ...} div {className: ..., style: ..., children: ...} div"
+    }
+  ],
+  "category": {
+    "clicked": true,
+    "urlAfter": "http://localhost:3001/posts?category=Foodie",
+    "filtered": null
+  },
+  "dark": {
+    "toggled": true,
+    "before": "rgb(255, 255, 255)",
+    "after": "rgb(11, 18, 32)"
+  },
+  "toc": {
+    "clicked": false,
+    "scrolled": false
+  }
+}
