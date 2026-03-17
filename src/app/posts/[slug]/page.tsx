@@ -1,8 +1,9 @@
-import { getPostBySlug, getPostSlugs } from '@/lib/posts'
-import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemote } from 'next-mdx-remote'
 import React from 'react'
 import styled from 'styled-components'
+import { MDXRemote } from 'next-mdx-remote'
+import { serialize } from 'next-mdx-remote/serialize'
+
+import { getPostBySlug, getPostSlugs } from '@/lib/posts'
 import prose from '@/styles/prose'
 import CodeBlock from '@/components/CodeBlock'
 
@@ -46,11 +47,11 @@ function extractHeadings(content: string) {
   const lines = content.split('\n')
   const headings: { text: string; id: string; level: number }[] = []
 
-  for (const l of lines) {
-    const m = l.match(/^(##+?)\s+(.*)/)
-    if (m) {
-      const level = m[1].length
-      const text = m[2].replace(/`/g, '').trim()
+  for (const line of lines) {
+    const match = line.match(/^(##+?)\s+(.*)/)
+    if (match) {
+      const level = match[1].length
+      const text = match[2].replace(/`/g, '').trim()
       const id = text.toLowerCase().replace(/[^a-z0-9가-힣]+/g, '-')
       headings.push({ text, id, level })
     }
@@ -66,24 +67,25 @@ export async function generateMetadata({
 }) {
   const { slug } = await params
   const post = getPostBySlug(slug)
+
   if (!post) return {}
 
-  const p: any = post.meta || {}
+  const meta: any = post.meta || {}
   const desc =
-    (p && (p.description || p.excerpt)) || (post as any).description || ''
+    meta.description || meta.excerpt || (post as any).description || ''
 
   return {
-    title: p.title || post.slug,
+    title: meta.title || post.slug,
     description: desc,
     openGraph: {
-      title: p.title || post.slug,
+      title: meta.title || post.slug,
       description: desc,
-      images: p.thumbnail ? [{ url: p.thumbnail }] : undefined,
+      images: meta.thumbnail ? [{ url: meta.thumbnail }] : undefined,
       url: `https://jamie-next-blog.vercel.app/posts/${post.slug}`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: p.title || post.slug,
+      title: meta.title || post.slug,
       description: desc,
     },
   }
@@ -97,7 +99,9 @@ export default async function PostPage({
   const { slug } = await params
   const post = getPostBySlug(slug)
 
-  if (!post) return <div>Not found</div>
+  if (!post) {
+    return <div>Not found</div>
+  }
 
   const mdxSource = await serialize(post.content || '')
   const headings = extractHeadings(post.content || '')
