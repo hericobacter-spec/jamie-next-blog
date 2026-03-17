@@ -5,7 +5,7 @@ import { serialize } from 'next-mdx-remote/serialize'
 
 import { getPostBySlug, getPostSlugs } from '@/lib/posts'
 import prose from '@/styles/prose'
-import dynamic from 'next/dynamic'
+import ClientMDX from '@/components/ClientMDX'
 
 export const dynamicParams = false
 
@@ -36,14 +36,7 @@ const Meta = styled.div`
   align-items: center;
 `
 
-const CodeBlock = dynamic(() => import('@/components/CodeBlock'), { ssr: false })
 
-const components = {
-  pre: (props: any) => <div {...props} />,
-  code: ({ className, children }: any) => (
-    <CodeBlock className={className}>{children}</CodeBlock>
-  ),
-}
 
 function extractHeadings(content: string) {
   const lines = content.split('\n')
@@ -130,7 +123,7 @@ export default async function PostPage({
       <div style={{ display: 'flex', gap: 24 }}>
         <div style={{ flex: 1 }}>
           <div className="prose mt-6">
-            <MDXRemote {...mdxSource} components={components} />
+            <ClientMDX mdxSource={mdxSource} />
           </div>
         </div>
 
