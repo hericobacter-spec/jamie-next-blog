@@ -2,8 +2,9 @@ import Link from 'next/link'
 import styled from 'styled-components'
 
 const Card = styled.article`
-  background: var(--card-bg); border:1px solid rgba(15,23,42,0.06); border-radius:10px;padding:20px;transition:transform .12s,box-shadow .12s;display:flex;flex-direction:column;height:100%;
-  &:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(15,23,42,0.08)}
+  background: var(--card-bg); border:1px solid var(--card-border); border-radius:10px;padding:20px;transition:transform .12s,box-shadow .12s,border-color .12s;display:flex;flex-direction:column;height:100%;
+  box-shadow: var(--card-shadow);
+  &:hover{transform:translateY(-6px);box-shadow: 0 14px 40px rgba(2,6,23,0.7); border-color: rgba(255,255,255,0.06)}
   @media (max-width:640px){padding:16px}
 `
 const Meta = styled.div`
