@@ -5,7 +5,7 @@ import { serialize } from 'next-mdx-remote/serialize'
 
 import { getPostBySlug, getPostSlugs } from '@/lib/posts'
 import prose from '@/styles/prose'
-import CodeBlock from '@/components/CodeBlock'
+import dynamic from 'next/dynamic'
 
 export const dynamicParams = false
 
@@ -35,6 +35,8 @@ const Meta = styled.div`
   flex-wrap: wrap;
   align-items: center;
 `
+
+const CodeBlock = dynamic(() => import('@/components/CodeBlock'), { ssr: false })
 
 const components = {
   pre: (props: any) => <div {...props} />,
@@ -128,7 +130,7 @@ export default async function PostPage({
       <div style={{ display: 'flex', gap: 24 }}>
         <div style={{ flex: 1 }}>
           <div className="prose mt-6">
-            <div>{post.content}</div>
+            <MDXRemote {...mdxSource} components={components} />
           </div>
         </div>
 
