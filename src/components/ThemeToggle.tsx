@@ -10,6 +10,22 @@ export default function ThemeToggle(){
       // notify ThemeProviderClient
       window.dispatchEvent(new CustomEvent("theme-change", { detail: { mode: next }}))
       document.documentElement.setAttribute("data-theme", next)
+      // directly set CSS vars to ensure immediate visual update
+      if(typeof document !== 'undefined'){
+        if(next === 'dark'){
+          document.documentElement.style.setProperty('--background','#0b1220')
+          document.documentElement.style.setProperty('--foreground','#e6eef8')
+          document.documentElement.style.setProperty('--card-bg','#071024')
+          document.documentElement.style.setProperty('--muted','#9ca3af')
+          document.documentElement.style.setProperty('--code-bg','#071024')
+        } else {
+          document.documentElement.style.setProperty('--background','#ffffff')
+          document.documentElement.style.setProperty('--foreground','#171717')
+          document.documentElement.style.setProperty('--card-bg','#ffffff')
+          document.documentElement.style.setProperty('--muted','#6b7280')
+          document.documentElement.style.setProperty('--code-bg','#f8fafc')
+        }
+      }
     }catch(e){/* ignore */}
   }
   return (
