@@ -2,12 +2,29 @@ import Link from 'next/link'
 import styled from 'styled-components'
 
 const Card = styled.article`
-  background: var(--card-bg); border:1px solid rgba(15,23,42,0.06); border-radius:10px;padding:20px;transition:transform .12s,box-shadow .12s;display:flex;flex-direction:column;height:100%;
-  &:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(15,23,42,0.08)}
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 20px;
+  transition: all 0.25s ease;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  box-shadow: var(--card-shadow);
+  &:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    border-color: rgba(255,255,255,0.16);
+  }
   @media (max-width:640px){padding:16px}
 `
 const Meta = styled.div`
-  color:var(--muted);font-size:13px;margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 `
 const Tag = styled.span`
   background:var(--code-bg);color:var(--foreground);padding:4px 8px;border-radius:999px;font-size:12px;
@@ -24,7 +41,7 @@ export default function PostCard({post}:{post:any}){
   return (
     <Card>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12}}>
-        <h3 style={{margin:0,fontSize:18}}><Link href={`/posts/${post.slug}`}>{post.title}</Link></h3>
+        <h3 style={{margin:0,fontSize:18,color:'var(--foreground)'}}><Link href={`/posts/${post.slug}`}>{post.title}</Link></h3>
         {category ? <CategoryBadge color={category==='Foodie'? '#fb923c' : category==='A.I'? '#7c3aed' : category==='Life'? '#10b981' : '#2563eb'}>{category}</CategoryBadge> : null}
       </div>
       <Meta>
