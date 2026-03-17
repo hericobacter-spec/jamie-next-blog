@@ -18,6 +18,16 @@ const Logo = styled.div`
   @media (max-width:640px){font-size:18px}
 `
 export default function Header(){
+  const toggle = ()=>{
+    try{
+      const cur = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
+      const next = cur === 'dark' ? 'light' : 'dark'
+      localStorage.setItem('theme', next)
+      // notify ThemeProviderClient
+      window.dispatchEvent(new CustomEvent('theme-change', { detail: { mode: next }}))
+      document.documentElement.setAttribute('data-theme', next)
+    }catch(e){/* ignore */}
+  }
   return (
     <Wrap>
       <Inner>
@@ -25,7 +35,7 @@ export default function Header(){
         <Nav>
           <Link href="/posts">Posts</Link>
           <Link href="/about">About</Link>
-          <button id="theme-toggle" aria-label="Toggle theme" style={{marginLeft:12, padding:'6px 8px', borderRadius:6, border:'1px solid #e6edf3', background:'transparent', cursor:'pointer'}}>🌓</button>
+          <button id="theme-toggle" aria-label="Toggle theme" onClick={toggle} style={{marginLeft:12, padding:'6px 8px', borderRadius:6, border:'1px solid #e6edf3', background:'transparent', cursor:'pointer'}}>🌓</button>
         </Nav>
       </Inner>
     </Wrap>
