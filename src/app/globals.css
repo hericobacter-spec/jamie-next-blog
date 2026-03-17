@@ -18,30 +18,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
-:root[data-theme="dark"] {
- --background: #0b1220;
- --foreground: #e5eefc;
-
- --card-bg: #111a2e;
- --card-border: rgba(255,255,255,0.10);
-
- --muted: #9fb0cc;
- --code-bg: #0f172a;
-
- --card-shadow: 0 12px 30px rgba(0,0,0,0.35);
+:root[data-theme="dark"], html[data-theme="dark"] {
+  --background: #0b1220;
+  --foreground: #e6eef8;
 }
 
-:root[data-theme="light"] {
- --background: #ffffff;
- --foreground: #0f172a;
-
- --card-bg: #ffffff;
- --card-border: rgba(15,23,42,0.08);
-
- --muted: #64748b;
- --code-bg: #f1f5f9;
-
- --card-shadow: 0 6px 18px rgba(15,23,42,0.08);
+:root[data-theme="light"], html[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
 body {
@@ -49,4 +33,3 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-
