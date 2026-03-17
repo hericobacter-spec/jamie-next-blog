@@ -21,6 +21,13 @@ const Article = styled.article`
   border-radius: 8px;
   box-shadow: 0 4px 18px rgba(15, 23, 42, 0.03);
   ${prose}
+
+  @media (max-width: 768px) {
+    margin: 20px auto;
+    padding: 18px;
+    border-radius: 0;
+    box-shadow: none;
+  }
 `
 
 const Meta = styled.div`
@@ -33,6 +40,33 @@ const Meta = styled.div`
   align-items: center;
 `
 
+const ContentLayout = styled.div`
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    gap: 16px;
+  }
+`
+
+const MainContent = styled.div`
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+`
+
+const TocAside = styled.aside`
+  width: 220px;
+  flex: 0 0 220px;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    flex: none;
+    display: none; /* hide TOC on small screens */
+  }
+`
 
 
 function extractHeadings(content: string) {
@@ -117,14 +151,14 @@ export default async function PostPage({
         {post.meta.tags ? <span>· {post.meta.tags.join(', ')}</span> : null}
       </Meta>
 
-      <div style={{ display: 'flex', gap: 24 }}>
-        <div style={{ flex: 1 }}>
+      <ContentLayout>
+        <MainContent>
           <div className="prose mt-6">
             <pre style={ {whiteSpace: 'pre-wrap'} }>{post.content}</pre>
           </div>
-        </div>
+        </MainContent>
 
-        <aside style={{ width: 220, flex: '0 0 220px' }}>
+        <TocAside>
           <div style={{ position: 'sticky', top: 80 }}>
             <h4 style={{ marginTop: 0, fontSize: 14, color: '#6b7280' }}>
               On this page
@@ -139,17 +173,13 @@ export default async function PostPage({
                     listStyle: 'none',
                     padding: 0,
                     margin: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
+                    display: 'flex',flexDirection: 'column',
                     gap: 6,
                   }}
                 >
                   {headings.map((h) => (
                     <li key={h.id} style={{ marginLeft: (h.level - 2) * 8 }}>
-                      <a
-                        href={`#${h.id}`}
-                        style={{ color: '#2563eb', textDecoration: 'none' }}
-                      >
+                      <a href={`#${h.id}`} style={{ color: '#2563eb', textDecoration: 'none' }}>
                         {h.text}
                       </a>
                     </li>
@@ -158,8 +188,8 @@ export default async function PostPage({
               )}
             </nav>
           </div>
-        </aside>
-      </div>
+        </TocAside>
+      </ContentLayout>
     </Article>
   )
 }
