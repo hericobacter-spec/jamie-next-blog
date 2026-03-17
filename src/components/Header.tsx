@@ -25,6 +25,7 @@ export default function Header(){
         <Nav>
           <Link href="/posts">Posts</Link>
           <Link href="/about">About</Link>
+          <button id="theme-toggle" aria-label="Toggle theme" style={{marginLeft:12, padding:'6px 8px', borderRadius:6, border:'1px solid #e6edf3', background:'transparent', cursor:'pointer'}}>🌓</button>
         </Nav>
       </Inner>
     </Wrap>
