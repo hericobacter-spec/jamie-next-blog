@@ -1,11 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { MDXRemote } from 'next-mdx-remote'
-import { serialize } from 'next-mdx-remote/serialize'
 
 import { getPostBySlug, getPostSlugs } from '@/lib/posts'
 import prose from '@/styles/prose'
-import ClientMDX from '@/components/ClientMDX'
 
 export const dynamicParams = false
 
@@ -98,7 +95,7 @@ export default async function PostPage({
     return <div>Not found</div>
   }
 
-  const mdxSource = await serialize(post.content || '')
+  const mdxSource = await /*serialize removed*/(post.content || '')
   const headings = extractHeadings(post.content || '')
 
   return (
@@ -123,7 +120,7 @@ export default async function PostPage({
       <div style={{ display: 'flex', gap: 24 }}>
         <div style={{ flex: 1 }}>
           <div className="prose mt-6">
-            <ClientMDX mdxSource={mdxSource} />
+            <pre style={ {whiteSpace: 'pre-wrap'} }>{post.content}</pre>
           </div>
         </div>
 
