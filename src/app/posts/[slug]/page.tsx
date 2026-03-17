@@ -1,7 +1,7 @@
 import { getPostBySlug } from '@/lib/posts'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
-import dynamic from 'next/dynamic'
+import ClientMDX from '@/components/ClientMDX'
 import React from 'react'
 import styled from 'styled-components'
 import prose from '@/styles/prose'
@@ -15,8 +15,6 @@ const Article = styled.article`
 const Meta = styled.div`
   color:#6b7280;font-size:14px;margin-bottom:18px;
 `
-// render MDX on the client because it may include client components (CodeBlock)
-const ClientMDX = dynamic(() => import('@/components/ClientMDX'), { ssr: false })
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }){
   // In App Router params may be a Promise; await to unwrap before use
