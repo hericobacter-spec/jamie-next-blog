@@ -71,8 +71,7 @@ const TocAside = styled.aside`
 `
 
 function extractHeadings(content: string) {
-  const lines = content.split('
-')
+  const lines = content.split('\n')
   const headings: { text: string; id: string; level: number }[] = []
 
   for (const line of lines) {
@@ -144,7 +143,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
       <ContentLayout>
         <MainContent>
           <div className="prose mt-6">
-            <MDXRemote {...mdxSource} />
+<MDXRemote {...mdxSource} />
           </div>
         </MainContent>
 
