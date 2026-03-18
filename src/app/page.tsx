@@ -43,6 +43,13 @@ export default function Home(){
           </div>
         </div>
       </Section>
+      <Section>
+        <div className="container" style={{maxWidth:960,margin:'0 auto',padding:24}}>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:24,marginTop:20,alignItems:'stretch'}}>
+            {posts.map((p:any)=> <PostCard key={p.slug} post={p} />)}
+          </div>
+        </div>
+      </Section>
     </div>
   )
 }
