@@ -1,23 +1,49 @@
 import React from 'react'
 import { getAllPosts } from '@/lib/posts'
-import { normalizeCategory, filterPostsByCategory } from '@/lib/category'
 import PostCard from '@/components/PostCard'
 import CategoriesClient from '@/components/CategoriesClient'
 
 export const dynamic = 'force-dynamic'
 
-type SearchParams = {
-  category?: string
+type Category = 'All' | 'Blog' | 'Foodie' | 'A.I' | 'Life'
+
+type SearchParamsInput =
+  | { category?: string }
+  | Promise<{ category?: string }>
+  | undefined
+
+function normalizeCategory(input?: string): Category {
+  const value = (input ?? '').trim().toLowerCase()
+
+  if (!value || value === 'all') return 'All'
+  if (value === 'blog') return 'Blog'
+  if (value === 'foodie') return 'Foodie'
+  if (value === 'life') return 'Life'
+  if (value === 'a.i' || value === 'ai' || value === 'a.i.' || value === 'a i') {
+    return 'A.I'
+  }
+
+  return 'All'
 }
 
-export default function PostsPage({
+function filterPostsByCategory(posts: any[], category: Category) {
+  if (category === 'All') return posts
+
+  return posts.filter((post: any) => {
+    const raw = post?.category ?? post?.meta?.category
+    return normalizeCategory(raw) === category
+  })
+}
+
+export default async function PostsPage({
   searchParams,
 }: {
-  searchParams?: SearchParams
+  searchParams?: SearchParamsInput
 }) {
+  const resolvedSearchParams = await Promise.resolve(searchParams)
   const allPosts = getAllPosts()
 
-  const rawCategory = searchParams?.category
+  const rawCategory = resolvedSearchParams?.category
   const currentCategory = normalizeCategory(rawCategory)
   const filteredPosts = filterPostsByCategory(allPosts, currentCategory)
 
