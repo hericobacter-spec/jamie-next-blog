@@ -14,6 +14,10 @@ export function getAllPosts(){
     const full = path.join(postsDir,s)
     const raw = fs.readFileSync(full,'utf8')
     const { data } = matter(raw)
+    // ensure date is string to avoid Date objects in React render
+    if(data && data.date && typeof data.date !== 'string'){
+      try{ data.date = data.date.toISOString().split('T')[0] }catch(e){ data.date = String(data.date) }
+    }
     return { slug: s.replace(/\.mdx?$/,''), ...data }
   }).sort((a:any,b:any)=> new Date(b.date).valueOf() - new Date(a.date).valueOf())
 }
