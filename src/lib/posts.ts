@@ -18,7 +18,8 @@ export function getAllPosts(){
     if(data && data.date){
       try{ data.date = new Date(data.date) }catch(e){ /* leave as-is */ }
     }
-    return { slug: s.replace(/\.mdx?$/,''), ...data }
+    const displayDate = data && data.date && data.date instanceof Date ? data.date.toISOString().split('T')[0] : data && data.date ? String(data.date) : undefined
+    return { slug: s.replace(/\.mdx?$/,''), date: displayDate, ...data }
   }).sort((a:any,b:any)=> new Date(b.date).valueOf() - new Date(a.date).valueOf())
 }
 
