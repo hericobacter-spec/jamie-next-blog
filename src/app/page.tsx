@@ -24,7 +24,6 @@ export default function Home(){
   // Stepwise restore: start with Hero
   const all = getAllPosts()
   // Next step: add Categories section
-  const all = getAllPosts()
   const posts = all.slice(0,8)
   return (
     <div>
