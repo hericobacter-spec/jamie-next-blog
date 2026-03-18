@@ -46,7 +46,7 @@ export default function Home(){
       <Section>
         <div className="container" style={{maxWidth:960,margin:'0 auto',padding:24}}>
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:24,marginTop:20,alignItems:'stretch'}}>
-            {/* render none for isolation */}
+            {posts.slice(0,1).map((p:any)=> <PostCard key={p.slug} post={p} />)}
           </div>
         </div>
       </Section>
