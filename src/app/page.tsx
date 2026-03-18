@@ -23,6 +23,9 @@ const Section = styled.section`
 export default function Home(){
   // Stepwise restore: start with Hero
   const all = getAllPosts()
+  // Next step: add Categories section
+  const all = getAllPosts()
+  const posts = all.slice(0,8)
   return (
     <div>
       <Hero>
@@ -32,6 +35,15 @@ export default function Home(){
           </div>
         </HeroInner>
       </Hero>
+      <Section>
+        <div className="container" style={{maxWidth:960,margin:'0 auto',padding:24}}>
+          <div style={{marginTop:8}}>
+            <React.Suspense fallback={<div /> }>
+              <CategoriesClient />
+            </React.Suspense>
+          </div>
+        </div>
+      </Section>
     </div>
   )
 }
