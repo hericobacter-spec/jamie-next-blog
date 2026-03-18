@@ -21,6 +21,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const resolved = await params
   const post = getPostBySlug(resolved.slug)
   if(!post) return <div>Not found</div>
+  // Diagnostic checks: ensure loader provided content as string
+  if (!post.content) {
+    throw new Error(`DEBUG_EMPTY_CONTENT: slug=${resolved.slug}`)
+  }
+  if (typeof post.content !== 'string') {
+    throw new Error(`DEBUG_INVALID_CONTENT_TYPE: slug=${resolved.slug} type=${typeof post.content}`)
+  }
   const mdxSource = await serialize(post.content || '')
   return (
     <Article>
