@@ -14,7 +14,13 @@ export function getAllPosts(){
     const full = path.join(postsDir,s)
     const raw = fs.readFileSync(full,'utf8')
     const { data } = matter(raw)
-    return { slug: s.replace(/\.mdx?$/,''), ...data }
+    // ensure date is a Date object (do not coerce to string here)
+    if(data && data.date){
+      try{ data.date = new Date(data.date) }catch(e){ /* leave as-is */ }
+    }
+    const displayDate = data && data.date && data.date instanceof Date ? data.date.toISOString().split('T')[0] : data && data.date ? String(data.date) : undefined
+    // Ensure top-level date is the normalized string (place it after spreading data so it overrides any Date object from frontmatter)
+    return { slug: s.replace(/\.mdx?$/,''), ...data, date: displayDate }
   }).sort((a:any,b:any)=> new Date(b.date).valueOf() - new Date(a.date).valueOf())
 }
 
@@ -26,5 +32,8 @@ export function getPostBySlug(slug:string){
   const raw = fs.readFileSync(full,'utf8')
   const { data, content } = matter(raw)
   const rt = readingTime(content)
+  if(data && data.date){
+    try{ data.date = new Date(data.date) }catch(e){ /* leave as-is */ }
+  }
   return { slug, meta: data, content, readingTime: rt.text }
 }
