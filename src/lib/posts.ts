@@ -30,5 +30,8 @@ export function getPostBySlug(slug:string){
   const raw = fs.readFileSync(full,'utf8')
   const { data, content } = matter(raw)
   const rt = readingTime(content)
+  if(data && data.date){
+    try{ data.date = new Date(data.date) }catch(e){ /* leave as-is */ }
+  }
   return { slug, meta: data, content, readingTime: rt.text }
 }
