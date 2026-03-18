@@ -21,6 +21,17 @@ const Section = styled.section`
   padding:36px 0;
 `
 export default function Home(){
-  // Minimal render for binary-search diagnosis
-  return <main>home debug</main>
+  // Stepwise restore: start with Hero
+  const all = getAllPosts()
+  return (
+    <div>
+      <Hero>
+        <HeroInner>
+          <div>
+            <h1 style={{fontSize:56,margin:0,lineHeight:1.02}}>Jamie Next Blog</h1>
+          </div>
+        </HeroInner>
+      </Hero>
+    </div>
+  )
 }
