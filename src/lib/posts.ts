@@ -19,7 +19,8 @@ export function getAllPosts(){
       try{ data.date = new Date(data.date) }catch(e){ /* leave as-is */ }
     }
     const displayDate = data && data.date && data.date instanceof Date ? data.date.toISOString().split('T')[0] : data && data.date ? String(data.date) : undefined
-    return { slug: s.replace(/\.mdx?$/,''), date: displayDate, ...data }
+    // Ensure top-level date is the normalized string (place it after spreading data so it overrides any Date object from frontmatter)
+    return { slug: s.replace(/\.mdx?$/,''), ...data, date: displayDate }
   }).sort((a:any,b:any)=> new Date(b.date).valueOf() - new Date(a.date).valueOf())
 }
 
