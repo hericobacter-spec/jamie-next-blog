@@ -4,41 +4,49 @@ import PostCard from '@/components/PostCard'
 import CategoriesClient from '@/components/CategoriesClient'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
-type SearchParams = {
-  category?: string
-}
+type Category = 'All' | 'Blog' | 'Foodie' | 'A.I' | 'Life'
 
-function normalizeCategory(input?: string) {
-  if (!input) return 'All'
+type SearchParamsInput =
+  | { category?: string }
+  | Promise<{ category?: string }>
+  | undefined
 
-  const value = input.toLowerCase()
+function normalizeCategory(input?: string): Category {
+  const value = (input ?? '').trim().toLowerCase()
 
-  if (value === 'life') return 'Life'
+  if (!value || value === 'all') return 'All'
   if (value === 'blog') return 'Blog'
   if (value === 'foodie') return 'Foodie'
-  if (value === 'a.i' || value === 'ai') return 'A.I'
+  if (value === 'life') return 'Life'
+  if (value === 'a.i' || value === 'ai' || value === 'a.i.' || value === 'a i') {
+    return 'A.I'
+  }
 
   return 'All'
 }
 
-export default function PostsPage({
+function filterPostsByCategory(posts: any[], category: Category) {
+  if (category === 'All') return posts
+
+  return posts.filter((post: any) => {
+    const rawCategory = post?.category ?? post?.meta?.category
+    return normalizeCategory(rawCategory) === category
+  })
+}
+
+export default async function PostsPage({
   searchParams,
 }: {
-  searchParams?: SearchParams
+  searchParams?: SearchParamsInput
 }) {
+  const resolvedSearchParams = await Promise.resolve(searchParams)
+
   const allPosts = getAllPosts()
-
-  const rawCategory = searchParams?.category
+  const rawCategory = resolvedSearchParams?.category
   const currentCategory = normalizeCategory(rawCategory)
-
-  const filteredPosts =
-    currentCategory === 'All'
-      ? allPosts
-      : allPosts.filter((post: any) => {
-        const category = post?.category ?? post?.meta?.category
-        return normalizeCategory(category) === currentCategory
-      })
+  const filteredPosts = filterPostsByCategory(allPosts, currentCategory)
 
   return (
     <div style={{ maxWidth: 960, margin: '0 auto', padding: 24 }}>
