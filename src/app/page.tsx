@@ -37,12 +37,12 @@ export default function Home(){
               <CTAButtonLink href="/about" style={{background:'#4b5563'}}>About</CTAButtonLink>
             </CTAs>
           </div>
-          <div style={{ width: 420, height: 260, borderRadius: 12, overflow: 'hidden', flexShrink: 0, boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }}>
+          <div style={{ width: 260, height: 160, borderRadius: 12, overflow: 'hidden', flexShrink: 0, boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }}>
             <Image
               src="/images/hero-main.jpg"
               alt="Jamie Blog hero image"
-              width={420}
-              height={260}
+              width={260}
+              height={160}
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
               priority
             />
