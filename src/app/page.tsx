@@ -11,6 +11,11 @@ const Hero = styled.section`
 `
 const HeroInner = styled.div`
   max-width:960px;margin:0 auto;padding:0 24px;display:flex;gap:24px;align-items:center;justify-content:space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `
 const CTAs = styled.div`
   display:flex;gap:12px;margin-top:12px;
@@ -30,14 +35,14 @@ export default function Home(){
       <Hero>
         <HeroInner>
           <div>
-            <h1 style={{fontSize:56,margin:0,lineHeight:1.02}}>Jamie Next Blog</h1>
-            <p style={{fontSize:18,color:'#374151',maxWidth:640,marginTop:12}}>A refined starter blog — MDX-driven, fast, and minimal. I write about engineering, food, AI experiments, and daily life.</p>
+            <h1 style={{fontSize:'clamp(2.25rem, 7vw, 3.5rem)',margin:0,lineHeight:1.02}}>Jamie Next Blog</h1>
+            <p style={{fontSize:'clamp(1rem, 3.5vw, 1.125rem)',color:'#374151',maxWidth:640,marginTop:12}}>A refined starter blog — MDX-driven, fast, and minimal. I write about engineering, food, AI experiments, and daily life.</p>
             <CTAs>
               <CTAButtonLink href="/posts">Posts</CTAButtonLink>
               <CTAButtonLink href="/about" style={{background:'#4b5563'}}>About</CTAButtonLink>
             </CTAs>
           </div>
-          <div style={{ width: 260, height: 160, borderRadius: 12, overflow: 'hidden', flexShrink: 0, boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }}>
+          <div style={{ width: 'min(260px, 100%)', aspectRatio: '13 / 8', borderRadius: 12, overflow: 'hidden', flexShrink: 0, boxShadow: '0 10px 30px rgba(0,0,0,0.08)', alignSelf: 'stretch', maxWidth: 260 }}>
             <Image
               src="/images/hero-main.jpg"
               alt="Jamie Blog hero image"
