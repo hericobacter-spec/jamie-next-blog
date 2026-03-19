@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import styled from 'styled-components'
 import { getAllPosts } from '@/lib/posts'
 import PostCard from '@/components/PostCard'
@@ -36,7 +37,16 @@ export default function Home(){
               <CTAButtonLink href="/about" style={{background:'#4b5563'}}>About</CTAButtonLink>
             </CTAs>
           </div>
-          <div style={{width:260,height:160,background:'#f8fafc',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',color:'#6b7280'}}>Hero image</div>
+          <div style={{ width: 420, height: 260, borderRadius: 12, overflow: 'hidden', flexShrink: 0, boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }}>
+            <Image
+              src="/images/hero-main.jpg"
+              alt="Jamie Blog hero image"
+              width={420}
+              height={260}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              priority
+            />
+          </div>
         </HeroInner>
       </Hero>
 
