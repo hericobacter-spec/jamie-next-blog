@@ -26,6 +26,7 @@ export default function Header(){
         <Nav>
           <Link href="/posts">Posts</Link>
           <Link href="/about">About</Link>
+          <Link href="/privacy-policy">Privacy</Link>
           <ThemeToggle />
         </Nav>
       </Inner>
