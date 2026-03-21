@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import prose from '@/styles/prose'
 import CodeBlock from '@/components/CodeBlock'
+import type { Metadata } from 'next'
 
 const Article = styled.article`
   max-width:780px;margin:40px auto;padding:24px;background:white;border-radius:8px;box-shadow:0 4px 18px rgba(15,23,42,0.03);
@@ -19,6 +20,55 @@ const mdxComponents = {
   code: ({ className, children }: any) => (
     <CodeBlock className={className}>{children}</CodeBlock>
   ),
+}
+
+const siteUrl = 'https://jamie-next-blog.vercel.app'
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolved = await params
+  const post = getPostBySlug(resolved.slug)
+
+  if (!post) {
+    return {
+      title: 'Post not found',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    }
+  }
+
+  const title = post.meta?.title || 'Post'
+  const description = post.meta?.description || 'Jamie Next Blog 포스트'
+  const url = `${siteUrl}/posts/${post.slug}`
+  const image = post.meta?.thumbnail || '/images/hero-main.jpg'
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      type: 'article',
+      locale: 'ko_KR',
+      url,
+      title,
+      description,
+      images: [
+        {
+          url: image,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+    },
+  }
 }
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }){

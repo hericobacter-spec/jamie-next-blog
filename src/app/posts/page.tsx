@@ -1,9 +1,24 @@
 export const dynamic = 'force-dynamic'
 
 import React from 'react'
+import type { Metadata } from 'next'
 import { getAllPosts } from '@/lib/posts'
 import PostCard from '@/components/PostCard'
 import CategoriesClient from '@/components/CategoriesClient'
+
+export const metadata: Metadata = {
+  title: 'Posts',
+  description: 'Jamie Next Blog의 전체 포스트 목록. AI, 맛집, 여행, 블로그 제작 기록을 카테고리별로 볼 수 있습니다.',
+  alternates: {
+    canonical: '/posts',
+  },
+  openGraph: {
+    title: 'Posts | Jamie Next Blog',
+    description: 'AI, 맛집, 여행, 블로그 제작 기록을 카테고리별로 볼 수 있습니다.',
+    url: 'https://jamie-next-blog.vercel.app/posts',
+    type: 'website',
+  },
+}
 
 type Category = 'All' | 'Blog' | 'Foodie' | 'A.I' | 'Life'
 

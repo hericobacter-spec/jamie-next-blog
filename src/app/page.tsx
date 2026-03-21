@@ -1,4 +1,5 @@
 import React from 'react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import styled from 'styled-components'
@@ -26,6 +27,21 @@ const CTAButtonLink = styled(Link)`
 const Section = styled.section`
   padding:36px 0;
 `
+
+export const metadata: Metadata = {
+  title: 'Jamie Next Blog',
+  description: 'OpenClaw와 Next.js로 운영하는 개인 블로그. AI 실험, 맛집 후기, 여행 기록, 블로그 제작 과정을 담습니다.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Jamie Next Blog',
+    description: 'OpenClaw와 Next.js로 운영하는 개인 블로그. AI 실험, 맛집 후기, 여행 기록, 블로그 제작 과정을 담습니다.',
+    url: 'https://jamie-next-blog.vercel.app',
+    type: 'website',
+  },
+}
+
 export default function Home(){
   const all = getAllPosts()
   const posts = all.slice(0,8)
