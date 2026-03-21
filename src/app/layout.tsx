@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION,
+    google: process.env.GOOGLE_SITE_VERIFICATION || 'google687ba423e81c5ef1',
   },
   openGraph: {
     type: 'website',
