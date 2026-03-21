@@ -18,6 +18,7 @@ export default function Footer(){
           <Link href="/">Home</Link>
           <Link href="/posts">Posts</Link>
           <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
         </Links>
         <div>© {new Date().getFullYear()} Jamie — Built with Next.js</div>

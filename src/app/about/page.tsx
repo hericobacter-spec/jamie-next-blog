@@ -114,6 +114,10 @@ export default function AboutPage() {
       </p>
 
       <p>
+        연락은 <a href="mailto:hericobacter1@gmail.com">hericobacter1@gmail.com</a> 으로 가능합니다.
+      </p>
+
+      <p>
         이 블로그는 계속 발전 중이며 새로운 기능과 콘텐츠가
         지속적으로 추가될 예정입니다.
       </p>
