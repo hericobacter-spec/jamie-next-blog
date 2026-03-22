@@ -28,6 +28,34 @@ const Section = styled.section`
   padding:36px 0;
 `
 
+const ContactLinks = styled.div`
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:12px;
+`
+
+const ContactButton = styled.a`
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:999px;
+  background:#f3f4f6;
+  border:1px solid #e5e7eb;
+  color:#111827;
+  text-decoration:none;
+  font-weight:600;
+  transition:all 0.18s ease;
+
+  &:hover {
+    background:#111827;
+    border-color:#111827;
+    color:#ffffff;
+    transform:translateY(-1px);
+  }
+`
+
 export const metadata: Metadata = {
   title: 'Jamie Next Blog',
   description: 'OpenClaw와 Next.js로 운영하는 개인 블로그. AI 실험, 맛집 후기, 여행 기록, 블로그 제작 과정을 담습니다.',
@@ -92,12 +120,11 @@ export default function Home(){
         <div className="container" style={{maxWidth:960,margin:'0 auto',padding:24}}>
           <h3 style={{marginBottom:8}}>Contact</h3>
           <p style={{color:'#374151'}}>Connect with me:</p>
-          <div style={{display:'flex',gap:12,flexWrap:'wrap',marginTop:12}}>
-            <a href="#">GitHub</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">Instagram</a>
-            <a href="#">Facebook</a>
-          </div>
+          <ContactLinks>
+            <ContactButton href="https://github.com/hericobacter-spec" target="_blank" rel="noopener noreferrer">GitHub</ContactButton>
+            <ContactButton href="mailto:hericobacter1@gmail.com">E-mail</ContactButton>
+            <ContactButton href="https://www.instagram.com/jamiesuyong/" target="_blank" rel="noopener noreferrer">Instagram</ContactButton>
+          </ContactLinks>
         </div>
       </Section>
     </div>
