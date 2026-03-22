@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   applicationName: siteName,
   alternates: {
     canonical: '/',
+    types: {
+      'application/rss+xml': `${siteUrl}/rss.xml`,
+    },
   },
   keywords: ['Jamie Next Blog', 'OpenClaw', 'Next.js', 'AI', '맛집', '군산맛집', '블로그'],
   category: 'technology',
