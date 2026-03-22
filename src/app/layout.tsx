@@ -5,6 +5,7 @@ import GlobalStyle from '@/styles/global'
 import React from 'react'
 import { Inter, Merriweather } from 'next/font/google'
 import type { Metadata } from 'next'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', weight: ['300','400','600','700'] })
 const merri = Merriweather({ subsets: ['latin'], variable: '--font-merri', weight: ['400','700'] })
@@ -70,6 +71,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }){
   return (
     <html lang="ko" className={`${inter.variable} ${merri.variable}`}>
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4030752098152003"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body>
         <Providers>
           <GlobalStyle />
