@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import prose from '@/styles/prose'
 import CodeBlock from '@/components/CodeBlock'
+import Comments from '@/components/Comments'
 import type { Metadata } from 'next'
 
 const Article = styled.article`
@@ -82,6 +83,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       <div className="prose mt-6">
         <MDXRemote source={post.content || ''} components={mdxComponents} />
       </div>
+      <Comments term={post.slug} />
     </Article>
   )
 }
