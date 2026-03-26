@@ -28,8 +28,8 @@ export const metadata: Metadata = {
       { url: '/images/avatar.png', type: 'image/png' },
     ],
     apple: [
+      { url: '/apple-touch-icon.png', type: 'image/png' },
       { url: '/apple-touch-icon.svg', type: 'image/svg+xml' },
-      { url: '/images/avatar.png', type: 'image/png' },
     ],
   },
   alternates: {
