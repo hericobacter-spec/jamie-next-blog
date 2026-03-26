@@ -22,6 +22,13 @@ export const metadata: Metadata = {
   },
   description: siteDescription,
   applicationName: siteName,
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/images/avatar.png', type: 'image/png' },
+    ],
+    apple: '/images/avatar.png',
+  },
   alternates: {
     canonical: '/',
     types: {
