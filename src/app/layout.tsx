@@ -27,7 +27,10 @@ export const metadata: Metadata = {
       { url: '/favicon.svg', type: 'image/svg+xml' },
       { url: '/images/avatar.png', type: 'image/png' },
     ],
-    apple: '/images/avatar.png',
+    apple: [
+      { url: '/apple-touch-icon.svg', type: 'image/svg+xml' },
+      { url: '/images/avatar.png', type: 'image/png' },
+    ],
   },
   alternates: {
     canonical: '/',
