@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Gemma 4 오픈 모델 심층 분석</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:'Noto Sans KR',sans-serif;background:#f1f5f9}</style>
+</head>
+<body class="min-h-screen bg-slate-100 p-4 md:p-8">
+
+<div class="max-w-3xl mx-auto space-y-6">
+
+<!-- HERO -->
+<div class="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">2026-04-02 출시</span>
+<span class="bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded-full">Apache 2.0</span>
+<span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Arena #3 오픈 모델</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Google Gemma 4 심층 분석</h1>
+<p class="text-sm text-slate-600 mb-4">Gemini 3 기반, 4가지 사이즈, MoE 아키텍처, 네이티브 멀티모달, Thinking Mode — 바이트 대비 역대 최고 성능의 오픈 모델 패밀리.</p>
+
+<div class="grid grid-cols-4 gap-3 mb-6">
+<div class="text-center bg-slate-50 rounded-xl p-3">
+<div class="text-xl font-bold text-blue-600">4종</div>
+<div class="text-xs text-slate-500">모델 사이즈</div>
+</div>
+<div class="text-center bg-slate-50 rounded-xl p-3">
+<div class="text-xl font-bold text-purple-600">256K</div>
+<div class="text-xs text-slate-500">최대 컨텍스트</div>
+</div>
+<div class="text-center bg-slate-50 rounded-xl p-3">
+<div class="text-xl font-bold text-green-600">128</div>
+<div class="text-xs text-slate-500">MoE 전문가 수</div>
+</div>
+<div class="text-center bg-slate-50 rounded-xl p-3">
+<div class="text-xl font-bold text-amber-600">97%</div>
+<div class="text-xs text-slate-500">MoE 효율성</div>
+</div>
+</div>
+
+<!-- Installation -->
+<div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+<div class="text-xs font-semibold text-blue-800 mb-2">📥 설치 방법</div>
+<div class="grid grid-cols-3 gap-3 text-xs">
+<div class="bg-white rounded-lg p-2"><div class="text-slate-400 mb-1">Ollama</div><code class="text-blue-600 font-semibold">ollama pull gemma4</code></div>
+<div class="bg-white rounded-lg p-2"><div class="text-slate-400 mb-1">Hugging Face</div><code class="text-blue-600 font-semibold">gg-hf-gg/gemma-4</code></div>
+<div class="bg-white rounded-lg p-2"><div class="text-slate-400 mb-1">AI Studio</div><code class="text-blue-600 font-semibold">aistudio.google.com</code></div>
+</div>
+</div>
+</div>
+
+<!-- MODEL LINEUP -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<h2 class="text-lg font-bold text-slate-900 mb-4">모델 라인업</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-sm">
+<thead><tr class="bg-slate-50">
+<th class="text-left p-3 font-semibold text-slate-600">모델</th>
+<th class="text-left p-3 font-semibold text-slate-600">아키텍처</th>
+<th class="text-center p-3 font-semibold text-slate-600">총 파라미터</th>
+<th class="text-center p-3 font-semibold text-slate-600">활성 파라미터</th>
+<th class="text-center p-3 font-semibold text-slate-600">컨텍스트</th>
+<th class="text-center p-3 font-semibold text-slate-600">모달리티</th>
+</tr></thead>
+<tbody>
+<tr class="border-b border-slate-100"><td class="p-3 font-semibold">E2B</td><td class="p-3 text-slate-500">Dense</td><td class="p-3 text-center">5.1B</td><td class="p-3 text-center font-bold text-blue-600">2.3B</td><td class="p-3 text-center">128K</td><td class="p-3 text-center text-xs">Text+Image+Audio+Video</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-3 font-semibold">E4B</td><td class="p-3 text-slate-500">Dense</td><td class="p-3 text-center">8B</td><td class="p-3 text-center font-bold text-blue-600">4.5B</td><td class="p-3 text-center">128K</td><td class="p-3 text-center text-xs">Text+Image+Audio+Video</td></tr>
+<tr class="border-b border-slate-100"><td class="p-3 font-semibold">26B-A4B</td><td class="p-3 text-slate-500">MoE (128 experts)</td><td class="p-3 text-center">25.2B</td><td class="p-3 text-center font-bold text-purple-600">3.8B</td><td class="p-3 text-center">256K</td><td class="p-3 text-center text-xs">Text+Image+Video</td></tr>
+<tr><td class="p-3 font-semibold">31B</td><td class="p-3 text-slate-500">Dense</td><td class="p-3 text-center">30.7B</td><td class="p-3 text-center font-bold text-red-600">30.7B</td><td class="p-3 text-center">256K</td><td class="p-3 text-center text-xs">Text+Image+Video</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- GEMMA 3 vs 4 -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<h2 class="text-lg font-bold text-slate-900 mb-4">Gemma 3 → 4 성능 비교</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-sm">
+<thead><tr class="bg-slate-50">
+<th class="text-left p-3 font-semibold text-slate-600">벤치마크</th>
+<th class="text-center p-3 font-semibold text-slate-400">Gemma 3 27B</th>
+<th class="text-center p-3 font-semibold text-blue-600">Gemma 4 31B</th>
+<th class="text-center p-3 font-semibold text-purple-600">26B-A4B</th>
+<th class="text-center p-3 font-semibold text-green-600">향상</th>
+</tr></thead>
+<tbody>
+<tr class="border-b border-slate-100"><td class="p-3">MMLU Pro</td><td class="p-3 text-center text-slate-400">67.6%</td><td class="p-3 text-center font-bold">85.2%</td><td class="p-3 text-center">82.6%</td><td class="p-3 text-center font-bold text-green-600">+17.6</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-3">GPQA Diamond</td><td class="p-3 text-center text-slate-400">42.4%</td><td class="p-3 text-center font-bold">84.3%</td><td class="p-3 text-center">82.3%</td><td class="p-3 text-center font-bold text-green-600">+41.9</td></tr>
+<tr class="border-b border-slate-100"><td class="p-3">BigBench Extra Hard</td><td class="p-3 text-center text-slate-400">19.3%</td><td class="p-3 text-center font-bold">74.4%</td><td class="p-3 text-center">64.8%</td><td class="p-3 text-center font-bold text-green-600">+55.1</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-3 font-semibold">AIME 2026</td><td class="p-3 text-center text-slate-400">20.8%</td><td class="p-3 text-center font-bold text-red-600">89.2%</td><td class="p-3 text-center font-bold">88.3%</td><td class="p-3 text-center font-bold text-green-600">+68.4</td></tr>
+<tr class="border-b border-slate-100"><td class="p-3">LiveCodeBench v6</td><td class="p-3 text-center text-slate-400">29.1%</td><td class="p-3 text-center font-bold">80.0%</td><td class="p-3 text-center">77.1%</td><td class="p-3 text-center font-bold text-green-600">+50.9</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-3">Codeforces ELO</td><td class="p-3 text-center text-slate-400">110</td><td class="p-3 text-center font-bold">2150</td><td class="p-3 text-center">1718</td><td class="p-3 text-center font-bold text-green-600">+2040</td></tr>
+<tr class="border-b border-slate-100"><td class="p-3">MATH-Vision</td><td class="p-3 text-center text-slate-400">46.0%</td><td class="p-3 text-center font-bold">85.6%</td><td class="p-3 text-center">82.4%</td><td class="p-3 text-center font-bold text-green-600">+39.6</td></tr>
+<tr><td class="p-3">MRCR v2 (128K)</td><td class="p-3 text-center text-slate-400">13.5%</td><td class="p-3 text-center font-bold">66.4%</td><td class="p-3 text-center">44.1%</td><td class="p-3 text-center font-bold text-green-600">+52.9</td></tr>
+</tbody>
+</table>
+</div>
+<div class="mt-3 bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800">💡 AIME 2026: 20.8% → 89.2% — 오픈 모델 역사상 가장 큰 단일 세대 수학 점프. Thinking Mode가 핵심 역할.</div>
+</div>
+
+<!-- COMPETITION -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<h2 class="text-lg font-bold text-slate-900 mb-4">경쟁 모델 헤드투헤드 (~27B 클래스)</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-sm">
+<thead><tr class="bg-slate-50">
+<th class="text-left p-3 font-semibold text-slate-600">벤치마크</th>
+<th class="text-center p-3 font-semibold text-blue-600">Gemma 4 31B</th>
+<th class="text-center p-3 font-semibold text-purple-600">Gemma 4 A4B</th>
+<th class="text-center p-3 font-semibold text-slate-500">Qwen 3.5 27B</th>
+<th class="text-center p-3 font-semibold text-slate-500">Llama 4 Scout</th>
+</tr></thead>
+<tbody>
+<tr class="border-b border-slate-100"><td class="p-3">MMLU Pro</td><td class="p-3 text-center font-bold">85.2%</td><td class="p-3 text-center">82.6%</td><td class="p-3 text-center font-bold text-red-600">86.1%</td><td class="p-3 text-center">78.5%</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-3">AIME 2026</td><td class="p-3 text-center font-bold text-red-600">89.2%</td><td class="p-3 text-center font-bold">88.3%</td><td class="p-3 text-center">~85%</td><td class="p-3 text-center">72.3%</td></tr>
+<tr class="border-b border-slate-100"><td class="p-3">LiveCodeBench</td><td class="p-3 text-center font-bold">80.0%</td><td class="p-3 text-center">77.1%</td><td class="p-3 text-center">~78%</td><td class="p-3 text-center">68.4%</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-3">GPQA Diamond</td><td class="p-3 text-center font-bold">84.3%</td><td class="p-3 text-center">82.3%</td><td class="p-3 text-center font-bold text-red-600">85.5%</td><td class="p-3 text-center">71.2%</td></tr>
+<tr class="border-b border-slate-100"><td class="p-3">Codeforces ELO</td><td class="p-3 text-center font-bold text-red-600">2150</td><td class="p-3 text-center">1718</td><td class="p-3 text-center">~1800</td><td class="p-3 text-center">1400</td></tr>
+<tr><td class="p-3">라이선스</td><td class="p-3 text-center font-bold text-green-600">Apache 2.0</td><td class="p-3 text-center font-bold text-green-600">Apache 2.0</td><td class="p-3 text-center text-slate-400">Qwen ToS</td><td class="p-3 text-center text-slate-400">Llama ToS</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<h2 class="text-lg font-bold text-slate-900 mb-4">아키텍처 & 핵심 기능</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<div>
+<div class="text-sm font-semibold text-slate-700 mb-2">🏗️ 아키텍처 특징</div>
+<ul class="text-xs text-slate-600 space-y-1.5">
+<li>• <b>5:1 하이브리드 로컬/글로벌 어텐션</b> — 근거리 5토큰 로컬 + 글로벌 슬라이딩 윈도우</li>
+<li>• <b>GQA (Grouped Query Attention)</b> — 메모리 효율적 어텐션</li>
+<li>• <b>MoE: 128 소형 전문가 + 1 공유</b> — 토큰당 8개 활성 (Llama 4는 16 대형 전문가)</li>
+<li>• <b>Proportional RoPE + Softcapping</b> — 위치 임베딩 스케일링 + 값 클리핑</li>
+<li>• <b>KV Cache Sharing</b> — MoE 전문가 간 KV 캐시 공유</li>
+</ul>
+</div>
+<div>
+<div class="text-sm font-semibold text-slate-700 mb-2">⚡ 핵심 기능</div>
+<ul class="text-xs text-slate-600 space-y-1.5">
+<li>• <b>Thinking Mode</b> — 4,000+ 토큰 단계별 추론 후 답변</li>
+<li>• <b>Function Calling</b> — 네이티브 API 호출, JSON 구조화 출력</li>
+<li>• <b>멀티모달 비전</b> — 가변 해상도 이미지/비디오, OCR, 차트 이해</li>
+<li>• <b>네이티브 오디오 (E2B/E4B)</b> — ASR+번역+추론 단일 모델</li>
+<li>• <b>에이전트 워크플로우</b> — 시스템 명령, 도구 호출 자율 에이전트</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-3 text-center text-xs">
+<div class="bg-blue-50 rounded-lg p-3 border border-blue-100"><div class="font-semibold text-blue-800">엣지/모바일</div><div class="font-bold text-blue-600 mt-1">E2B / E4B</div><div class="text-slate-500">오디오 + 비전</div></div>
+<div class="bg-purple-50 rounded-lg p-3 border border-purple-100"><div class="font-semibold text-purple-800">소비자 GPU</div><div class="font-bold text-purple-600 mt-1">26B-A4B</div><div class="text-slate-500">24GB VRAM</div></div>
+<div class="bg-red-50 rounded-lg p-3 border border-red-100"><div class="font-semibold text-red-800">워크스테이션</div><div class="font-bold text-red-600 mt-1">31B Dense</div><div class="text-slate-500">32GB+ VRAM</div></div>
+</div>
+</div>
+
+<!-- CONCLUSION -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<h2 class="text-lg font-bold text-slate-900 mb-4">결론 & 전망</h2>
+<div class="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4 mb-4">
+<div class="text-sm text-slate-700 leading-relaxed">Gemma 4는 단순한 업그레이드가 아닌 <b>패러다임 전환</b>이다. Apache 2.0 라이선스 전환, Gemini 3 기반 아키텍처, 네이티브 멀티모달, Thinking Mode, 에이전트 워크플로우 지원을 하나의 모델 패밀리에 통합했다. 특히 26B-A4B의 MoE 설계는 소비자 GPU에서도 프론티어급 성능을 경험하게 한다.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<div class="text-sm font-bold text-green-700 mb-2">✅ 강점</div>
+<ul class="text-xs text-slate-600 space-y-1">
+<li>1. 수학·코딩 압도적 — AIME 89.2%, CF 2150</li>
+<li>2. MoE 효율성 — 3.8B 활성으로 97% 품질</li>
+<li>3. Apache 2.0 — 경쟁사보다 자유로운 상업 이용</li>
+<li>4. 엣지 오디오 — E2B에서 단일 모델 ASR+번역+추론</li>
+<li>5. 에이전트 네이티브 — Function Calling, JSON 내장</li>
+</ul>
+</div>
+<div>
+<div class="text-sm font-bold text-red-700 mb-2">⚠ 한계</div>
+<ul class="text-xs text-slate-600 space-y-1">
+<li>1. 다국어 — Qwen 3.5 (201개 언어)이 여전히 우위</li>
+<li>2. 컨텍스트 — Llama 4의 1M+에는 미치지 못함</li>
+<li>3. 추론 속도 — MoE 모델의 tok/s 벤치마크 미확인</li>
+<li>4. 신생 모델 — 커뮤니티 파인튜닝 축적 필요</li>
+<li>5. GPQA/MMLU — Qwen 3.5가 근소 우세</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="text-xs text-slate-400 pb-4">
+<p>출처: Google Blog, Arena AI, ai.rs, VentureBeat, Ars Technica, Latent Space (2026-04)</p>
+<p>본 보고서는 공개 정보 기반으로 작성되었으며 투자 조언이 아닙니다.</p>
+</div>
+
+</div>
+</body>
+</html>
