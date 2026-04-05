@@ -22,7 +22,12 @@ const prose = css`
   .prose img{max-width:100%;display:block;margin:12px 0;border-radius:6px}
   .prose figure{margin:0}
   .prose figcaption{font-size:13px;color:#6b7280;text-align:center;margin-top:6px}
-  .prose table{width:100%;border-collapse:collapse;margin:12px 0}
+  .prose table{width:100%;border-collapse:collapse;margin:12px 0;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .prose thead,.prose tbody,.prose tr,.prose th,.prose td{display:table;width:100%;table-layout:fixed}
+  .prose thead{position:sticky;top:0}
+  @media(max-width:640px){
+    .prose th,.prose td{padding:6px 8px;font-size:14px;white-space:nowrap}
+  }
   .prose th,.prose td{border:1px solid #e6edf3;padding:8px;text-align:left}
   .prose code{background:#f3f4f6;padding:2px 6px;border-radius:4px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace}
   pre[class*="language-"]{background:#0f172a;color:#f8fafc;padding:16px;border-radius:8px;overflow:auto}
