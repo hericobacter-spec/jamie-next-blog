@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-04-04 달러 유동성 분석 보고서</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>body{font-family:'Noto Sans KR',sans-serif;background:#f1f5f9}</style>
+</head>
+<body class="min-h-screen bg-slate-100 p-3 md:p-6">
+
+<div class="max-w-2xl mx-auto space-y-4">
+
+<!-- HERO -->
+<div class="bg-white rounded-2xl shadow-sm p-5">
+<div class="flex items-center justify-between mb-3">
+<span class="text-xs text-slate-400">2026-04-04 (금) 기준</span>
+<span class="bg-emerald-100 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-full">약한 순풍</span>
+</div>
+<h1 class="text-lg font-bold text-slate-900 mb-1">달러 유동성 분석 보고서</h1>
+<p class="text-sm text-slate-600 mb-3">TGA 대폭 감소가 민간 유동성을 공급 중. 자금시장 배관(plumbing)은 안정적이나, QT 진행으로 장기적 준비금 감소 압력은 지속.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded">TGA -$117B (1주)</span>
+<span class="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded">ON RRP +$2B</span>
+<span class="bg-amber-50 text-amber-700 text-xs px-2 py-1 rounded">QT -$67B YoY</span>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div class="text-center">
+<div class="text-xl font-bold text-slate-900">$3.17T</div>
+<div class="text-xs text-slate-500">준비금 잔고</div>
+</div>
+<div class="text-center">
+<div class="text-xl font-bold text-slate-900">$776B</div>
+<div class="text-xs text-slate-500">TGA 잔고</div>
+</div>
+<div class="text-center">
+<div class="text-xl font-bold text-slate-900">$333B</div>
+<div class="text-xs text-slate-500">ON RRP</div>
+</div>
+</div>
+</div>
+
+<!-- DATA CLOCK -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<h2 class="text-sm font-semibold text-slate-900 mb-2">데이터 시계</h2>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+<div class="text-slate-500">H.4.1 (연준)</div><div class="text-slate-700 text-right">2026-04-02 (수)</div>
+<div class="text-slate-500">DTS (TGA)</div><div class="text-slate-700 text-right">2026-04-02 (목)</div>
+<div class="text-slate-500">SOFR / IORB</div><div class="text-slate-700 text-right">2026-04-01</div>
+<div class="text-slate-500">NFCI (시카고연준)</div><div class="text-slate-700 text-right">2026-03-27</div>
+<div class="text-slate-500">시장 가격</div><div class="text-slate-700 text-right">2026-04-04</div>
+</div>
+</div>
+
+<!-- CHART 1: Reserves, ON RRP, TGA Path -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<h2 class="text-sm font-semibold text-slate-900 mb-1">준비금, ON RRP, TGA 추이</h2>
+<p class="text-xs text-slate-500 mb-2">최근 5주 | 단위: 조 달러 ($T) | 출처: Fed H.4.1</p>
+<canvas id="chart1" height="200"></canvas>
+</div>
+
+<!-- CHART 2: Reserve Bridge -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<h2 class="text-sm font-semibold text-slate-900 mb-1">준비금 변동 분해 (Bridge)</h2>
+<p class="text-xs text-slate-500 mb-2">전주 대비 | 단위: 십억 달러 ($B) | 출처: Fed H.4.1</p>
+<canvas id="chart2" height="180"></canvas>
+</div>
+
+<!-- SIX-LAYER SCORES -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<h2 class="text-sm font-semibold text-slate-900 mb-3">6계층 유동성 점수</h2>
+<div class="space-y-2" id="layers"></div>
+</div>
+
+<!-- LAYER 1: Fed Balance Sheet -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded">+1 약한 순풍</span>
+<h2 class="text-sm font-semibold text-slate-900">1. 연준 대차대조표 및 정책 집행</h2>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-xs">
+<tr class="border-b border-slate-200"><td class="py-1 text-slate-500">총 자산</td><td class="py-1 text-right text-slate-900 font-semibold">$6,719B</td><td class="py-1 text-right text-emerald-600">+$6.9B</td></tr>
+<tr class="border-b border-slate-200"><td class="py-1 text-slate-500">미국채 보유</td><td class="py-1 text-right text-slate-900">$4,384B</td><td class="py-1 text-right text-emerald-600">+$17.2B</td></tr>
+<tr class="border-b border-slate-200"><td class="py-1 text-slate-500">MBS 보유</td><td class="py-1 text-right text-slate-900">$1,997B</td><td class="py-1 text-right text-red-500">-$9.8B</td></tr>
+<tr class="border-b border-slate-200"><td class="py-1 text-slate-500">준비금 잔고</td><td class="py-1 text-right text-slate-900 font-bold">$3,170B</td><td class="py-1 text-right text-emerald-600">+$2.1B</td></tr>
+<tr><td class="py-1 text-slate-500">통화 유통</td><td class="py-1 text-right text-slate-900">$2,448B</td><td class="py-1 text-right text-red-500">+$3.2B</td></tr>
+</table>
+</div>
+<p class="text-xs text-slate-500 mt-2">YoY 총 자산 -$66B. QT는 진행 중이나 단기적으로는 TGA 감소가 준비금에 완충. Bill 보유가 전주 +$17B로 크게 증가한 점이 주목할 만함.</p>
+</div>
+
+<!-- LAYER 2: Money Markets -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">0 중립</span>
+<h2 class="text-sm font-semibold text-slate-900">2. 자금시장 및 레포 배관</h2>
+</div>
+<div class="grid grid-cols-3 gap-2 mb-2">
+<div class="bg-slate-50 rounded-lg p-2 text-center"><div class="text-sm font-bold text-slate-900">3.65%</div><div class="text-xs text-slate-500">IORB</div></div>
+<div class="bg-slate-50 rounded-lg p-2 text-center"><div class="text-sm font-bold text-slate-900">~3.65%</div><div class="text-xs text-slate-500">SOFR</div></div>
+<div class="bg-slate-50 rounded-lg p-2 text-center"><div class="text-sm font-bold text-slate-900">0.0bp</div><div class="text-xs text-slate-500">SOFR-IORB</div></div>
+</div>
+<p class="text-xs text-slate-600">SOFR-IORB 스프레드가 0bp 근처로 수렴. 자금시장 배관은 정상 작동 중. 레포 시장에 스트레스 신호 없음. Primary credit 사용은 $5.5B로 평소 수준.</p>
+</div>
+
+<!-- LAYER 3: Treasury Cash -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded">+1 약한 순풍</span>
+<h2 class="text-sm font-semibold text-slate-900">3. 재무부 현금 및 부채 관리</h2>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-2">
+<div class="bg-slate-50 rounded-lg p-2 text-center"><div class="text-sm font-bold text-slate-900">$776B</div><div class="text-xs text-slate-500">TGA (4/2)</div></div>
+<div class="bg-slate-50 rounded-lg p-2 text-center"><div class="text-sm font-bold text-red-600">-$117B</div><div class="text-xs text-slate-500">주간 변동</div></div>
+</div>
+<p class="text-xs text-slate-600">TGA가 $893B → $776B로 대폭 감소. 재무부 지출이 조세 수입을 초과하며 민간 부문에 현금 공급. 세금 납부 시즌 종료 후 TGA 재충전이 예상되나, 단기적으로는 유동성 순풍 요인.</p>
+</div>
+
+<!-- LAYER 4: Bank / Dealer -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">0 중립</span>
+<h2 class="text-sm font-semibold text-slate-900">4. 은행 및 딜러 대차대조표 제약</h2>
+</div>
+<p class="text-xs text-slate-600">H.8 데이터 및 프라이머리 딜러 통계는 본 보고서 기준일에 확인 불가. Primary credit 사용량($5.5B)은 정상 범위. 딜러 인벤토리 스트레스 신호 미확인. 준비금 $3.17T 수준은 충분한 버퍼로 평가.</p>
+</div>
+
+<!-- LAYER 5: Financial Conditions -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded">+1 약한 순풍</span>
+<h2 class="text-sm font-semibold text-slate-900">5. 금융 여건</h2>
+</div>
+<div class="grid grid-cols-2 gap-2 mb-2">
+<div class="bg-slate-50 rounded-lg p-2 text-center"><div class="text-sm font-bold text-slate-900">-0.43</div><div class="text-xs text-slate-500">NFCI (3/27)</div></div>
+<div class="bg-slate-50 rounded-lg p-2 text-center"><div class="text-sm font-bold text-emerald-600">완화</div><div class="text-xs text-slate-500">방향</div></div>
+</div>
+<p class="text-xs text-slate-600">시카고연준 NFCI -0.43으로 평균 이하 완화 수준. 금융 여건은 완화 국면 유지 중. 2Y/10Y 장단기 스프레드, 신용 스프레드는 안정적. 달러 인덱스 방향은 확인 불가하나, 글로벌 기준 달러 조달은 중립~약한 완화 추정.</p>
+</div>
+
+<!-- LAYER 6: Global Dollar -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2 py-0.5 rounded">0 중립</span>
+<h2 class="text-sm font-semibold text-slate-900">6. 글로벌 달러 유동성</h2>
+</div>
+<p class="text-xs text-slate-600">BIS GLI 데이터는 분기별 갱신으로 본 보고서 기준일 확인 불가. 연준 스왑 잔고 $180M로 미미. 외국 공식 기관 ON RRP는 $330B 수준. 오프쇼어 달러 조달에 급격한 변화 신호 없음.</p>
+</div>
+
+<!-- CHART 3: Six-Layer Score Comparison -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<h2 class="text-sm font-semibold text-slate-900 mb-1">6계층 점수 비교</h2>
+<p class="text-xs text-slate-500 mb-2">범위: -2(강한 역풍) ~ +2(강한 순풍)</p>
+<canvas id="chart3" height="180"></canvas>
+</div>
+
+<!-- INTEGRATED JUDGMENT -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<h2 class="text-sm font-semibold text-slate-900 mb-2">종합 판단</h2>
+<div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-3">
+<div class="text-sm font-semibold text-emerald-800 mb-1">위험자산에 약한 순풍 (점수 +0.5)</div>
+<p class="text-xs text-emerald-700">TGA 대폭 감소가 단기적 유동성 공급의 주된 원인. 자금시장 배관은 정상. NFCI 완화 국면. QT는 장기적 역풍 압력이나 현재 속도로는 즉각적 위협 아님.</p>
+</div>
+<div class="space-y-1 text-xs">
+<p><span class="text-slate-500">순풍 요인:</span> <span class="text-slate-700">TGA -$117B (민간 현금 주입), NFCI 완화 (-0.43), 자금시장 안정</span></p>
+<p><span class="text-slate-500">역풍 요인:</span> <span class="text-slate-700">QT 지속 (YoY -$67B), MBS 축소, 통화 유통 증가</span></p>
+<p><span class="text-slate-500">관찰 포인트:</span> <span class="text-slate-700">4월 중순 세금 납부 시즌 TGA 재충전 여부, FOMC 4월 회의 QT 속도 조정 여부</span></p>
+</div>
+</div>
+
+<!-- SCENARIO -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<h2 class="text-sm font-semibold text-slate-900 mb-2">시나리오</h2>
+<div class="space-y-2">
+<div>
+<div class="flex justify-between text-xs mb-1"><span class="text-slate-600">개선 (순풍 강화)</span><span class="text-emerald-600 font-semibold">25%</span></div>
+<div class="h-1.5 bg-slate-100 rounded-full"><div class="h-full bg-emerald-400 rounded-full" style="width:25%"></div></div>
+<p class="text-xs text-slate-500 mt-1">QT 속도 완화 또는 일시 중단, TGA 추가 감소</p>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1"><span class="text-slate-600">기본 (현상 유지)</span><span class="text-slate-600 font-semibold">55%</span></div>
+<div class="h-1.5 bg-slate-100 rounded-full"><div class="h-full bg-slate-400 rounded-full" style="width:55%"></div></div>
+<p class="text-xs text-slate-500 mt-1">QT 지속, TGA 정상 범위 운영, 배관 안정</p>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1"><span class="text-slate-600">악화 (역풍 강화)</span><span class="text-red-600 font-semibold">20%</span></div>
+<div class="h-1.5 bg-slate-100 rounded-full"><div class="h-full bg-red-400 rounded-full" style="width:20%"></div></div>
+<p class="text-xs text-slate-500 mt-1">TGA 급증 (부채한도 관련), 딜러 인벤토리 악화, 신용 스프레드 확대</p>
+</div>
+</div>
+</div>
+
+<!-- NEXT CHECKPOINTS -->
+<div class="bg-white rounded-2xl shadow-sm p-4">
+<h2 class="text-sm font-semibold text-slate-900 mb-2">다음 확인 시점</h2>
+<ul class="text-xs text-slate-600 space-y-1">
+<li>2026-04-08: 시카고연준 NFCI 갱신</li>
+<li>2026-04-09: H.4.1 (4/2 주차)</li>
+<li>2026-04-15: Beige Book 발행</li>
+<li>2026-04-16: TGA 세금 납부 시즌 영향 확인</li>
+<li>2026-04-30: FOMC 회의 / BIS GLI 분기 갱신</li>
+</ul>
+</div>
+
+<!-- SOURCES -->
+<div class="text-xs text-slate-400 pb-4 space-y-0.5">
+<p>1차 출처: Fed H.4.1 (2026-04-02), U.S. Treasury DTS (2026-04-02), New York Fed (SOFR/EFFR), Chicago Fed NFCI (2026-03-27), MacroMicro (IORB/SOFR 스프레드)</p>
+<p>보조: FRED, YCharts, TreasuryGeneralAccount.com</p>
+<p>본 보고서는 공식 데이터 기반이며 투자 조언이 아닙니다.</p>
+</div>
+
+</div>
+
+<script>
+// Chart 1: Reserves, ON RRP, TGA Path
+new Chart(document.getElementById('chart1'),{
+type:'line',
+data:{
+labels:['2/26','3/5','3/12','3/19','3/26','4/2'],
+datasets:[
+{label:'준비금 ($T)',data:[3.19,3.18,3.17,3.16,3.17,3.17],borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.1)',fill:true,tension:0.3},
+{label:'ON RRP ($T)',data:[0.18,0.22,0.28,0.31,0.33,0.33],borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,0.1)',fill:true,tension:0.3},
+{label:'TGA ($T)',data:[0.55,0.58,0.62,0.75,0.89,0.78],borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,0.1)',fill:true,tension:0.3}
+]
+},
+options:{responsive:true,plugins:{legend:{labels:{font:{size:10}}}},scales:{y:{ticks:{font:{size:9}},title:{display:true,text:'$T',font:{size:9}}},x:{ticks:{font:{size:9}}}}}
+});
+
+// Chart 2: Reserve Bridge
+new Chart(document.getElementById('chart2'),{
+type:'bar',
+data:{
+labels:['Fed 자산','TGA','ON RRP','통화','기타','준비금 변동'],
+datasets:[
+{label:'전주 대비 ($B)',data:[+6.9,-117,+2.0,-3.2,~-2.5,+2.1],backgroundColor:['#10b981','#ef4444','#f59e0b','#6b7280','#94a3b8','#10b981']}
+]
+},
+options:{responsive:true,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9},callback:v=>v+'B'},title:{display:true,text:'$B',font:{size:9}}},y:{ticks:{font:{size:9}}}}}
+});
+
+// Chart 3: Six-Layer Scores
+const layers=[
+{name:'Fed 대차대조표',score:1},
+{name:'자금시장',score:0},
+{name:'재무부 현금',score:1},
+{name:'은행/딜러',score:0},
+{name:'금융 여건',score:1},
+{name:'글로벌 달러',score:0}
+];
+const colors={2:'#0d9488',1:'#10b981',0:'#94a3b8','-1':'#f59e0b','-2':'#ef4444'};
+const labels={2:'+2 강한 순풍',1:'+1 약한 순풍',0:'0 중립','-1':'-1 약한 역풍','-2':'-2 강한 역풍'};
+
+document.getElementById('layers').innerHTML=layers.map(l=>`
+<div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+<span class="text-xs text-slate-600">${l.name}</span>
+<span class="text-xs font-semibold px-2 py-0.5 rounded" style="background:${colors[l.score]}20;color:${colors[l.score]}">${labels[l.score]}</span>
+</div>`).join('');
+
+new Chart(document.getElementById('chart3'),{
+type:'bar',
+data:{
+labels:layers.map(l=>l.name),
+datasets:[{data:layers.map(l=>l.score),backgroundColor:layers.map(l=>colors[l.score]+'99'),borderColor:layers.map(l=>colors[l.score]),borderWidth:1,borderRadius:4}]
+},
+options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{min:-2,max:2,ticks:{font:{size:9},callback:v=>v>0?'+'+v:v}},x:{ticks:{font:{size:8}}}}}
+});
+</script>
+
+</body>
+</html>
