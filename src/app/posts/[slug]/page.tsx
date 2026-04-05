@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import prose from '@/styles/prose'
 import CodeBlock from '@/components/CodeBlock'
 import Comments from '@/components/Comments'
+import remarkGfm from 'remark-gfm'
 import type { Metadata } from 'next'
 
 const Article = styled.article`
@@ -81,7 +82,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       <h1 style={{marginBottom:8}}>{post.meta.title}</h1>
       <Meta>{post.meta.date} • {post.readingTime} {post.meta.tags? '• '+post.meta.tags.join(', '): ''}</Meta>
       <div className="prose mt-6">
-        <MDXRemote source={post.content || ''} components={mdxComponents} />
+        <MDXRemote source={post.content || ''} components={mdxComponents} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
       </div>
       <Comments term={post.slug} />
     </Article>
