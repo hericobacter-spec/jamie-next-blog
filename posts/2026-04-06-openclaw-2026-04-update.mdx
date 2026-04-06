@@ -1,175 +1,116 @@
 ---
-title: "[NEWS] OpenClaw 2026.4.5 대업데이트: 한글 UI, Dreams 메모리 시스템, 비디오·음악 생성까지"
+title: "OpenClaw 대업데이트: 한글 UI에 AI가 비디오·음악 만들고, 스스로 메모리 정리까지"
 date: "2026-04-06"
-description: "OpenClaw 2026.4.5 업데이트 실사용 후기. 한국어 Control UI, Dreams 자동 메모리 정리 시스템, Claude CLI MCP 연동, 비디오·음악 생성 툴, Bedrock/Qwen/Fireworks AI 신규 프로바이더 등 대규모 변경점을 실제 캡처와 함께 확인합니다."
-category: "A.I"
+description: "OpenClaw 2026.4.5 업데이트 후기. 한국어 Control UI, Dreams 메모리 정리 시스템, 비디오·음악 생성, Claude CLI 연동 등 주요 변화를 직접 확인해봤다."
+category: "Life"
 tags:
   - OpenClaw
   - AI에이전트
-  - 업데이트
+  - 업데이트후기
+  - 한글UI
   - Dreams
   - ClaudeCLI
-  - MCP
-  - AI미디어생성
-  - 한글UI
-keywords: "OpenClaw 2026.4.5, OpenClaw update, Dreams memory system, OpenClaw Korean UI, Claude CLI MCP, AI video generation, AI music generation, Bedrock provider, ClawHub"
+keywords: "OpenClaw 2026.4.5 업데이트 후기, OpenClaw 한글 UI, Dreams 메모리, AI 비디오 생성, AI 음악 생성, Claude CLI MCP, OpenClaw 사용기"
 ---
 
-# [NEWS] OpenClaw 2026.4.5 대업데이트: 한글 UI, Dreams 메모리 시스템, 비디오·음악 생성까지
+# OpenClaw 대업데이트: 한글 UI에 AI가 비디오·음악 만들고, 스스로 메모리 정리까지
 
-> OpenClaw이 2026년 4월 5일 **2026.4.5** 버전을 배포했다. AI 에이전트 플랫폼으로서 미디어 생성, 자동 메모리 정리, 다국어 UI 등 한 단계 도약하는 업데이트다. 실제 업데이트 후 환경에서 주요 변경점을 확인해보았다.
-
-## 이번 업데이트의 규모
-
-이번 2026.4.5는 단순한 버그 수정이 아니다. **에이전트가 직접 비디오와 음악을 생성**할 수 있게 되었고, AI가 자체적으로 메모리를 정리하는 **Dreams 시스템**이 도입되었으며, Control UI가 **13개 언어**를 지원하게 되었다. 신규 프로바이더만 5개 이상 추가되었고, 프롬프트 캐싱 안정화 등 성능 개선도 상당하다.
+오늘 오후에 OpenClaw이 대규모 업데이트를 했다는 알림을 받았다. 2026.4.5 버전인데, changelog를 보는 것만으로도 손이 바쁠 정도로 변경점이 많았다. 그래서 직접 업데이트하고 하나씩 확인해봤다.
 
 ---
 
-## 🇰🇷 한글 Control UI
+## 한글이 된 Control UI
 
-가장 먼저 눈에 띄는 변화다. Control UI가 한국어를 비롯해 **간체/번체 중국어, 포르투갈어, 독일어, 스페인어, 일본어, 프랑스어, 터키어, 인도네시아어, 폴란드어, 우크라이나어**까지 총 13개 언어를 지원한다.
+제일 먼저 눈에 들어온 건 Control UI가 한글이 되었다는 거다.
 
-![OpenClaw 한글 Control UI](/images/posts/openclaw-2026-04-update/korean-ui.jpg)
+![한글 Control UI](/images/posts/openclaw-2026-04-update/korean-ui.jpg)
 
-실제로 확인해보니 메뉴, 설정 항목, 상태 표시까지 전반적으로 한글로 표시된다. 영어에 익숙하지 않은 사용자에게는 큰 진입 장벽이 낮아졌다. 별도 언어 설정 없이 시스템 로케일을 기반으로 자동 감지되는 것으로 보인다.
+메뉴부터 설정 항목까지 전반적으로 한글로 표시된다. 사실 기존에도 영어가 익숙해서 큰 불편함은 없었는데, 막상 한글로 바뀌니까 뭔가 더 내 것 같은 느낌이 들었다. 13개 언어를 지원한다는데, 한국어가 포함된 건 반갑다.
 
 ---
 
-## 🧠 Dreams: AI가 스스로 정리하는 메모리 시스템
+## Dreams: AI가 나 대신 메모 정리해준다
 
-이번 업데이트의 핵심 기능이다. **Dreams(드리밍)**은 에이전트가 작성한 일일 메모를 자동으로 분석하고, 중요한 내용만 장기 기억으로 승격시키는 시스템이다.
+이게 이번 업데이트에서 제일 신기한 기능이다.
 
-### 3단계 메모리 정리
+나는 매일 `memory/YYYY-MM-DD.md` 파일에 그날 있었던 일을 기록한다. AI가 세션을 시작할 때마다 이 파일을 읽고 이전 대화의 맥락을 파악하는 방식인데, 시간이 지날수록 파일이 길어지고, 중요한 것과 아닌 것이 섞이게 된다.
 
-Dreams는 수면의 3단계를 모방하여 동작한다:
+**Dreams**는 이걸 AI가 자동으로 정리해주는 기능이다. 사람의 수면을 모방해서 3단계로 작동한다:
 
-| 단계 | 이름 | 역할 |
-|------|------|------|
-| Light | 가벼운 스캔 | 최근 일일 메모를 읽고 후보를 선별 |
-| Deep | 깊은 분석 | 중요도 가중치를 부여하고 노이즈를 제거 |
-| REM | 꿈의 정리 | MEMORY.md에 반영할 내용을 최종 결정 |
+- **Light**: 최근 메모를 가볍게 스캔
+- **Deep**: 중요한 내용에 가중치를 부여하고 노이즈 제거
+- **REM**: 최종적으로 장기 기억(MEMORY.md)에 반영할 내용 결정
 
 ![Dreams UI](/images/posts/openclaw-2026-04-update/dreams-ui.jpg)
 
-Control UI의 Dreams 메뉴에서 현재 드리밍 상태를 확인할 수 있다. 실제로 확인해보니 아직 첫 드리밍 사이클이 완료되지 않은 상태에서도 UI가 정상적으로 표시되었다.
+Control UI에 Dreams 전용 메뉴가 생겼다. 아직 첫 드리밍 사이클이 돌기 전이라 빈 화면이지만, 설정만 해두면 알아서 돌아간다.
 
-채팅에서 `/dreaming` 명령어를 입력하면 현재 설정과 상태를 확인할 수 있다:
+채팅에서 `/dreaming`을 입력하면 현재 상태를 볼 수 있다:
 
-![dreaming 명령어 결과](/images/posts/openclaw-2026-04-update/dreaming-command.jpg)
+![dreaming 명령어](/images/posts/openclaw-2026-04-update/dreaming-command.jpg)
 
-### 설정 방법
-
-`openclaw.json`에서 `enabled: true`로 활성화하고, `frequency`로 실행 주기를 설정할 수 있다. 또한 `recencyHalfLifeDays`와 `maxAgeDays`로 메모리 노화(aging)를 제어하여, 얼마나 오래된 메모까지 분석 대상으로 삼을지 조정 가능하다.
-
-### 드리밍 로그
-
-드리밍 과정에서 생성된 내용은 워크스페이스의 `dreams.md`에 기록된다. 이 파일은 기본 리콜 대상에는 포함되지 않으므로, 명시적으로 읽지 않는 한 자동 참조되지 않는다.
+실험적 기능이라고 하지만, 메모리 관리가 자동화된다는 건 꽤 매력적이다. 주기적으로 `MEMORY.md`를 손질해야 했던 귀찮음이 줄어들 것 같다.
 
 ---
 
-## 🎬 비디오 · 음악 생성 툴 내장
+## AI가 비디오와 음악을 만든다
 
-에이전트가 이제 텍스트만 출력하는 것이 아니라 **미디어를 직접 생성**할 수 있게 되었다.
+이건 좀 놀라웠다. 에이전트가 이제 텍스트만 출력하는 게 아니라 미디어를 직접 생성할 수 있다.
 
-### video_generate
+`video_generate` 툴로 xAI, Alibaba Wan, Runway에서 비디오를 만들 수 있고, `music_generate` 툴로 Google Lyria, MiniMax에서 음악을 생성할 수 있다. ComfyUI를 로컬에서 돌리고 있다면 워크플로우 기반으로 이미지·비디오·음악 모두 생성 가능하다.
 
-내장 `video_generate` 툴을 통해 에이전트가 비디오를 생성할 수 있다. 지원 프로바이더:
-
-- **xAI (grok-imagine-video)**
-- **Alibaba Model Studio Wan**
-- **Runway**
-
-### music_generate
-
-내장 `music_generate` 툴도 추가되었다. 지원 프로바이더:
-
-- **Google Lyria**
-- **MiniMax**
-- **ComfyUI** (워크플로우 기반)
-
-비동기 작업 추적(async task tracking)을 지원하므로, 음악 생성이 완료되면 자동으로 결과를 전달한다. 대화 중에 "이 분위기에 맞는 BGM 만들어줘" 같은 요청이 가능해진 셈이다.
+대화 중에 "이 분위기에 맞는 배경음악 만들어줘"라고 하면 AI가 직접 만들어서 준다고 생각하니, sci-fi 영화의 조수 AI 같은 느낌이다.
 
 ---
 
-## 🔌 새로운 프로바이더 5개 추가
+## Skills 패널에서 ClawHub 직접 검색
 
-이번 업데이트에서 가장 많은 변화가 있었던 부분 중 하나다.
+![Skills 패널](/images/posts/openclaw-2026-04-update/skills-clawhub.jpg)
 
-| 프로바이더 | 유형 | 특징 |
-|-----------|------|------|
-| **Qwen** | 챗/임베딩 | 알리바바 클라우드 Qwen 모델 시리즈 |
-| **Fireworks AI** | 챗 | 빠른 추론 속도 |
-| **StepFun** | 챗 | 중국 AI 스타트업 |
-| **Amazon Bedrock Mantle** | 다중 모델 | Claude, GPT-OSS, Qwen, Kimi, GLM 등 |
-| **MiniMax** | TTS/검색 | 음성 합성 + 웹 검색 |
-
-특히 **Bedrock Mantle**은 AWS IAM 인증 체인을 자동 감지하므로, 수동으로 `AWS_BEARER_TOKEN_BEDROCK`을 설정할 필요가 없다. Bedrock에서 호스팅되는 다양한 모델을 라우팅 없이 직접 사용할 수 있게 되었다.
-
-또한 `openai-codex/gpt-5.4-mini`가 새로 추가되었다. 가벼운 작업에 적합한 비용 효율적 모델이다.
+기존에는 터미널에서 `openclaw plugins install`을 쳐야 했는데, 이제 Control UI에서 바로 ClawHub를 검색하고 설치할 수 있다. 플러그인 관리가 훨씬 편해졌다.
 
 ---
 
-## 🛠 Skills 패널 개선: ClawHub 직접 검색
-
-![Skills / ClawHub 패널](/images/posts/openclaw-2026-04-update/skills-clawhub.jpg)
-
-Control UI의 Skills 패널에서 **ClawHub 검색, 상세 확인, 설치**를 직접 할 수 있게 되었다. 기존에는 터미널에서 `openclaw plugins install`을 실행해야 했지만, 이제 웹 UI에서 브라우징하고 원클릭 설치가 가능하다.
-
-`openclaw plugins install --force` 옵션도 추가되어, 기존에 설치된 플러그인을 강제 교체할 수 있다.
-
----
-
-## 🧠 Thinking Level 피커
+## Thinking Level을 UI에서 바로 조절
 
 ![Thinking Level 피커](/images/posts/openclaw-2026-04-update/thinking-picker.jpg)
 
-채팅 헤더에 **Thinking 레벨 선택 드롭다운**이 추가되었다. Off, Low, Medium, High, Stream 등 다양한 수준을 세션별로 즉시 전환할 수 있다. 모바일 채팅 설정에서도 동일하게 지원된다.
-
-이전에는 `/thinking` 명령어를 입력해야 했지만, UI에서 직접 조작 가능해져서 워크플로우가 훨씬 매끄러워졌다.
+채팅 화면 상단에 Thinking 레벨 선택 드롭다운이 생겼다. Off부터 Stream까지 즉시 전환 가능하다. 이전에는 `/thinking` 명령어를 쳐야 했는데, 이제 클릭 한 번으로 끝.
 
 ---
 
-## 🔗 Claude CLI MCP 브릿지
+## Claude CLI와 연동
 
-OpenClaw의 툴을 **Claude CLI에 MCP 브릿지**로 노출하는 기능이다. 백그라운드 Claude CLI 실행 중에도 OpenClaw의 툴(파일 읽기, 웹 검색, 캘린더 등)을 Claude가 직접 사용할 수 있다.
-
-또한 `stdin + stream-json` 방식으로 전환되어, 긴 응답도 실시간 프로그레스를 보여주고 최종 메타데이터도 정상적으로 수신된다. Claude Code 사용자에게는 특히 유용한 업데이트다.
+OpenClaw의 툴을 Claude CLI에서도 쓸 수 있게 MCP 브릿지가 추가되었다. Claude Code를 쓰는 사람한테는 유용할 것 같다. 파일 읽기, 웹 검색, 캘린더 조회 같은 OpenClaw의 툴을 Claude가 직접 사용할 수 있다.
 
 ---
 
-## 📱 iOS Exec 승인 알림
+## 새로운 프로바이더들
 
-iOS 사용자를 위한 기능이다. 이제 **APNs 푸시 알림**로 exec 명령 승인 요청이 오고, 인앱 모달에서 직접 승인/거부할 수 있다. 이전에는 Telegram이나 다른 채널을 통해 승인해야 했지만, iPhone에서 모든 것이 해결된다.
-
----
-
-## 🚀 프롬프트 캐싱 안정화
-
-기술적으로 중요한 변경이다. 프롬프트 접두사 재사용성, 결정론적 MCP 툴 정렬, 컴팩션, 임베디드 이미지 히스토리 등 다양한 경로에서 캐시 적중률이 개선되었다.
-
-`openclaw status --verbose`에서 캐시 진단 정보를 확인할 수 있으며, 시맨틱하게 동일한 프롬프트가 KV/캐시를 더 안정적으로 재사용하게 되었다. API 비용 절감에 직결되는 개선이다.
+Qwen, Fireworks AI, StepFun, Amazon Bedrock Mantle, MiniMax가 새로 추가되었다. 특히 Bedrock Mantle은 AWS IAM 인증을 자동으로 감지해서, Claude, GPT-OSS, Qwen, Kimi, GLM 등을 Bedrock 경로로 직접 쓸 수 있게 된다. `gpt-5.4-mini`도 추가되어 가벼운 작업에 쓰기 좋다.
 
 ---
 
-## ⚠️ Breaking Changes
+## iOS에서 exec 승인 알림
 
-기존 설정에서 일부 레거시 별칭이 제거되었다:
+iPhone 사용자한테는 꽤 실용적인 기능이다. APNs 푸시로 exec 명령 승인 요청이 오고, 앱 내에서 바로 승인하거나 거부할 수 있다. 이전에는 다른 채널로 알림이 와서 확인해야 했는데, 이제 아이폰 하나로 끝난다.
 
-- `talk.voiceId` / `talk.apiKey` → 정식 경로로 마이그레이션
-- `agents.*.sandbox.perSession` → `enabled`로 변경
-- `browser.ssrfPolicy.allowPrivateNetwork` → 정식 경로
-- `hooks.internal.handlers` → 새 훅 시스템
+---
 
-`openclaw doctor --fix`로 자동 마이그레이션이 가능하다. 업데이트 후 실행해보는 것을 추천한다.
+## 프롬프트 캐싱이 안정화되었다
+
+기술적인 이야기지만, API 비용에 직결되는 부분이다. 프롬프트 캐시 적중률이 올라가서 동일하거나 유사한 요청에서 비용이 절감된다. `openclaw status --verbose`에서 캐시 상태를 확인할 수 있다.
+
+---
+
+## 업데이트 후 주의사항
+
+몇 가지 레거시 설정이 변경되었다. `talk.voiceId` 같은 별칭이 제거되었는데, `openclaw doctor --fix`를 실행하면 자동 마이그레이션된다. 업데이트 후 한 번 실행해주는 걸 추천한다.
 
 ---
 
 ## 총평
 
-OpenClaw 2026.4.5는 **텍스트 에이전트에서 멀티미디어 에이전트로의 전환**을 공식적으로 선언하는 업데이트다. 비디오와 음악 생성이 내장되고, Dreams 시스템으로 에이전트가 자체적으로 메모리를 관리하며, 13개 언어 UI로 글로벌 접근성이 크게 향상되었다.
+이번 업데이트는 OpenClaw이 단순한 챗봇 프레임워크를 넘어 **멀티미디어 에이전트 플랫폼**으로 진화하고 있음을 보여준다. 비디오와 음악을 만들고, 스스로 메모리를 정리하고, 13개 언어로 소통한다.
 
-한국 사용자 입장에서는 **한글 UI 공식 지원**이 가장 환영할 만한 변화다. Dreams 시스템은 실험적이지만, 에이전트가 장기적으로 유용한 비서가 되기 위한 필수 인프라다. 앞으로의 발전이 기대된다.
-
----
-
-*OpenClaw 2026.4.5 (3e72c03), 2026년 4월 5일 배포. changelog 기반 실사용 후기.*
+한국어 UI가 공식 지원된 건 정말 반갑다. Dreams 시스템은 아직 실험적이지만, 에이전트가 장기적으로 나를 더 잘 이해하는 데 큰 역할을 할 것 같다. 앞으로 어떻게 발전할지 기대된다.
