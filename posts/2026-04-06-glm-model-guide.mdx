@@ -148,60 +148,61 @@ Z.ai 공식 API 가격 (USD, 백만 토큰당):
 
 ---
 
-## 🔥 OpenClaw 최적화 모델: GLM-4.7-Flash
+## 🔥 OpenClaw 최적화 모델: GLM-5-Turbo
 
-### 왜 "최적화"인가
+### 왜 "OpenClaw 최적화"인가
 
-GLM-4.7-Flash는 **Claude Opus 4.5의 고추론(high-reasoning) 출력으로 파인튜닝**된 모델이다. 즉, 프론티어 모델의 "사고 방식"을 학습한 경량 모델이다.
+Z.ai가 **학습 시점부터 OpenClaw 에이전트 워크플로우에 특화**하여 설계한 모델이 바로 GLM-5-Turbo다. 일반 목적 챗봇 모델이 아닌, **에이전트 인프라**로 태어난 모델이다.
+
+Z.ai는 GLM-5-Turbo를 다음 항목에 최적화했다고 공식적으로 명시한다:
+
+- **도구 호출(Tool Invocation)** 안정성 강화
+- **명령 수행(Instruction Following)** 정밀도 향상
+- **예약/지속적 작업(Scheduled & Persistent Tasks)** 처리
+- **긴 체인 실행(Long Chain Execution)** 신뢰성
+
+또한 OpenClaw 실제 작업 카테고리(환경 설정, 소프트웨어 개발, 정보 검색, 데이터 분석, 콘텐츠 생성)를 기반으로 **ZClawBench**라는 전용 벤치마크를 도입했다.
+
+> "GLM-5-Turbo는 OpenClaw 시나리오에서 GLM-5 대비 유의미한 향상을 보이며, 다양한 중요 작업 카테고리에서 여러 선도 모델을 능가한다." — Z.ai
 
 ### 핵심 장점
 
 | 특징 | 내용 |
 |------|------|
-| **가격** | 입력 $0.07, 출력 $0.40/M (GLM-5의 1/14) |
-| **무료 구동** | GLM Coding Plan으로 Claude Code, OpenClaw에서 **완전 무료** |
-| **로컬 구동** | Ollama로 로컬에서 무료 실행 가능 |
-| **컨텍스트** | 200K 토큰 |
-| **성능** | 일반적인 에이전트 작업에서 GLM-5와 유사한 품질 |
-| **속도** | GLM-5보다 빠른 응답 속도 |
+| **컨텍스트** | ~200K 토큰 |
+| **최대 출력** | 128K 토큰 |
+| **Thinking Mode** | 다중 모드 지원 |
+| **Function Calling** | 네이티브 도구 호출 |
+| **MCP 지원** | Model Context Protocol 내장 |
+| **컨텍스트 캐싱** | 캐시 읽기/쓰기 지원 |
+| **구조화 출력** | JSON 구조화 응답 |
+| **스트리밍** | 실시간 스트리밍 출력 |
+| **가격** | 입력 $1.20, 출력 $4.00/M |
 
-### Ollama로 로컬 구동
+### 왜 범용 모델이 아닌가?
 
-```bash
-ollama pull glm4:latest
-```
+OpenClaw의 에이전트 루프는 단일 프롬프트-응답이 아니다. 메시지 → 세션 해석 → 컨텍스트 조립 → 모델 추론 → 도구 실행 → 스트리밍 응답 → 영속화의 연속적인 루프다. 범용 모델은 다단계 에이전트 작업에서 **의도 유지, 올바른 도구 선택, 장기 작업에서의 안정성**에서 흔들리기 쉽다.
 
-### OpenClaw + GLM-4.7-Flash 설정
+GLM-5-Turbo는 이를 위해 **학습 시점부터** 해당 요구사항에 맞춰 튜닝되었다. 마치 자동차용 엔진과 항공기용 엔진이 같은 원리라도 설계 목적이 다른 것과 같다.
 
-Z.ai 프로바이더를 선택한 후:
+### GLM-5V-Turbo (비전 모델)
 
-```json
-{
-  "primary": "zai/glm-4.7-flash",
-  "fallbacks": ["zai/glm-4.5-air"]
-}
-```
+2026년 4월 1일, Z.ai는 **GLM-5V-Turbo**도 출시했다. 네이티브 멀티모달 비전 코딩 모델로, 역시 **OpenClaw 및 에이전트 워크플로우에 최적화**되었다. 200K 컨텍스트 윈도우를 유지하며 대용량 기술 문서나 소프트웨어 상호작용 영상도 처리 가능.
 
-또는 haimaker 등 서드파티를 통해:
+### OpenClaw + GLM-5-Turbo 설정
 
 ```json
 {
-  "providers": {
-    "haimaker": {
-      "baseUrl": "https://api.haimaker.ai/v1",
-      "apiKey": "YOUR_KEY",
-      "api": "openai-completions",
-      "models": [{"id": "glm-4.7-flash", "name": "GLM-4.7 Flash"}]
-    }
-  }
+  "primary": "zai/glm-5-turbo",
+  "fallbacks": ["zai/glm-4.7"]
 }
 ```
 
 ### Reddit 커뮤니티 평가
 
-> "GLM 4.7 Flash + OpenClaw은 아무도 사용하지 않는 **무료 AI 스택**이다. 클라우드 모델은 큰 컨텍스트 윈도우에 좋지만, 일반적인 사용량에서는 GLM 4.7 Flash가 압도적이다." — r/AISEOInsider
-
 > "OpenClaw를 GLM-5로 전환했더니 API 비용이 **6배 줄었다**." — r/AIToolsPerformance
+
+> "GLM 4.7 Flash + OpenClaw은 아무도 사용하지 않는 **무료 AI 스택**이다." — r/AISEOInsider (참고: GLM-4.7-Flash는 별도의 무료 경량 모델)
 
 ---
 
@@ -262,8 +263,8 @@ openclaw gateway restart
 | 용도 | 추천 모델 | 가격 |
 |------|---------|------|
 | **품질 최우선** | `zai/glm-5.1` | Coding Plan 무료 |
-| **비용 절감** | `zai/glm-4.7` | Coding Plan 무료 |
-| **빠른 응답** | `zai/glm-4.7-flash` | **완전 무료** |
+| **에이전트 전용** | `zai/glm-5-turbo` | Coding Plan 무료 |
+| **빠른 응답** | `zai/glm-4.7-flash` | Coding Plan 무료 |
 | **이미지 분석** | `zai/glm-4.6v` | Coding Plan 무료 |
 | **백그라운드** | `zai/glm-4.5-air` | Coding Plan 무료 |
 
@@ -305,12 +306,12 @@ ollama pull glm4:latest
 |------|---------|------|------|
 | **GLM-5.1** | 최신 프론티어 | Coding Plan 무료 | Claude Opus 4.6의 94.6% 코딩 성능 |
 | **GLM-5** | 프론티어 | Coding Plan 무료 | 에이전트·추론 범용 |
-| **GLM-4.7-Flash** | **OpenClaw 최적화** | **완전 무료** | Claude Opus 4.5 사고방식 학습, 가성비 끝판왕 |
+| **GLM-5-Turbo** | **OpenClaw 최적화** | $1.20/$4.00 | **에이전트 전용**, 도구 호출·체인 실행 특화 |
 | GLM-4.7 | 가성비 고성능 | Coding Plan 무료 | 안정적 일반 작업 |
 | GLM-4.7-FlashX | 초저비용 | $0.07/$0.01 | 대량 단순 요청 |
 | GLM-4.5-Air | 경량 백그라운드 | Coding Plan 무료 | 허트비트 등 정기 작업 |
 
-GLM-5.1은 오픈소스 모델이 프론티어 독점 모델에 도달할 수 있음을 증명하는 이정표다. 100% 비미국 하드웨어로 학습되었고, Claude Code와 OpenClaw를 공식 지원하며, GLM-4.7-Flash를 통해 **무료로도 프론티어급 경험**을 제공한다. 글로벌 AI 생태계에서 **비용 효율적 프론티어 대안**이라는 명확한 포지셔닝을 확고히 하고 있다.
+GLM-5-Turbo는 **OpenClaw 에이전트 워크플로우에 학습 시점부터 특화**된 모델이다. 도구 호출 안정성, 긴 체인 실행 신뢰성, 예약/지속적 작업 처리에 최적화되었으며, Z.ai는 전용 ZClawBench 벤치마크까지 도입했다. 100% 비미국 하드웨어로 학습되었고, Claude Code와 OpenClaw를 공식 지원하며, Coding Plan으로 **무료로도 프론티어급 경험**을 제공한다. 글로벌 AI 생태계에서 **비용 효율적 프론티어 대안**이자 **에이전트 인프라 전용 모델**이라는 명확한 포지셔닝을 확고히 하고 있다.
 
 ---
 

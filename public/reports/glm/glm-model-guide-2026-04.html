@@ -70,25 +70,26 @@
 <div class="bg-white rounded-2xl shadow-sm p-6">
 <div class="flex items-center gap-2 mb-3">
 <span class="text-xl">🔥</span>
-<h2 class="text-lg font-bold text-slate-900">OpenClaw 최적화 모델: GLM-4.7-Flash</h2>
+<h2 class="text-lg font-bold text-slate-900">OpenClaw 최적화 모델: GLM-5-Turbo</h2>
 </div>
 <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 mb-4">
-<div class="text-sm text-slate-700 leading-relaxed"><b>Claude Opus 4.5의 고추론 출력으로 파인튜닝</b>된 경량 모델. GLM Coding Plan으로 <b>완전 무료</b>로 OpenClaw와 Claude Code에서 구동. Ollama로 로컬에서도 무료 실행 가능.</div>
+<div class="text-sm text-slate-700 leading-relaxed">Z.ai가 <b>학습 시점부터 OpenClaw 에이전트 워크플로우에 특화</b>하여 설계한 전용 모델. 도구 호출 안정성, 명령 수행 정밀도, 예약/지속적 작업, 긴 체인 실행에 최적화. Z.ai가 OpenClaw 실제 작업 기반 <b>ZClawBench</b> 전용 벤치마크까지 도입.
+
+"GLM-5-Turbo는 OpenClaw 시나리오에서 GLM-5 대비 유의미한 향상을 보이며, 다양한 중요 작업 카테고리에서 여러 선도 모델을 능가한다." — Z.ai</div>
 </div>
-<div class="overflow-x-auto">
-<table class="w-full text-xs">
-<thead><tr class="bg-slate-50">
-<th class="text-left p-2 font-semibold text-slate-600">특징</th><th class="text-left p-2 font-semibold text-slate-600">GLM-4.7-Flash</th><th class="text-left p-2 font-semibold text-slate-600">GLM-5.1</th><th class="text-left p-2 font-semibold text-slate-600">Claude Opus 4.6</th>
-</tr></thead>
-<tbody>
-<tr class="border-b border-slate-100"><td class="p-2">가격 (입/출)</td><td class="p-2 font-bold text-green-600">$0.07/$0.40</td><td class="p-2">$1.00/$3.20</td><td class="p-2 text-red-600">~$15/~$75</td></tr>
-<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2">Coding Plan</td><td class="p-2 font-bold text-green-600">✅ 무료</td><td class="p-2">✅ 무료</td><td class="p-2 text-slate-400">❌</td></tr>
-<tr class="border-b border-slate-100"><td class="p-2">로컬 구동</td><td class="p-2 font-bold text-green-600">✅ Ollama</td><td class="p-2">4×A100 필요</td><td class="p-2 text-slate-400">❌</td></tr>
-<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2">컨텍스트</td><td class="p-2">200K</td><td class="p-2">200K</td><td class="p-2">200K</td></tr>
-<tr><td class="p-2">파인튜닝 기반</td><td class="p-2 font-bold">Claude Opus 4.5</td><td class="p-2">GLM-5</td><td class="p-2">Claude</td></tr>
-</tbody>
-</table>
+<div class="grid grid-cols-3 gap-3 mb-4">
+<div class="text-center bg-green-50 rounded-lg p-3 border border-green-100"><div class="text-xs text-slate-500">컨텍스트</div><div class="text-lg font-bold text-green-600">~200K</div></div>
+<div class="text-center bg-blue-50 rounded-lg p-3 border border-blue-100"><div class="text-xs text-slate-500">최대 출력</div><div class="text-lg font-bold text-blue-600">128K</div></div>
+<div class="text-center bg-purple-50 rounded-lg p-3 border border-purple-100"><div class="text-xs text-slate-500">가격</div><div class="text-lg font-bold text-purple-600">$1.2/$4</div></div>
 </div>
+<ul class="text-xs text-slate-600 space-y-1.5">
+<li>• <b>학습 시점부터</b> OpenClaw 에이전트에 특화 (범용 모델 아님)</li>
+<li>• 도구 호출(Tool Invocation) 안정성 강화</li>
+<li>• 예약/지속적 작업 + 긴 체인 실행(Long Chain) 신뢰성</li>
+<li>• Thinking Mode, Function Calling, MCP, 컨텍스트 캐싱 내장</li>
+<li>• <b>GLM-5V-Turbo</b> (4/1 출시): 네이티브 멀티모달 비전 + OpenClaw 최적화</li>
+<li>• ZClawBench: 환경 설정, SW 개발, 정보 검색, 데이터 분석, 콘텐츠 생성</li>
+</ul>
 </div>
 
 <!-- Model Lineup -->
@@ -207,7 +208,7 @@
 <h2 class="text-lg font-bold mb-4">📊 핵심 인사이트</h2>
 <div class="space-y-3 text-sm">
 <div class="flex gap-3"><span class="text-amber-400 font-bold">01</span><span><b>94.6% 도달</b> — GLM-5.1이 오픈소스 모델 중 Claude Opus 4.6에 가장 근접</span></div>
-<div class="flex gap-3"><span class="text-amber-400 font-bold">02</span><span><b>OpenClaw 최적화</b> — GLM-4.7-Flash는 Claude Opus 4.5 사고방식 학습, 완전 무료</span></div>
+<div class="flex gap-3"><span class="text-amber-400 font-bold">02</span><span><b>OpenClaw 전용 최적화</b> — GLM-5-Turbo는 학습 시점부터 에이전트 워크플로우 특화, ZClawBench 전용 벤치마크</span></div>
 <div class="flex gap-3"><span class="text-amber-400 font-bold">03</span><span><b>100% 비미국 하드웨어</b> — Huawei Ascend 910B 10만 장, NVIDIA 제로</span></div>
 <div class="flex gap-3"><span class="text-amber-400 font-bold">04</span><span><b>Claude Code 공식 호환</b> — 유일한 중국 모델, settings.json 한 줄 변경</span></div>
 <div class="flex gap-3"><span class="text-amber-400 font-bold">05</span><span><b>1/10~1/23 가격</b> — Claude Opus 4.6 대비 압도적 가성비</span></div>
