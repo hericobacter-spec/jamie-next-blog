@@ -15,7 +15,8 @@ export function getAllPosts(){
     const raw = fs.readFileSync(full,'utf8')
     const { data } = matter(raw)
     return { slug: s.replace(/\.mdx?$/,''), ...data }
-  }).sort((a:any,b:any)=> new Date(b.date).valueOf() - new Date(a.date).valueOf())
+  }).filter((p:any) => p.published !== false)
+  .sort((a:any,b:any)=> new Date(b.date).valueOf() - new Date(a.date).valueOf())
 }
 
 import readingTime from 'reading-time'
