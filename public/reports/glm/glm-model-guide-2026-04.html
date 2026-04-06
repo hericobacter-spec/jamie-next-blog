@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLM 모델 가이드 2026 — Zhipu AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:'Noto Sans KR',sans-serif;background:#f1f5f9}</style>
+</head>
+<body class="min-h-screen bg-slate-100 p-4 md:p-8">
+
+<div class="max-w-3xl mx-auto space-y-6">
+
+<!-- HERO -->
+<div class="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">2026.04 기준</span>
+<span class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full">GLM-5.1 최신</span>
+<span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">OpenClaw 최적화</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Zhipu AI GLM 모델 완전 가이드</h1>
+<p class="text-sm text-slate-600 mb-4">GLM-5.1 (Claude Opus 4.6 대비 94.6%), GLM-4.7-Flash (OpenClaw 최적화 무료 모델), 전 라인업 가격·벤치마크·설정법</p>
+
+<div class="grid grid-cols-4 gap-3">
+<div class="text-center bg-slate-50 rounded-xl p-3">
+<div class="text-xl font-bold text-blue-600">744B</div>
+<div class="text-xs text-slate-500">총 파라미터</div>
+</div>
+<div class="text-center bg-slate-50 rounded-xl p-3">
+<div class="text-xl font-bold text-purple-600">94.6%</div>
+<div class="text-xs text-slate-500">Opus 4.6 대비</div>
+</div>
+<div class="text-center bg-slate-50 rounded-xl p-3">
+<div class="text-xl font-bold text-green-600">무료</div>
+<div class="text-xs text-slate-500">Coding Plan</div>
+</div>
+<div class="text-center bg-slate-50 rounded-xl p-3">
+<div class="text-xl font-bold text-amber-600">100%</div>
+<div class="text-xs text-slate-500">비미국 하드웨어</div>
+</div>
+</div>
+</div>
+
+<!-- GLM-5.1 -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="text-xl">⭐</span>
+<h2 class="text-lg font-bold text-slate-900">GLM-5.1: 최신 프론티어 (2026.03.27)</h2>
+</div>
+<div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 mb-4">
+<div class="text-sm text-slate-700 leading-relaxed">GLM-5에서 단 6주 만에 코딩 성능 <b>28% 향상</b>. Claude Opus 4.6 코딩 점수 47.9 대비 GLM-5.1은 <b>45.3점 (94.6%)</b>. 주요 개선은 <b>에이전트 능력</b>에 집중 — 터미널 작업, SWE-bench, MCP 도구 사용에서 대폭 강화.</div>
+</div>
+<div class="grid grid-cols-3 gap-3 mb-4">
+<div class="text-center bg-green-50 rounded-lg p-3 border border-green-100"><div class="text-xs text-slate-500">코딩 점수</div><div class="text-lg font-bold text-green-600">45.3</div></div>
+<div class="text-center bg-blue-50 rounded-lg p-3 border border-blue-100"><div class="text-xs text-slate-500">활성 파라미터</div><div class="text-lg font-bold text-blue-600">40-44B</div></div>
+<div class="text-center bg-purple-50 rounded-lg p-3 border border-purple-100"><div class="text-xs text-slate-500">MoE 전문가</div><div class="text-lg font-bold text-purple-600">256개</div></div>
+</div>
+<ul class="text-xs text-slate-600 space-y-1.5">
+<li>• 744B 총 파라미터, MoE 256 전문가 (토큰당 8개 활성)</li>
+<li>• DeepSeek Sparse Attention (DSA) — 200K 컨텍스트 비용 절감</li>
+<li>• 28.5조 토큰 사전 학습, Thinking Mode 기본 활성화</li>
+<li>• Huawei Ascend 910B 10만 장으로 학습 (NVIDIA GPU 제로)</li>
+<li>• ⚠️ 코딩 벤치마크는 Z.ai 자체 보고, 독립 평가 대기 중</li>
+</ul>
+</div>
+
+<!-- OpenClaw Optimized -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="text-xl">🔥</span>
+<h2 class="text-lg font-bold text-slate-900">OpenClaw 최적화 모델: GLM-4.7-Flash</h2>
+</div>
+<div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 mb-4">
+<div class="text-sm text-slate-700 leading-relaxed"><b>Claude Opus 4.5의 고추론 출력으로 파인튜닝</b>된 경량 모델. GLM Coding Plan으로 <b>완전 무료</b>로 OpenClaw와 Claude Code에서 구동. Ollama로 로컬에서도 무료 실행 가능.</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-xs">
+<thead><tr class="bg-slate-50">
+<th class="text-left p-2 font-semibold text-slate-600">특징</th><th class="text-left p-2 font-semibold text-slate-600">GLM-4.7-Flash</th><th class="text-left p-2 font-semibold text-slate-600">GLM-5.1</th><th class="text-left p-2 font-semibold text-slate-600">Claude Opus 4.6</th>
+</tr></thead>
+<tbody>
+<tr class="border-b border-slate-100"><td class="p-2">가격 (입/출)</td><td class="p-2 font-bold text-green-600">$0.07/$0.40</td><td class="p-2">$1.00/$3.20</td><td class="p-2 text-red-600">~$15/~$75</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2">Coding Plan</td><td class="p-2 font-bold text-green-600">✅ 무료</td><td class="p-2">✅ 무료</td><td class="p-2 text-slate-400">❌</td></tr>
+<tr class="border-b border-slate-100"><td class="p-2">로컬 구동</td><td class="p-2 font-bold text-green-600">✅ Ollama</td><td class="p-2">4×A100 필요</td><td class="p-2 text-slate-400">❌</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2">컨텍스트</td><td class="p-2">200K</td><td class="p-2">200K</td><td class="p-2">200K</td></tr>
+<tr><td class="p-2">파인튜닝 기반</td><td class="p-2 font-bold">Claude Opus 4.5</td><td class="p-2">GLM-5</td><td class="p-2">Claude</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Model Lineup -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="text-xl">📋</span>
+<h2 class="text-lg font-bold text-slate-900">전 모델 라인업 & 가격</h2>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-xs">
+<thead><tr class="bg-slate-50">
+<th class="text-left p-2 font-semibold text-slate-600">모델</th>
+<th class="text-center p-2 font-semibold text-slate-600">입력 $/M</th>
+<th class="text-center p-2 font-semibold text-slate-600">출력 $/M</th>
+<th class="text-center p-2 font-semibold text-slate-600">컨텍스트</th>
+<th class="text-center p-2 font-semibold text-slate-600">Coding Plan</th>
+</tr></thead>
+<tbody>
+<tr class="border-b border-slate-100"><td class="p-2 font-semibold">GLM-5.1 ⭐</td><td class="p-2 text-center">~$1.00</td><td class="p-2 text-center">~$3.20</td><td class="p-2 text-center">200K</td><td class="p-2 text-center font-bold text-green-600">무료</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2 font-semibold">GLM-5</td><td class="p-2 text-center">$1.00</td><td class="p-2 text-center">$3.20</td><td class="p-2 text-center">200K</td><td class="p-2 text-center font-bold text-green-600">무료</td></tr>
+<tr class="border-b border-slate-100"><td class="p-2 font-semibold">GLM-5-Turbo</td><td class="p-2 text-center">$1.20</td><td class="p-2 text-center">$4.00</td><td class="p-2 text-center">128K+</td><td class="p-2 text-center font-bold text-green-600">무료</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2 font-semibold">GLM-4.7</td><td class="p-2 text-center">$0.60</td><td class="p-2 text-center">$2.20</td><td class="p-2 text-center">200K</td><td class="p-2 text-center font-bold text-green-600">무료</td></tr>
+<tr class="border-b border-slate-100 bg-amber-50"><td class="p-2 font-bold">GLM-4.7-Flash 🔥</td><td class="p-2 text-center font-bold text-green-600">$0.07</td><td class="p-2 text-center font-bold text-green-600">$0.40</td><td class="p-2 text-center">200K</td><td class="p-2 text-center font-bold text-green-600">무료</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2 font-semibold">GLM-4.7-FlashX</td><td class="p-2 text-center font-bold text-green-600">$0.07</td><td class="p-2 text-center font-bold text-green-600">$0.01</td><td class="p-2 text-center">128K</td><td class="p-2 text-center font-bold text-green-600">무료</td></tr>
+<tr class="border-b border-slate-100"><td class="p-2 font-semibold">GLM-4.6</td><td class="p-2 text-center">$0.60</td><td class="p-2 text-center">$2.20</td><td class="p-2 text-center">128K</td><td class="p-2 text-center font-bold text-green-600">무료</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2 font-semibold">GLM-4.5-Air</td><td class="p-2 text-center">—</td><td class="p-2 text-center">—</td><td class="p-2 text-center">128K</td><td class="p-2 text-center font-bold text-green-600">무료</td></tr>
+<tr><td class="p-2 font-semibold">GLM-5V-Turbo</td><td class="p-2 text-center">—</td><td class="p-2 text-center">—</td><td class="p-2 text-center">—</td><td class="p-2 text-center font-bold text-green-600">무료</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Benchmarks -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="text-xl">📊</span>
+<h2 class="text-lg font-bold text-slate-900">프론티어 벤치마크 비교</h2>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-xs">
+<thead><tr class="bg-slate-50">
+<th class="text-left p-2 font-semibold text-slate-600">벤치마크</th>
+<th class="text-center p-2 font-semibold text-blue-600">GLM-5</th>
+<th class="text-center p-2 font-semibold text-purple-600">Claude Opus 4.6</th>
+<th class="text-center p-2 font-semibold text-slate-500">GPT-5.2</th>
+<th class="text-center p-2 font-semibold text-slate-500">Gemini 3 Pro</th>
+<th class="text-center p-2 font-semibold text-slate-500">DeepSeek V3.2</th>
+</tr></thead>
+<tbody>
+<tr class="border-b border-slate-100"><td class="p-2">HLE (w/ Tools)</td><td class="p-2 text-center font-bold">50.4</td><td class="p-2 text-center">43.4</td><td class="p-2 text-center">45.5</td><td class="p-2 text-center">45.8</td><td class="p-2 text-center">40.8</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2">GPQA-Diamond</td><td class="p-2 text-center">86.0</td><td class="p-2 text-center">—</td><td class="p-2 text-center font-bold">92.4</td><td class="p-2 text-center">91.9</td><td class="p-2 text-center">82.4</td></tr>
+<tr class="border-b border-slate-100"><td class="p-2">SWE-bench Verified</td><td class="p-2 text-center">77.8</td><td class="p-2 text-center font-bold">81.4</td><td class="p-2 text-center">80.0</td><td class="p-2 text-center">76.2</td><td class="p-2 text-center">73.1</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2">τ²-Bench (에이전트)</td><td class="p-2 text-center">89.7</td><td class="p-2 text-center font-bold">91.6</td><td class="p-2 text-center">85.5</td><td class="p-2 text-center">90.7</td><td class="p-2 text-center">85.3</td></tr>
+<tr class="border-b border-slate-100"><td class="p-2">BrowseComp</td><td class="p-2 text-center font-bold">62.0</td><td class="p-2 text-center">37.0</td><td class="p-2 text-center">—</td><td class="p-2 text-center">37.8</td><td class="p-2 text-center">51.4</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2">MCP-Atlas</td><td class="p-2 text-center">67.8</td><td class="p-2 text-center">65.2</td><td class="p-2 text-center font-bold">68.0</td><td class="p-2 text-center">66.6</td><td class="p-2 text-center">62.2</td></tr>
+<tr><td class="p-2">Vending Bench 2</td><td class="p-2 text-center">$4,432</td><td class="p-2 text-center">$4,967</td><td class="p-2 text-center">$3,591</td><td class="p-2 text-center font-bold">$5,478</td><td class="p-2 text-center">$1,034</td></tr>
+</tbody>
+</table>
+</div>
+<div class="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-blue-800">💡 GLM-5는 BrowseComp(웹 브라우징)와 HLE w/ Tools에서 Claude/GPT 상회. SWE-bench에서는 Claude Opus 4.6과 3.6%p 차이.</div>
+</div>
+
+<!-- OpenClaw Setup -->
+<div class="bg-white rounded-2xl shadow-sm p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="text-xl">⚙️</span>
+<h2 class="text-lg font-bold text-slate-900">OpenClaw 설정 가이드</h2>
+</div>
+
+<div class="text-sm font-semibold text-slate-700 mb-2">GLM-5.1 업그레이드</div>
+<div class="bg-slate-900 rounded-lg p-4 text-xs font-mono text-green-400 mb-4 overflow-x-auto">
+<pre>{
+  "primary": "zai/glm-5.1",
+  "fallbacks": ["zai/glm-4.7"]
+}</pre>
+</div>
+
+<div class="text-sm font-semibold text-slate-700 mb-2">모델 등록 (openclaw.json)</div>
+<div class="bg-slate-900 rounded-lg p-4 text-xs font-mono text-green-400 mb-4 overflow-x-auto">
+<pre>{
+  "id": "glm-5.1", "name": "GLM-5.1",
+  "reasoning": true, "input": ["text"],
+  "cost": {"input": 0, "output": 0},
+  "contextWindow": 204800, "maxTokens": 131072
+}</pre>
+</div>
+
+<div class="text-sm font-semibold text-slate-700 mb-2">Claude Code 호환</div>
+<div class="bg-slate-900 rounded-lg p-4 text-xs font-mono text-green-400 mb-4 overflow-x-auto">
+<pre>{
+  "env": {
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5.1",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.1",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.5-air"
+  }
+}</pre>
+</div>
+
+<div class="text-sm font-semibold text-slate-700 mb-2">모델 선택 가이드</div>
+<div class="overflow-x-auto">
+<table class="w-full text-xs">
+<thead><tr class="bg-slate-50"><th class="text-left p-2">용도</th><th class="text-left p-2">모델</th><th class="text-left p-2">가격</th></tr></thead>
+<tbody>
+<tr class="border-b border-slate-100"><td class="p-2">품질 최우선</td><td class="p-2 font-semibold">zai/glm-5.1</td><td class="p-2 text-green-600 font-bold">무료</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2">가성비</td><td class="p-2 font-semibold">zai/glm-4.7</td><td class="p-2 text-green-600 font-bold">무료</td></tr>
+<tr class="border-b border-slate-100 bg-amber-50"><td class="p-2 font-bold">빠른 응답 / 로컬</td><td class="p-2 font-bold">zai/glm-4.7-flash</td><td class="p-2 text-green-600 font-bold">무료</td></tr>
+<tr class="border-b border-slate-100 bg-slate-50/50"><td class="p-2">이미지 분석</td><td class="p-2 font-semibold">zai/glm-4.6v</td><td class="p-2 text-green-600 font-bold">무료</td></tr>
+<tr><td class="p-2">백그라운드</td><td class="p-2 font-semibold">zai/glm-4.5-air</td><td class="p-2 text-green-600 font-bold">무료</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- INSIGHTS -->
+<div class="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl shadow-sm p-6 text-white">
+<h2 class="text-lg font-bold mb-4">📊 핵심 인사이트</h2>
+<div class="space-y-3 text-sm">
+<div class="flex gap-3"><span class="text-amber-400 font-bold">01</span><span><b>94.6% 도달</b> — GLM-5.1이 오픈소스 모델 중 Claude Opus 4.6에 가장 근접</span></div>
+<div class="flex gap-3"><span class="text-amber-400 font-bold">02</span><span><b>OpenClaw 최적화</b> — GLM-4.7-Flash는 Claude Opus 4.5 사고방식 학습, 완전 무료</span></div>
+<div class="flex gap-3"><span class="text-amber-400 font-bold">03</span><span><b>100% 비미국 하드웨어</b> — Huawei Ascend 910B 10만 장, NVIDIA 제로</span></div>
+<div class="flex gap-3"><span class="text-amber-400 font-bold">04</span><span><b>Claude Code 공식 호환</b> — 유일한 중국 모델, settings.json 한 줄 변경</span></div>
+<div class="flex gap-3"><span class="text-amber-400 font-bold">05</span><span><b>1/10~1/23 가격</b> — Claude Opus 4.6 대비 압도적 가성비</span></div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="text-xs text-slate-400 pb-4">
+<p>출처: Z.ai docs, HuggingFace (zai-org/GLM-5), Serenities AI, OpenRouter, Reddit (2026-04)</p>
+</div>
+
+</div>
+</body>
+</html>

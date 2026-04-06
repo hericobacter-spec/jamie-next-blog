@@ -1,97 +1,129 @@
 ---
-title: "Zhipu AI GLM 모델 가이드: GLM-5부터 GLM-4.7-FlashX까지, 그리고 OpenClaw 최적화 활용법"
+title: "Zhipu AI GLM 모델 가이드: GLM-5.1 최신 업데이트, 오픈소스 프론티어, OpenClaw 최적화 모델 완전 분석"
 date: "2026-04-06"
-description: "중국 최고의 AI 랩 Zhipu AI(Z.ai)의 GLM 모델 패밀리 전체 가이드. GLM-5 744B 파라미터 오픈소스 모델부터 경량 모델까지, 가격 비교, 벤치마크 성능, OpenClaw 연동 설정, 그리고 Claude Code 호환성까지 상세히 분석합니다."
+description: "Zhipu AI(Z.ai) GLM 모델 패밀리 완전 가이드. 2026년 3월 27일 출시된 GLM-5.1은 Claude Opus 4.6 코딩 성능의 94.6%를 달성. 744B 파라미터 MoE, OpenClaw 최적화 모델(GLM-4.7-Flash), 가격 비교, 벤치마크, Claude Code 호환성까지 상세 분석."
 category: "A.I"
 tags:
+  - GLM-5.1
   - GLM
   - ZhipuAI
   - Z.ai
   - OpenClaw
   - 오픈소스LLM
-  - API가격
   - ClaudeCode
-keywords: "GLM-5, Zhipu AI, Z.ai GLM models, GLM-4.7, GLM-4.7-FlashX, OpenClaw GLM configuration, Claude Code GLM, GLM pricing, GLM benchmark comparison, MoE LLM, open source Chinese LLM"
+  - API가격
+keywords: "GLM-5.1, Zhipu AI, Z.ai GLM models, GLM-4.7-Flash OpenClaw, OpenClaw optimized model, GLM pricing, GLM benchmark, Claude Code GLM, MoE LLM, open source Chinese LLM, Huawei Ascend"
 ---
 
-# Zhipu AI GLM 모델 가이드: GLM-5부터 경량 모델까지, 그리고 OpenClaw 최적화 활용법
+# Zhipu AI GLM 모델 가이드: GLM-5.1, 오픈소스 프론티어, OpenClaw 최적화 모델 완전 분석
 
-2026년 2월 11일, Zhipu AI(Z.ai)가 **GLM-5**를 출시했다. 744B 파라미터의 MoE(Mixture of Experts) 오픈소스 모델로, DeepSeek V3.2, Kimi K2.5와 함께 **중국 오픈소스 LLM 빅3**를 구성한다. 특히 OpenClaw와 Claude Code와의 공식 호환성을 갖춘 유일한 중국 모델로, 글로벌 AI 생태계에서 독특한 위치를 차지하고 있다.
+> **[전체 HTML 보고서 보기](/reports/glm/glm-model-guide-2026-04.html)**
 
-이 글에서는 GLM 모델 패밀리 전체를 개요부터 가격, 벤치마크, OpenClaw 연동, 활용법까지 상세히 정리한다.
+2026년 3월 27일, Zhipu AI(Z.ai)가 **GLM-5.1**을 출시했다. 2월 11일 GLM-5 출시 후 불과 6주 만의 업데이트로, 코딩 벤치마크에서 Claude Opus 4.6 성능의 **94.6%**를 기록하며 프론티어 독점 모델과의 격차를 역대 최소 수준으로 좁혔다. 특히 **OpenClaw 최적화 모델**로 불리는 GLM-4.7-Flash는 Claude Opus 4.5의 고추론(high-reasoning) 출력으로 파인튜닝되어, 무료로 로컬 구동 가능하면서도 놀라운 성능을 보여주고 있다.
 
 ---
 
 ## Zhipu AI(Z.ai) 개요
 
-**Zhipu AI(智谱AI)**는 2019년 칭화대학교 KEG 연구실에서 분사한 중국의 AI 기업이다. GLM(General Language Model) 시리즈를 개발하며, 2026년 현재 **세계 Top 3 오픈 가중치 플랫폼** 중 하나로 평가받는다.
+**Zhipu AI(智谱AI)**는 2019년 칭화대학교 KEG 연구실에서 분사한 중국의 AI 기업이다. 2026년 1월 **홍콩 IPO**를 통해 세계 최초의 상장 기반 모델 기업이 되었고, $6.6B(첫날 종가 $7.1B)의 기업가치로 공모했다.
 
 ### 핵심 특징
 
-- **오픈소스 전략**: GLM-5를 GitHub와 Hugging Face에 공개 (Apache 2.0 라이선스)
-- **OpenAI API 호환**: `/v4/chat/completions` 엔드포인트로 OpenAI SDK 그대로 사용 가능
-- **Claude Code 호환**: 공식적으로 Claude Code 모델 교체 지원
-- **OpenClaw 네이티브 지원**: OpenClaw의 Z.AI 프로바이더로 기본 통합
-- **한국어 지원**: GLM-4 시리즈부터 한국어 학습 데이터 포함, GLM-5에서 향상
+- **100% 비미국 하드웨어 학습**: Huawei Ascend 910B 칩 10만 장 + MindSpore 프레임워크, NVIDIA GPU 단 1장도 사용 안 함
+- **US Entity List 대응**: 2025년 1월 미국 제재 대상에 포함되었으나, 자체 반도체로 프론티어 모델 학습 성공
+- **오픈소스 전략**: GLM-5를 GitHub와 Hugging Face에 공개 (MIT 라이선스 예정)
+- **OpenAI API 호환**: `/v4/chat/completions` 엔드포인트로 OpenAI SDK 그대로 사용
+- **Claude Code + OpenClaw 공식 호환**: 유일한 중국 모델 네이티브 지원
 
 ---
 
-## GLM 모델 라인업
+## GLM 모델 라인업 (2026년 4월 기준)
 
 ### 텍스트 모델
 
-| 모델 | 총 파라미터 | 활성 파라미터 | 컨텍스트 | 용도 | 특징 |
-|------|-----------|-------------|---------|------|------|
-| **GLM-5** | 744B | 40B (MoE) | 200K | 프론티어 추론·코딩·에이전트 | DSA 희소 어텐션, Thinking Mode 기본 활성화 |
-| **GLM-5-Turbo** | 744B | 40B (MoE) | 128K+ | 고속 추론 | GLM-5보다 빠른 응답, 긴 컨텍스트 지원 |
-| **GLM-4.7** | — | — | 128K | 범용 고성능 | GLM-5의 이전 세대, 비용 효율적 |
-| **GLM-4.7-FlashX** | — | — | 128K | 초저비용 빠른 응답 | 가성비 최고, 단순 작업용 |
-| **GLM-4.6** | — | — | 128K | 범용 | 안정적 중급 모델 |
-| **GLM-4.5** | 355B | 32B (MoE) | 128K | 범용 | GLM-5의 직전 세대 |
-| **GLM-4.5-Air** | — | — | 128K | 경량 | 가벼운 작업, 엣지 배포 |
-| **GLM-4.5-X** | — | — | 128K | 고성능 전문 | 복잡한 추론에 특화 |
+| 모델 | 출시일 | 총 파라미터 | 활성 파라미터 | 컨텍스트 | 용도 |
+|------|--------|-----------|-------------|---------|------|
+| **GLM-5.1** ⭐ | 2026.03.27 | 744B | 40-44B (MoE) | 200K | 프론티어 코딩·에이전트 (최신) |
+| **GLM-5** | 2026.02.11 | 744B | 40B (MoE) | 200K | 프론티어 추론·코딩 |
+| **GLM-5-Turbo** | 2026.02 | 744B | 40B (MoE) | 128K+ | 고속 추론 |
+| **GLM-4.7** | 2025 | — | — | 200K | 범용 고성능 |
+| **GLM-4.7-Flash** 🔥 | 2025 | — | — | 200K | **OpenClaw 최적화** (무료) |
+| **GLM-4.7-FlashX** | 2025 | — | — | 128K | 초저비용 |
+| **GLM-4.6** | 2025 | — | — | 128K | 범용 안정형 |
+| **GLM-4.5** | 2025 | 355B | 32B (MoE) | 128K | 범용 |
+| **GLM-4.5-Air** | 2025 | — | — | 128K | 경량 백그라운드 |
 
 ### 비전 모델
 
 | 모델 | 용도 | 특징 |
 |------|------|------|
-| **GLM-4.6V** | 이미지 이해 | OCR, 차트 분석, 이미지 추론 |
-| **GLM-4.6V-FlashX** | 저비용 비전 | 빠르고 저렴한 이미지 분석 |
-| **GLM-5V-Turbo** | 최신 비전 | GLM-5 기반 최고 성능 비전 |
+| **GLM-5V-Turbo** | 최신 비전 | GLM-5 기반 최고 성능 |
+| **GLM-4.6V** | 이미지 이해 | OCR, 차트 분석 |
+| **GLM-4.6V-FlashX** | 저비용 비전 | $0.04/$0.40 |
 
-### 아키텍처 핵심: DeepSeek Sparse Attention (DSA)
+---
 
-GLM-5는 DeepSeek가 개발한 **DSA(DeepSeek Sparse Attention)**를 통합했다. 이는 긴 컨텍스트 처리 비용을 크게 줄이면서도 200K 컨텍스트 윈도우를 유지하는 혁신적인 어텐션 메커니즘이다. 결과적으로 744B 파라미터에도 불구하고 배포 비용을 획기적으로 절감했다.
+## GLM-5.1: GLM-5에서 무엇이 바뀌었나
+
+### 코딩 성능 비약적 향상
+
+Claude Code를 평가 프레임워크로 사용한 Z.ai 자체 벤치마크:
+
+| 모델 | 코딩 점수 | Claude Opus 4.6 대비 |
+|------|---------|---------------------|
+| Claude Opus 4.6 | 47.9 | 기준 |
+| **GLM-5.1** | **45.3** | **94.6%** |
+| GLM-5 | 35.4 | 73.9% |
+
+GLM-5 → GLM-5.1로 **단일 포인트 릴리즈에서 28% 향상**. 이는 사소한 튜닝이 아닌 **대규모 포스트트레이닝 최적화**의 결과다.
+
+### 아키텍처 (GLM-5 계열 공통)
+
+- **744B 총 파라미터**, MoE 256 전문가, 토큰당 8개 활성
+- **활성 파라미터 ~40-44B** (5.4-5.9% 희소율)
+- **DeepSeek Sparse Attention (DSA)**: 긴 컨텍스트 비용 획기적 절감
+- **사전 학습 데이터**: 28.5조 토큰 (GLM-4.5 대비 +5.5조)
+- **최대 출력**: 131,072 토큰
+- **Thinking Mode**: 기본 활성화, 단계별 추론 후 답변
+
+### 에이전트 능력 강화
+
+GLM-5.1의 주요 개선은 **에이전트 능력**에 집중되었다:
+
+- **Terminal-Bench 2.0**: Claude Code 환경에서 실제 터미널 작업 평가
+- **SWE-bench Verified**: 실제 GitHub 이슈 해결 능력
+- **MCP-Atlas**: Model Context Protocol 도구 사용 능력
+- **Vending Bench 2**: 1년 기간 자판기 사업 시뮬레이션 (장기 계획)
+
+> ⚠️ **주의**: GLM-5.1 코딩 벤치마크(45.3점, 94.6%)는 Z.ai 자체 보고다. 독립 제3평가는 아직 없음. GLM-5의 SWE-bench 77.8%는 외부 검증 완료.
 
 ---
 
 ## 가격 비교
 
-Z.ai 공식 API 가격 (USD 기준, 백만 토큰당):
+Z.ai 공식 API 가격 (USD, 백만 토큰당):
 
-| 모델 | 입력 $/M | 출력 $/M | 한글 토큰 | 무료 체험 |
-|------|---------|---------|----------|---------|
-| **GLM-5** | $1.00 | $3.20 | ¥4 / ¥18 | ✅ 한정 무료 |
-| **GLM-5-Turbo** | $1.20 | $4.00 | ¥7 / ¥26 | ✅ 한정 무료 |
-| **GLM-4.7** | $0.60 | $2.20 | — | ✅ 한정 무료 |
-| **GLM-4.7-FlashX** | $0.07 | $0.40 | — | ✅ 한정 무료 |
-| **GLM-4.6** | $0.60 | $2.20 | — | ✅ 한정 무료 |
-| **GLM-4.5** | $0.60 | $2.20 | — | ✅ 한정 무료 |
-| **GLM-4.5-X** | $2.20 | $8.90 | — | ✅ 한정 무료 |
-| **GLM-4.6V** | $0.30 | $0.90 | — | ✅ 한정 무료 |
-| **GLM-4.6V-FlashX** | $0.04 | $0.40 | — | ✅ 한정 무료 |
+| 모델 | 입력 $/M | 출력 $/M | 무료 체험 |
+|------|---------|---------|---------|
+| **GLM-5.1** | ~$1.00 | ~$3.20 | ✅ Coding Plan |
+| **GLM-5** | $1.00 | $3.20 | ✅ |
+| **GLM-5-Turbo** | $1.20 | $4.00 | ✅ |
+| **GLM-4.7** | $0.60 | $2.20 | ✅ |
+| **GLM-4.7-Flash** | $0.07 | $0.40 | ✅ **Coding Plan 무료** |
+| **GLM-4.7-FlashX** | $0.07 | $0.01 | ✅ |
+| **GLM-4.6** | $0.60 | $2.20 | ✅ |
 
-### 경쟁 모델 대비 가격 (프론티어급)
+### 프론티어급 경쟁 모델 대비
 
-| 모델 | 입력 $/M | 출력 $/M | GLM-5 대비 |
-|------|---------|---------|-----------|
-| **GLM-5** | $1.00 | $3.20 | 기준 |
-| Claude Opus 4.5 | ~$15 | ~$75 | **15~23배 비쌈** |
-| GPT-5.2 | ~$10 | ~$40 | **10~12배 비쌈** |
-| Gemini 3 Pro | ~$1.25 | ~$10 | 출력 3배 |
+| 모델 | 입력 $/M | 출력 $/M | GLM-5.1 대비 |
+|------|---------|---------|-------------|
+| **GLM-5.1** | ~$1.00 | ~$3.20 | 기준 |
+| Claude Opus 4.6 | ~$15 | ~$75 | **15~23배 비쌈** |
 | Claude Sonnet 4.6 | ~$3 | ~$15 | **3~5배 비쌈** |
+| GPT-5.4 | ~$10 | ~$40 | **10~12배 비쌈** |
+| Gemini 3 Pro | ~$1.25 | ~$10 | 출력 3배 |
 
-> 💡 **핵심**: GLM-5는 Claude Opus 4.5와 유사한 성능을 **1/10 이하 가격**에 제공한다. Reddit 사용자에 따르면 OpenClaw에서 GLM-5로 전환 후 **API 비용이 6배 절감**되었다.
+> 💡 Reddit 사용자 보고: OpenClaw에서 GLM-5로 전환 후 **API 비용 6배 절감**. Coding Plan 가입 시 GLM-4.7-Flash는 **완전 무료**.
 
 ---
 
@@ -99,53 +131,105 @@ Z.ai 공식 API 가격 (USD 기준, 백만 토큰당):
 
 ### 프론티어 모델 vs GLM-5
 
-| 벤치마크 | GLM-5 | Claude Opus 4.5 | GPT-5.2 | Gemini 3 Pro | DeepSeek V3.2 | Kimi K2.5 |
+| 벤치마크 | GLM-5 | Claude Opus 4.6 | GPT-5.2 | Gemini 3 Pro | DeepSeek V3.2 | Kimi K2.5 |
 |----------|-------|-----------------|---------|-------------|---------------|-----------|
 | HLE (w/ Tools) | **50.4** | 43.4 | 45.5 | 45.8 | 40.8 | 51.8 |
-| AIME 2026 I | 92.7 | 93.3 | — | 90.6 | 92.7 | 92.5 |
-| GPQA-Diamond | 86.0 | 87.0 | 92.4 | 91.9 | 82.4 | 87.6 |
-| SWE-bench Verified | 77.8 | **80.9** | 80.0 | 76.2 | 73.1 | 76.8 |
-| SWE-bench Multilingual | **73.3** | 77.5 | 72.0 | 65.0 | 70.2 | 73.0 |
-| Terminal-Bench 2.0 | 56.2 | **59.3** | 54.0 | 54.2 | 39.3 | 50.8 |
+| AIME 2026 I | 92.7 | — | — | 90.6 | 92.7 | 92.5 |
+| GPQA-Diamond | 86.0 | — | 92.4 | 91.9 | 82.4 | 87.6 |
+| SWE-bench Verified | 77.8 | **81.4** | 80.0 | 76.2 | 73.1 | 76.8 |
+| SWE-bench Multilingual | **73.3** | — | 72.0 | 65.0 | 70.2 | 73.0 |
 | τ²-Bench (에이전트) | 89.7 | **91.6** | 85.5 | 90.7 | 85.3 | 80.2 |
 | MCP-Atlas | 67.8 | 65.2 | **68.0** | 66.6 | 62.2 | 63.8 |
-| BrowseComp | 62.0 | 37.0 | — | 37.8 | 51.4 | 60.6 |
+| BrowseComp | **62.0** | 37.0 | — | 37.8 | 51.4 | 60.6 |
 | Vending Bench 2 | $4,432 | **$4,967** | $3,591 | **$5,478** | $1,034 | $1,198 |
 
-### 분석
+**GLM-5가 압도적인 분야**: BrowseComp(웹 브라우징), HLE w/ Tools, SWE-bench Multilingual
+**GLM-5가 근소하게 약한 분야**: GPQA-Diamond, SWE-bench Verified (Claude Opus 4.6 대비 3.6%p)
 
-**GLM-5가 특히 강한 분야:**
-- **BrowseComp (웹 브라우징)**: 62.0%로 Claude Opus 4.5(37.0%), Gemini 3 Pro(37.8%)를 압도
-- **HLE w/ Tools (도구 활용 추론)**: 50.4%로 Claude Opus 4.5(43.4%), GPT-5.2(45.5%) 상회
-- **SWE-bench Multilingual**: 다국어 소프트웨어 엔지니어링에서 GPT-5.2, Gemini 3 Pro 상회
+---
 
-**GLM-5가 약간 부족한 분야:**
-- **GPQA-Diamond**: Claude Opus 4.5, GPT-5.2보다 소폭 낮음
-- **Tool-Decathlon**: 다양한 도구 사용에서 Claude, GPT-5.2에 미치지 못함 (38.0 vs 46.3)
-- **CyberGym**: 사이버보안 과제에서 Claude Opus 4.5(50.6%)에 크게 뒤짐 (43.2)
+## 🔥 OpenClaw 최적화 모델: GLM-4.7-Flash
+
+### 왜 "최적화"인가
+
+GLM-4.7-Flash는 **Claude Opus 4.5의 고추론(high-reasoning) 출력으로 파인튜닝**된 모델이다. 즉, 프론티어 모델의 "사고 방식"을 학습한 경량 모델이다.
+
+### 핵심 장점
+
+| 특징 | 내용 |
+|------|------|
+| **가격** | 입력 $0.07, 출력 $0.40/M (GLM-5의 1/14) |
+| **무료 구동** | GLM Coding Plan으로 Claude Code, OpenClaw에서 **완전 무료** |
+| **로컬 구동** | Ollama로 로컬에서 무료 실행 가능 |
+| **컨텍스트** | 200K 토큰 |
+| **성능** | 일반적인 에이전트 작업에서 GLM-5와 유사한 품질 |
+| **속도** | GLM-5보다 빠른 응답 속도 |
+
+### Ollama로 로컬 구동
+
+```bash
+ollama pull glm4:latest
+```
+
+### OpenClaw + GLM-4.7-Flash 설정
+
+Z.ai 프로바이더를 선택한 후:
+
+```json
+{
+  "primary": "zai/glm-4.7-flash",
+  "fallbacks": ["zai/glm-4.5-air"]
+}
+```
+
+또는 haimaker 등 서드파티를 통해:
+
+```json
+{
+  "providers": {
+    "haimaker": {
+      "baseUrl": "https://api.haimaker.ai/v1",
+      "apiKey": "YOUR_KEY",
+      "api": "openai-completions",
+      "models": [{"id": "glm-4.7-flash", "name": "GLM-4.7 Flash"}]
+    }
+  }
+}
+```
+
+### Reddit 커뮤니티 평가
+
+> "GLM 4.7 Flash + OpenClaw은 아무도 사용하지 않는 **무료 AI 스택**이다. 클라우드 모델은 큰 컨텍스트 윈도우에 좋지만, 일반적인 사용량에서는 GLM 4.7 Flash가 압도적이다." — r/AISEOInsider
+
+> "OpenClaw를 GLM-5로 전환했더니 API 비용이 **6배 줄었다**." — r/AIToolsPerformance
 
 ---
 
 ## OpenClaw 연동 설정
 
-OpenClaw는 Z.AI를 **네이티브 프로바이더**로 지원한다. 설정은 매우 간단하다.
+### GLM-5.1으로 업그레이드
 
-### 1. Z.AI API 키 발급
+Z.ai 공식 문서에 따른 GLM-5.1 설정:
 
-1. [Z.AI Open Platform](https://z.ai/model-api)에 가입
-2. [API Keys](https://z.ai/manage-apikey/apikey-list)에서 API 키 생성
-3. [GLM Coding Plan](https://z.ai/model-api/glm-coding-plan) 구독
+**1. 모델 등록** (`~/.openclaw/openclaw.json`):
 
-### 2. OpenClaw 설정
-
-설치 시 Z.AI 프로바이더를 선택하면 자동으로 설정된다:
-
-```bash
-openclaw onboard --install-daemon
-# Model/auth provider → Z.AI 선택
+```json
+{
+  "models": [
+    {
+      "id": "glm-5.1",
+      "name": "GLM-5.1",
+      "reasoning": true,
+      "input": ["text"],
+      "cost": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0},
+      "contextWindow": 204800,
+      "maxTokens": 131072
+    }
+  ]
+}
 ```
 
-또는 기존 설정에서 모델을 변경:
+**2. 기본 모델 변경**:
 
 ```json
 {
@@ -154,101 +238,80 @@ openclaw onboard --install-daemon
 }
 ```
 
-### 3. 모델 선택 가이드
+**3. 게이트웨이 재시작**:
 
-| 용도 | 추천 모델 | 이유 |
-|------|---------|------|
-| **메인 에이전트 (품질 우선)** | `zai/glm-5.1` | 최신 프론티어, 에이전트 작업 최적화 |
-| **메인 에이전트 (비용 절감)** | `zai/glm-4.7` | 40% 저렴, 대부분 작업 충분 |
-| **빠른 응답 (채팅, 요약)** | `zai/glm-4.7-flashx` | 1/14 가격, 단순 작업에 최적 |
-| **이미지 분석** | `zai/glm-4.6v` | 네이티브 비전 지원 |
-| **초저비용 백그라운드** | `zai/glm-4.5-air` | 허트비트 등 가벼운 정기 작업 |
-
-### 4. 페일오버 설정
-
-```json
-{
-  "primary": "zai/glm-5.1",
-  "fallbacks": ["zai/glm-4.7", "zai/glm-4.6", "zai/glm-4.5-air"]
-}
+```bash
+openclaw gateway restart
 ```
 
-고부하 시 자동으로 하위 모델로 전환되어 안정성을 확보한다.
-
-### 5. Claude Code 호환
-
-GLM-5는 Claude Code의 백엔드 모델로도 사용 가능하다:
+### Claude Code 호환
 
 ```json
 // ~/.claude/settings.json
 {
-  "model": "GLM-5"
+  "env": {
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.5-air",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5.1",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.1"
+  }
 }
 ```
 
-Z.ai 공식 문서에서 Claude Code 호환성을 명시적으로 지원한다.
+### 모델 선택 가이드
 
----
+| 용도 | 추천 모델 | 가격 |
+|------|---------|------|
+| **품질 최우선** | `zai/glm-5.1` | Coding Plan 무료 |
+| **비용 절감** | `zai/glm-4.7` | Coding Plan 무료 |
+| **빠른 응답** | `zai/glm-4.7-flash` | **완전 무료** |
+| **이미지 분석** | `zai/glm-4.6v` | Coding Plan 무료 |
+| **백그라운드** | `zai/glm-4.5-air` | Coding Plan 무료 |
 
-## 실제 활용법
+### GLM Coding Plan
 
-### 에이전트 엔지니어링
+Z.ai의 구독 플랜으로, 지원되는 코딩 도구(Claude Code, OpenClaw, Kilo Code 등)에서 **GLM 모델을 무료 또는 대폭 할인**으로 사용할 수 있다:
 
-GLM-5의 가장 큰 강점은 **장기 수평(long-horizon) 에이전트 작업**이다. Vending Bench 2(1년 기간 자판기 사업 시뮬레이션)에서 $4,432의 최종 잔액을 기록하며, Claude Opus 4.5($4,967)에 근접한 성능을 보여주었다.
+| 플랜 | 가격 | 모델 |
+|------|------|------|
+| **Lite** | — | GLM-5.1 포함 |
+| **Pro** (인기) | — | GLM-5.1 + MCP 무료 |
+| **Max** | — | 최대 사용량 |
 
-### 코드 생성 및 SWE 작업
-
-SWE-bench Verified에서 77.8%, SWE-bench Multilingual에서 73.3%를 기록. 특히 다국어 소프트웨어 엔지니어링에서 GPT-5.2(72.0%)와 Gemini 3 Pro(65.0%)를 상회한다.
-
-### 웹 브라우징 및 검색
-
-BrowseComp에서 62.0%로 압도적 성능. 이는 OpenClaw의 웹검색, 웹페치 기능과 결합할 때 특히 강력하다.
-
-### MCP(Model Context Protocol) 도구 사용
-
-MCP-Atlas에서 67.8%를 기록하며, OpenClaw의 스킬 시스템(웹검색, 캘린더, 파일 관리 등)과 자연스럽게 연동된다.
-
-### Thinking Mode
-
-GLM-5는 기본적으로 Thinking Mode가 활성화되어 있다. 복잡한 추론 문제에서 내부적으로 단계별 사고 과정을 거친 후 답변을 생성한다. `reasoning` 파라미터로 제어 가능하다.
+> ⚠️ Coding Plan 쿼터는 API 호출이 아닌 **지원 코딩 도구 내에서만** 사용 가능. 일반 API 호출은 별도 과금.
 
 ---
 
 ## 로컬 배포
 
-GLM-5는 완전한 오픈소스이므로 로컬에서도 배포 가능하다:
-
 ```bash
 # vLLM
-vllm serve zai-org/GLM-5-FP8 \
-  --served-model-name glm-5-fp8
+vllm serve zai-org/GLM-5-FP8 --served-model-name glm-5-fp8
 
-# SGLang (Hopper GPU)
-docker pull lmsysorg/sglang:glm5-hopper
+# SGLang
+docker pull lmsysorg/sglang:glm5-hopper   # Hopper GPU
+docker pull lmsysorg/sglang:glm5-blackwell  # Blackwell GPU
 
-# SGLang (Blackwell GPU)
-docker pull lmsysorg/sglang:glm5-blackwell
-
-# KTransformers, xLLM도 지원
+# Ollama (경량 모델)
+ollama pull glm4:latest
 ```
 
-단, 744B 파라미터이므로 최소 4×A100 80GB 또는 동급 GPU가 필요하다. FP8 양자화 버전으로 메모리 요구량을 줄일 수 있다.
+최소 요구사항: 4×A100 80GB 또는 동급 (FP8 양자화 시)
 
 ---
 
-## 요약: GLM 모델 패밀리 포지셔닝
+## 요약: GLM 모델 포지셔닝
 
-| 모델 | 포지셔닝 | 가격대 | 추천 사용자 |
-|------|---------|--------|-----------|
-| GLM-5 | 프론티어 | $$/M | 개발자, 스타트업, 에이전트 엔지니어링 |
-| GLM-5-Turbo | 고속 프론티어 | $$ | 대용량 컨텍스트 필요 시 |
-| GLM-4.7 | 가성비 고성능 | $ | 일반적인 API 사용 |
-| GLM-4.7-FlashX | 초저비용 | ¢ | 대량 요청, 단순 작업 |
-| GLM-4.5-Air | 엣지/경량 | ¢ | 로컬 배포, 백그라운드 작업 |
-| GLM-5V-Turbo | 최신 비전 | $$ | 이미지 분석, OCR, 차트 |
+| 모델 | 포지셔닝 | 가격 | 한 줄 |
+|------|---------|------|------|
+| **GLM-5.1** | 최신 프론티어 | Coding Plan 무료 | Claude Opus 4.6의 94.6% 코딩 성능 |
+| **GLM-5** | 프론티어 | Coding Plan 무료 | 에이전트·추론 범용 |
+| **GLM-4.7-Flash** | **OpenClaw 최적화** | **완전 무료** | Claude Opus 4.5 사고방식 학습, 가성비 끝판왕 |
+| GLM-4.7 | 가성비 고성능 | Coding Plan 무료 | 안정적 일반 작업 |
+| GLM-4.7-FlashX | 초저비용 | $0.07/$0.01 | 대량 단순 요청 |
+| GLM-4.5-Air | 경량 백그라운드 | Coding Plan 무료 | 허트비트 등 정기 작업 |
 
-GLM-5는 Claude Opus 4.5나 GPT-5.2에 비해 개별 벤치마크에서 약간 낮은 수치를 보이지만, **가격 대비 성능 비율은 압도적**이다. OpenClaw와 Claude Code를 공식 지원하는 유일한 중국 모델로서, 글로벌 AI 생태계에서 **비용 효율적 프론티어 대안**이라는 명확한 포지셔닝을 확보하고 있다.
+GLM-5.1은 오픈소스 모델이 프론티어 독점 모델에 도달할 수 있음을 증명하는 이정표다. 100% 비미국 하드웨어로 학습되었고, Claude Code와 OpenClaw를 공식 지원하며, GLM-4.7-Flash를 통해 **무료로도 프론티어급 경험**을 제공한다. 글로벌 AI 생태계에서 **비용 효율적 프론티어 대안**이라는 명확한 포지셔닝을 확고히 하고 있다.
 
 ---
 
-*출처: Z.ai 공식 문서, Hugging Face (zai-org/GLM-5), OpenRouter, Reddit r/ZaiGLM, OpenClaw docs.z.ai (2026-04)*
+*출처: Z.ai 공식 문서, Hugging Face (zai-org/GLM-5), Z.ai GLM-5.1 docs, Serenities AI, OpenRouter, Reddit r/ZaiGLM, r/AIToolsPerformance, r/AISEOInsider (2026-04)*
