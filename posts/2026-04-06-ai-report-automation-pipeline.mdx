@@ -1,0 +1,239 @@
+---
+title: "[REPORT] AI 보고서 자동화 파이프라인 구축기: HTML 보고서 → PPTX 변환 → 블로그 자동 포스팅"
+date: "2026-04-06"
+description: "AI 어시스턴트로 USD 유동성 분석 보고서와 Gemma 4 심층 분석 보고서를 자동 생성하는 파이프라인을 구축한 과정. HTML 보고서 스킬, Puppeteer 기반 PPTX 변환, Next.js MDX 블로그 자동 포스팅까지의 전체 워크플로우를 공유합니다."
+category: "A.I"
+tags:
+  - AI보고서
+  - 자동화
+  - 파이프라인
+  - PPTX변환
+  - Puppeteer
+  - MDX
+  - NextJS
+  - USD유동성
+keywords: "AI report automation pipeline, HTML report skill, PPTX conversion Puppeteer, automated blog posting MDX, USD liquidity report, Gemini analysis report, Next.js MDX blog, OpenClaw workflow automation"
+---
+
+# [REPORT] AI 보고서 자동화 파이프라인 구축기: HTML → PPTX → 블로그 자동 포스팅
+
+> **[USD 유동성 HTML 보고서 예시 보기](/reports/usd-liquidity/2026-04-04_usd_liquidity_analysis_report.html)**
+>
+> **[Gemma 4 분석 HTML 보고서 예시 보기](/reports/gemma4/2026-04-05_gemma4_analysis_report.html)**
+
+AI 어시스턴트에게 반복적인 보고서 작성을 자동화하도록 지시하면 어떻게 될까? 단순히 텍스트를 생성하는 것을 넘어, **기관형 HTML 보고서 → PPTX 프레젠테이션 → SEO 최적화 블로그 포스팅 → GitHub 커밋·푸시**까지 전체 파이프라인을 완전히 자동화할 수 있다. 이 글에서는 그 구축 과정을 공유한다.
+
+---
+
+## 왜 자동화가 필요했나
+
+매일 아침 정기적으로 확인해야 하는 데이터가 있었다:
+
+- **USD 유동성 분석**: Fed H.4.1, TGA, SOFR, NFCI 등 공식 데이터를 수집해 6계층 유동성 점수를 분석하는 보고서
+- **AI 뉴스 브리프**: 최신 AI 뉴스를 조사해 요약하는 일일 브리프
+- **심층 분석 리포트**: 새로운 AI 모델 출시 등 주요 이벤트에 대한 심층 분석
+
+이 작업들을 매일 수동으로 하면 상당한 시간이 소요된다. AI 어시스턴트의 HEARTBEAT 기능을 활용해 **매일 오전 7시(유동성)와 9시(AI 뉴스)**에 자동 실행되도록 설정했다.
+
+---
+
+## 파이프라인 아키텍처
+
+전체 워크플로우는 5단계로 구성된다:
+
+```
+데이터 수집 → HTML 보고서 생성 → PPTX 변환 → MDX 블로그 포스팅 → GitHub 커밋·푸시
+```
+
+각 단계를 순서대로 살펴보자.
+
+---
+
+## 1단계: 데이터 수집
+
+보고서의 품질은 데이터의 품질에 달려 있다. 각 보고서 유형별로 데이터 소스를 확보했다.
+
+### USD 유동성 보고서
+
+| 데이터 | 소스 | 주기 |
+|--------|------|------|
+| Fed H.4.1 | federalreserve.gov | 매주 목요일 |
+| TGA 잔액 | fiscaldata.treasury.gov | 영업일 매일 |
+| NFCI | Chicago Fed FRED | 매주 수요일 |
+| SOFR | New York Fed | 영업일 매일 |
+
+### AI 뉴스 브리프
+
+Tavily, Exa 등 웹검색 API를 활용해 최신 뉴스를 실시간 수집한다. 주요 소스는 TechCrunch, The Verge, ArXiv, VentureBeat, Hugging Face Blog 등이다.
+
+---
+
+## 2단계: HTML 보고서 생성
+
+html-report 스킬을 설치하고, AI 어시스턴트에게 **PPT 스타일 HTML 보고서**를 생성하도록 지시했다. 핵심은 **모바일 우선 기관형 디자인**이다.
+
+### 디자인 원칙
+
+- **Tailwind CSS**를 CDN으로 로드해 별도 빌드 없이 즉시 렌더링
+- **카드 기반 레이아웃**: 각 섹션이 독립적인 카드로, 스크롤에 자연스럽게 분리
+- **데이터 테이블**: 핵심 수치를 테이블로 정리, 모바일에서 `overflow-x: auto` 적용
+- **인사이트 하이라이트**: 배경 그라데이션으로 중요 인사이트를 시각적으로 구분
+- **Noto Sans KR** 웹폰트로 한글 가독성 확보
+
+### HTML 보고서의 장점
+
+1. **즉시 공유 가능**: GitHub Pages나 Vercel에 올리면 링크만 전달
+2. **인쇄 친화적**: 브라우저 인쇄 기능으로 PDF 변환 가능
+3. **반응형**: 모바일에서도 완벽하게 렌더링
+4. **버전 관리**: Markdown처럼 Git으로 변경 이력 추적
+
+---
+
+## 3단계: PPTX 변환
+
+HTML 슬라이드를 PPTX로 변환하는 자동화가 가장 기술적으로 복잡한 단계였다.
+
+### 변환 아키텍처
+
+```
+HTML 슬라이드 (6장) → Puppeteer 캡처 (2x 해상도) → PptxGenJS 이미지 삽입 → PPTX 출력
+```
+
+### 핵심 기술 결정
+
+**왜 HTML → 이미지 → PPTX인가?** 직접 PPTX를 생성하는 라이브러리(pptxgenjs, python-pptx 등)는 텍스트·차트에는 강하지만, 복잡한 레이아웃과 커스텀 디자인을 구현하기 어렵다. 반면 HTML+CSS는 **Tailwind의 유틸리티 클래스**로 상상하는 거의 모든 레이아웃을 구현할 수 있다.
+
+따라서 HTML로 완벽한 디자인을 먼저 만들고, 이를 스크린샷으로 캡처해 PPTX에 이미지로 삽입하는 방식을 택했다.
+
+### PptxGenJS 커스텀 레이아웃
+
+기본 레이아웃(10×7.5인치)에서 10.59×7.5인치로 커스텀 레이아웃을 정의해야 했다. 객체 할당 방식으로는 `UNKNOWN-LAYOUT` 에러가 발생하므로, 반드시 `defineLayout()` API를 사용해야 한다:
+
+```javascript
+pptx.defineLayout({ name: 'CUSTOM', width: 10.59, height: 7.5 });
+pptx.layout = 'CUSTOM';
+```
+
+### Puppeteer 설정
+
+- **deviceScaleFactor: 2** — 2배 해상도로 캡처해 PPTX에서 선명도 확보
+- **fullPage: true** — 슬라이드 전체를 캡처
+- 각 슬라이드를 순차적으로 캡처한 뒤 PptxGenJS에 이미지로 삽입
+
+---
+
+## 4단계: MDX 블로그 포스팅
+
+HTML 보고서와 별도로, SEO 최적화된 MDX 블로그 포스팅을 자동 생성한다.
+
+### MDX 프론트매터 구조
+
+```yaml
+---
+title: "[REPORT] 제목 (60자 내)"
+date: "YYYY-MM-DD"
+description: "설명 (150자 내)"
+category: "A.I"
+tags: [태그1, 태그2]
+keywords: "키워드1, 키워드2"
+---
+```
+
+### SEO 최적화 규칙
+
+| 규칙 | 세부 내용 |
+|------|---------|
+| 제목 | 60자 이내, `[REPORT]` 또는 `[NEWS]` 접두어 |
+| 설명 | 150자 이내, 핵심 내용 요약 |
+| 카테고리 | AI 관련은 `A.I`, 일상은 `Life` |
+| 본문 | 최소 2,000자, H1→H2→H3 계층 구조 |
+| HTML 링크 | MDX 내부에 HTML 보고서 원본 링크 포함 |
+
+### 테이블 렌더링 수정
+
+`next-mdx-remote`는 기본적으로 GFM(GitHub Flavored Markdown) 테이블을 지원하지 않는다. `remark-gfm` 플러그인을 추가해 해결:
+
+```typescript
+import remarkGfm from 'remark-gfm';
+
+// MDX 컴파일 옵션에 추가
+options: {
+  mdxOptions: {
+    remarkPlugins: [remarkGfm],
+  },
+}
+```
+
+또한 테이블의 `display: block; overflow-x: auto`는 모바일(640px 이하)에서만 적용하도록 CSS 미디어 쿼리로 제한했다. 데스크탑에서 1열 레이아웃이 깨지는 문제를 방지하기 위함이다.
+
+---
+
+## 5단계: GitHub 자동 커밋·푸시
+
+모든 파일이 준비되면 자동으로 Git에 커밋하고 푸시한다. 핵심 규칙:
+
+- **`git add -A` 절대 금지**: 워크스페이스 설정 파일이 블로그 리포에 섞이는 것을 방지
+- **프로젝트 파일만 지정 추가**: `posts/`, `public/` 디렉토리의 관련 파일만 `git add`
+- **커밋 메시지에 태그**: `[REPORT]` 또는 `[NEWS]`를 포함해 나중에 필터링 가능
+
+---
+
+## HEARTBEAT 정기 실행 설정
+
+OpenClaw의 HEARTBEAT 기능을 활용해 매일 정해진 시간에 자동 실행되도록 설정했다:
+
+```markdown
+## 💵 매일 달러 유동성 HTML 보고서 (매일 오전 7시)
+- Fed H.4.1, TGA, SOFR, NFCI 등 공식 데이터 수집
+- 모바일 우선 기관형 HTML 보고서 생성
+- MDX 요약본 작성 + HTML 원본 public/reports/ 에 복사
+- PPT 스타일 HTML 5페이지 + PPTX 변환
+- GitHub 커밋 & 푸시
+
+## 📰 매일 AI 뉴스 브리프 (매일 오전 9시)
+- 최신 AI 뉴스 조사
+- 한국어 번역 + 보강 (2000자+)
+- HTML 보고서 + MDX 블로그 포스팅
+- GitHub 커밋 & 푸시
+```
+
+---
+
+## 구축 과정에서 배운 것들
+
+### 1. 오케스트레이션이 핵심이다
+
+Claude Code 소스 유출 사건에서도 드러났듯, AI 도구의 진정한 가치는 모델 자체가 아니라 **워크플로우 오케스트레이션**에 있다. 각 단계를 개별적으로 실행하는 것은 누구나 할 수 있지만, 이를 **하나의 자동화된 파이프라인**으로 연결하는 것이 진짜 가치다.
+
+### 2. HTML은 최고의 보고서 포맷이다
+
+PDF는 무겁고, 파워포인트는 배포가 번거롭고, Markdown은 디자인이 제한적이다. HTML은 **즉시 공유 가능하고, 반응형이고, 버전 관리가 되며, 인쇄도 가능한** 범용 포맷이다.
+
+### 3. 커스텀 레이아웃 문서화가 중요하다
+
+PptxGenJS의 커스텀 레이아웃은 객체 할당이 아닌 `defineLayout()` API로 정의해야 한다. 이런 종류의 "트랩"은 경험하지 않으면 알기 어렵다. 구축 과정에서 발견한 이런 팁들을 문서화해두면 나중에 큰 시간 절약이 된다.
+
+### 4. 데이터 갱신 주기를 존중하라
+
+Fed H.4.1은 매주 목요일, NFCI는 매주 수요일에 발표된다. 컴퓨터가 재부팅되어 정기 작업을 놓쳤을 때, **데이터가 갱신되지 않았다면 보고서를 스킵**하는 판단도 자동화의 일부다. 의미 없는 중복 보고서보다 데이터가 신선할 때만 실행하는 것이 낫다.
+
+---
+
+## 결과
+
+완성된 파이프라인은 다음 파일들을 자동으로 생성한다:
+
+| 출력물 | 경로 | 형식 |
+|--------|------|------|
+| HTML 보고서 | `public/reports/` | HTML |
+| PPT 슬라이드 | `reports/*/ppt/slide-*.html` | HTML |
+| PPTX 프레젠테이션 | `reports/*/\*_report.pptx` | PPTX |
+| MDX 블로그 포스팅 | `posts/YYYY-MM-DD-*.mdx` | MDX |
+
+매일 아침 일어나면, **이미 완성된 보고서와 블로그 포스팅이 GitHub에 푸시되어 있다.** AI 어시스턴트가 데이터를 수집하고, 분석하고, 보고서를 작성하고, 프레젠테이션을 만들고, 블로그에 포스팅하는 모든 과정을 자동으로 수행한다.
+
+이것이 AI 시대의 **"보고서 작성"**이다. 더 이상 엑셀을 열고 데이터를 복사·붙여넣기할 필요가 없다. AI에게 워크플로우를 한 번 정의해주면, 나머지는 알아서 한다.
+
+---
+
+*본 글은 AI 어시스턴트(OpenClaw)의 자동화 파이프라인을 활용해 작성되었습니다.*
