@@ -1,0 +1,93 @@
+---
+title: "ComfyUI 첫날: M4 Mac mini에서 AI 이미지 생성기를 직접 세팅해봤다"
+date: "2026-04-07"
+description: "OpenClaw 2026.4.5 업데이트로 ComfyUI 플러그인이 공식 지원되었다. M4 Mac mini에 직접 설치하고, SDXL Turbo와 Juggernaut XL로 짱구 이미지를 생성해보며 느낀 점을 솔직하게 정리했다. 팔이 3개 달린 짱구를 보며 깨달은 것들."
+category: "A.I"
+tags:
+  - ComfyUI
+  - AI이미지생성
+  - StableDiffusion
+  - SDXL
+  - Mac미니
+  - M4
+  - AI에이전트
+  - OpenClaw
+  - LoRA
+keywords: "ComfyUI 설치, ComfyUI M4 Mac mini, SDXL Turbo, Juggernaut XL, AI 이미지 생성, 로컬 AI 이미지, Shin Chan LoRA, Stable Diffusion 한국어, ComfyUI 한국어 후기"
+---
+
+# ComfyUI 첫날: M4 Mac mini에서 AI 이미지 생성기를 직접 세팅해봤다
+
+> OpenClaw이 2026.4.5 업데이트를 하면서 ComfyUI 플러그인을 공식 지원하게 되었다. M4 Mac mini에 직접 설치하고 AI 이미지 생성을 경험해봤다. 결과는 재밌지만, 아직은 기대를 낮춰야 하는 단계다.
+
+## 왜 ComfyUI인가?
+
+지금 나는 AI 에이전트 플랫폼인 OpenClaw을 쓰고 있다. 대화 중에 "이미지 만들어줘"라고 하면 AI가 직접 ComfyUI를 호출해서 이미지를 생성해준다. API 키도 필요 없고, 내 컴퓨터에서 로컬로 돌아가니까 비용도 없다.
+
+Mac mini M4에 16GB 메모리. 충분하다며 시작했다.
+
+## 설치 과정
+
+설치 자체는 어렵지 않았다. Homebrew로 Python을 깔고, Git으로 ComfyUI를 클론하고, 가상환경을 만들어서 의존성을 설치했다. SDXL Turbo 모델(~6.5GB)을 다운로드하고, ComfyUI를 실행하면 `localhost:8188`에서 웹 UI가 뜬다.
+
+문제는 모델 다운로드였다. HuggingFace에서 파일이 큰 모델을 받을 때 무료 계정이면 속도 제한이 있고, 중간에 끊기는 게 일상이다. SDXL Turbo는 그나마 작아서 한 번에 받아졌지만, Juggernaut XL(6.6GB)이나 Asian Realism 모델은 여러 번 끊기면서 하루 종일 다운로드만 한 기억이 있다.
+
+LaunchAgent에 등록해서 재부팅해도 자동 실행되게 해놓았다. 이건 꿀팁이다.
+
+## 첫 번째 시도: SDXL Turbo로 짱구
+
+![SDXL Turbo로 생성한 짱구](/images/posts/comfyui-setup/shin-chan-turbo.png)
+
+SDXL Turbo는 1스텝으로 이미지를 생성하는 초고속 모델이다. "Shin Chan, big round glasses, bald head, yellow t-shirt"이라고 프롬프트를 줬다.
+
+결과는... 음. 짱구를 모티브로 한 어떤 아이 같긴 한데, 짱구는 아니다. 안경은 있고 대충 느낌은 비슷한데, 정체불명의 아이다.
+
+## 두 번째 시도: LoRA 추가
+
+![Shin-Chan LoRA 적용](/images/posts/comfyui-setup/shin-chan-lora.png)
+
+Civitai에서 Shin-Chan 전용 LoRA(36MB)를 다운로드해서 적용해봤다. LoRA는 기본 모델에 특정 캐릭터나 스타일을 추가하는 작은 가중치 파일이다.
+
+조금 더 비슷해졌다. 안경과 대머리는 좀 나아졌는데, 문제가 생겼다.
+
+**머리가 2개, 팔이 3개, 손가락이 여러 개.**
+
+SDXL Turbo가 1~4스텝이라 디테일이 부족한 게 원인이었다. 인체 구조를 제대로 표현하지 못하고, 팔다리가 여러 개 달린 괴물이 나오는 건 diffusion 모델의 고질적인 문제다.
+
+## 세 번째 시도: Juggernaut XL
+
+![Juggernaut XL + LoRA](/images/posts/comfyui-setup/shin-chan-juggernaut.png)
+
+퀄리티를 높이기 위해 Juggernaut XL이라는 포토리얼리즘에 특화된 SDXL 모델을 설치했다. 25스텝으로 생성하니까 시간은 1~2분 걸리지만, 결과물은 확실히 달랐다.
+
+LoRA 강도를 0.75로 낮추고, 네가티브 프롬프트에 "extra limbs, extra faces, bad anatomy"을 강화했다. 이번에는 팔이 3개인 건 해결됐지만, 여전히 원본 짱구와는 거리가 멀었다.
+
+## 만화를 실사로 바꿔보기
+
+![만화 → 실사 변환](/images/posts/comfyui-setup/manga-to-realistic.png)
+
+이건 좀 성공에 가까웠다. 만화 이미지를 로드하고, Juggernaut XL로 img2img 변환을 했다. denoise를 0.55로 설정해서 원본 구도는 유지하면서 텍스처만 실사로 바꿨다.
+
+결과가 생각보다 괜찮았다. 물론 완벽하진 않지만, 방향성은 맞았다.
+
+## 솔직한 소감
+
+ChatGPT나 Claude가 글을 쓰는 수준에 비교하면, 이미지 생성은 아직 갈 길이 멀다. 텍스트 생성은 "거의 완벽"에 가까운데, 이미지는 "뭔가 비슷하게 나오는 정도"다.
+
+팔이 여러 개 달린 짱구를 보면서, 유명 LLM의 퀄리티를 기대한 게 바보 같았다는 생각이 들었다. 이미지 모델은 텍스트 모델보다 몇 년은 뒤처져 있는 느낌이다.
+
+아니면 그냥 내가 필요한 모델을 잘 몰라서 그런 걸 수도 있다. Asian Realism 모델을 받다가 하루 종일 다운로드만 하다가 포기했으니까... 아시아인 얼굴에 특화된 모델이 있긴 한데, HF 무료 계정으로는 6GB+ 파일을 온전히 받기가 너무 어렵다.
+
+HuggingFace Pro에 가입하거나, Asian Realism 모델을 다른 경로로 구해서 제대로 테스트해봐야겠다. 그리고 Flux 같은 차세대 모델도 시도해볼 생각이다.
+
+## 배운 것들
+
+- **SDXL Turbo**: 빠르지만 디테일 부족. 캐릭터 생성엔 부적합
+- **Juggernaut XL**: 포토리얼리즘에 강함. 25스텝 정도면 퀄리티 괜찮음
+- **LoRA**: 캐릭터 특화 가능하지만, 기반 모델의 퀄리티에 종속됨
+- **denoise**: 낮추면 원본 유지, 높이면 더 많이 변환
+- **LaunchAgent 등록**: Mac에서 서비스 자동 실행의 핵심
+
+ComfyUI는 확실히 강력한 도구다. 노드 기반 워크플로우를 구성해서 복잡한 파이프라인을 만들 수 있고, 커뮤니티도 활성화되어 있다. 다만 지금의 나에게는 진입 장벽이 생각보다 높았다. 모델 선택, 프롬프트 엔지니어링, 하이퍼파라미터 튜닝... 하나하나 배워야 할 게 많다.
+
+그래도 로컬에서 AI가 이미지를 만들어내는 걸 직접 경험한 건 신기했다. 1년 전만 해도 이건 상상도 못 했을 텐데 말이다.
