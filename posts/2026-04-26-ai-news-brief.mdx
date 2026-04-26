@@ -1,0 +1,43 @@
+---
+title: "[NEWS] 2026-04-26 AI 뉴스 브리프"
+category: A.I
+---
+
+오늘의 AI 흐름은 한 문장으로 정리된다. **모델 자체의 성능 경쟁은 계속되지만, 시장의 초점은 이미 에이전트·워크플로우·운영 통제·오픈 생태계로 이동했다.** 연구 논문도, 빅테크 발표도, 모두 “실제로 일하는 AI”를 만들기 위한 조립법을 보여준다.
+
+### 오늘의 논문 5선
+
+#### 1) From Research Question to Scientific Workflow: Leveraging Agentic AI for Science Automation
+연구 질문을 바로 실행 가능한 워크플로우 DAG로 바꾸는 3계층 구조를 제안했다. LLM은 자연어를 구조화된 의도로만 해석하고, 실제 실행은 검증된 생성기와 도메인 Skills가 담당한다. 150개 쿼리에서 intent 정확도가 44%에서 83%로 뛰었고, 데이터 전송은 92% 감소했다.
+
+#### 2) MathDuels: Evaluating LLMs as Problem Posers and Solvers
+기존 수학 벤치마크가 포화되자, 모델이 문제를 내고 푸는 self-play 평가를 제시했다. 19개 frontier 모델을 비교해보니, 문제를 잘 내는 능력과 문제를 잘 푸는 능력은 완전히 같은 축이 아니었다.
+
+#### 3) Evaluation of Automatic Speech Recognition Using Generative Large Language Models
+WER 대신 의미 기반 평가를 위해 생성형 LLM을 활용했다. HATS 데이터셋에서 최상위 LLM은 인간 판정과 92~94% 일치했고, 전통적 WER 기준 63%보다 훨씬 높았다.
+
+#### 4) TingIS: Real-time Risk Event Discovery from Noisy Customer Incidents at Enterprise Scale
+대규모 서비스의 고객 민원을 실시간 위험 신호로 바꾸는 엔터프라이즈 시스템이다. LLM 기반 이벤트 링크와 라우팅, 통계/도메인 필터를 결합해 노이즈를 줄였고, P90 알림 지연 3.5분과 고우선 인시던트 95% 발견률을 달성했다.
+
+#### 5) Nemobot Games: Crafting Strategic AI Gaming Agents for Interactive Learning with Large Language Models
+LLM을 게임 전략 에이전트로 확장하는 인터랙티브 환경을 제안한다. dictionary-based, solvable, heuristic, learning-based 게임 전반에서 전략 생성과 설명을 수행하며 자기개선형 에이전트의 가능성을 보여준다.
+
+### 오늘의 공식 발표 3선
+
+#### OpenAI: workspace agents in ChatGPT
+OpenAI는 팀 단위로 공유하는 workspace agents를 공개했다. 핵심은 모델이 아니라 **조직 컨텍스트, 권한, 승인 흐름, 장기 실행 작업**을 한 제품 안에 묶는 운영 레이어다.
+
+#### Google: Gemma 4
+Google은 Gemma 4를 purpose-built for advanced reasoning and agentic workflows로 소개했다. Apache 2.0 라이선스, 4개 크기, 멀티모달 처리, 장문 컨텍스트, 함수 호출/JSON 출력은 오픈 모델이 실제 에이전트 스택의 기반이 될 수 있다는 신호다.
+
+#### NVIDIA: open models, data, tools
+NVIDIA는 Nemotron, Cosmos, Alpamayo, Isaac GR00T, Clara로 이어지는 오픈 모델·데이터·툴 묶음을 발표했다. speech, multimodal RAG, safety, robotics, physical AI까지 아우르며 AI 인프라 레이어를 넓히고 있다.
+
+### 오늘의 해석
+- 에이전트는 연구 주제가 아니라 운영체제 레이어가 되고 있다.
+- 정적 벤치마크보다 동적 평가가 더 중요해지고 있다.
+- 오픈 모델은 더 이상 대안이 아니라 실전 배포 전략이다.
+- 기업은 생성 품질보다 재현성·감사 가능성·권한 통제를 먼저 본다.
+
+### 체크포인트
+다음 경쟁은 모델 크기보다 **권한, 승인, 메모리, 툴 연결, 관찰성**이다. “똑똑한 모델”보다 “안전하게 굴러가는 시스템”이 승부처가 된다.
