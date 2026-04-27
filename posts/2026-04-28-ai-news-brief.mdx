@@ -1,0 +1,43 @@
+---
+title: "[NEWS] 2026-04-28 AI 뉴스 브리프"
+category: A.I
+---
+
+오늘의 AI 흐름은 한 문장으로 정리된다. **모델 성능 경쟁은 계속되지만, 시장의 초점은 이미 에이전트 하네스, 샌드박스, 비용 효율, 추적 가능한 워크플로우로 이동했다.** 새 논문과 공식 발표 모두 같은 방향을 가리킨다.
+
+### 오늘의 논문 5선
+
+#### 1) How Do AI Agents Spend Your Money? Analyzing and Predicting Token Consumption in Agentic Coding Tasks
+에이전트 코딩 작업의 토큰 소비 구조를 처음 체계적으로 분석했다. agentic task는 일반 코드 채팅보다 최대 1000배 비싸고, 비용은 출력보다 입력 토큰이 좌우한다.
+
+#### 2) Seeing the Whole Elephant: A Benchmark for Failure Attribution in LLM-based Multi-Agent Systems
+멀티에이전트 시스템의 실패 원인과 책임 에이전트를 찾는 벤치마크를 제안했다. 전체 실행 트레이스가 있어야 attribution accuracy가 크게 개선된다.
+
+#### 3) Aligning Dense Retrievers with LLM Utility via Distillation
+RAG용 dense retriever를 LLM utility에 맞게 distillation하는 방법을 제시했다. QASPER에서 Recall@1, MAP, Token F1을 크게 끌어올리면서도 LLM reranking보다 훨씬 빠르다.
+
+#### 4) Code for All: Educational Applications of the "Vibe Coding" Hackathon in Programming Education across All Skill Levels
+초보부터 숙련자까지 LLM 코드 생성만으로 프로젝트를 완성하는 해커톤을 분석했다. AI-assisted programming이 학습 효과와 산출물 양쪽에 어떤 영향을 주는지 보여준다.
+
+#### 5) Representational Harms in LLM-Generated Narratives Against Global Majority Nationalities
+LLM이 국가 정체성을 어떻게 재현하는지 분석한 논문이다. Global Majority 정체성에 대한 고정관념, 삭제, 단면적 묘사가 지속적으로 나타난다.
+
+### 오늘의 공식 발표 3선
+
+#### OpenAI: Agents SDK의 다음 진화
+OpenAI는 에이전트가 파일을 읽고, 명령을 실행하고, 코드를 고치고, 장기 작업을 안전한 샌드박스에서 계속 돌리는 하네스를 강조했다.
+
+#### OpenAI: workspace agents in ChatGPT
+팀이 공유하는 workspace agents는 ChatGPT와 Slack에서 같은 워크플로우를 재사용하게 한다. 승인, 권한, 연결 앱, 장기 작업이 제품 안으로 들어오면서 에이전트가 개인 도구에서 조직 인프라로 넘어가고 있다.
+
+#### Google: Deep Research Max
+Google은 Deep Research Max를 통해 자율 연구 에이전트를 한 단계 더 밀어올렸다. 긴 리서치 요약을 넘어 enterprise workflow와 native charts/infographics까지 겨냥한다.
+
+### 오늘의 해석
+- 에이전트는 더 똑똑해지는 동시에 더 비싸지고 있다.
+- 멀티에이전트가 늘수록 관찰성과 failure attribution이 필수다.
+- 검색/RAG도 생성 모델에 유용한 context를 기준으로 재정렬된다.
+- 업무와 교육 모두 “코드 작성”보다 “검증 가능한 자동화”로 이동한다.
+
+### 체크포인트
+다음 경쟁은 모델 성능보다 **토큰 효율, 샌드박스, 디버깅, 도메인 통합**이다. 연구자 입장에서는 agentic system의 비용 구조를 먼저 봐야 하고, 제품팀은 얼마나 안정적으로 오래 돌리는지를 더 물어보게 된다.
