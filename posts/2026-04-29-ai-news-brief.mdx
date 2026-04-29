@@ -1,0 +1,43 @@
+---
+title: "[NEWS] 2026-04-29 AI 뉴스 브리프"
+category: A.I
+---
+
+오늘의 AI 흐름은 한 문장으로 정리된다. **지능 경쟁은 계속되지만, 시장이 진짜 주목하는 건 에이전트의 비용, 관찰성, 서빙 방식, 그리고 워크플로우 전환이다.** 모델이 좋아질수록 “얼마나 잘하나”보다 “얼마나 싸고, 안정적으로, 추적 가능하게 굴리나”가 더 중요해지고 있다.
+
+### 오늘의 논문 5선
+
+#### 1) How Do AI Agents Spend Your Money? Analyzing and Predicting Token Consumption in Agentic Coding Tasks
+에이전트 코딩 작업에서 토큰이 실제로 어디에 쓰이는지 처음 체계적으로 분석했다. agentic task는 일반 코드 채팅보다 최대 1000배 비싸고, 비용은 출력보다 입력 토큰이 좌우한다.
+
+#### 2) Pythia: Toward Predictability-Driven Agent-Native LLM Serving
+멀티에이전트/코딩 에이전트의 구조적 특성을 서빙 계층에서 활용하자는 제안이다. production trace를 보면 prefix cache, long-context contention, queuing delay가 병목이며, workflow semantics를 서빙 레이어가 인지하면 throughput과 job completion time을 크게 개선할 수 있다.
+
+#### 3) From Threads to Trajectories: A Multi-LLM Pipeline for Community Knowledge Extraction from GitHub Issue Discussions
+긴 GitHub 이슈 스레드에서 해결 과정과 원인을 정리한 trajectory를 뽑아내는 파이프라인이다. 여러 LLM을 분업시켜 comment analysis, label classification, trajectory synthesis를 수행한다.
+
+#### 4) Carbon-Taxed Transformers: A Green Compression Pipeline for Overgrown Language Models
+코드 관련 LLM을 더 작고 효율적으로 압축하는 파이프라인이다. 메모리, 속도, CO2를 함께 줄이면서도 정확도를 상당 부분 유지한다.
+
+#### 5) Make Any Collection Navigable: Methods for Constructing and Evaluating Hypergraph of Text
+문서 집합을 하이퍼그래프로 만들어 탐색 가능하게 하는 방법을 다룬다. 흥미로운 점은 LLM 기반 방법만이 답이 아니라 TF-IDF 같은 단순 베이스라인도 새 지표에서 꽤 잘 버틴다는 점이다.
+
+### 오늘의 공식 발표 3선
+
+#### OpenAI: Codex 업데이트와 에이전트형 코딩
+OpenAI는 Codex를 장기 작업에 맞는 코딩 협업자로 더 밀고 있다. 핵심은 코드 작성뿐 아니라 파일 탐색, 명령 실행, 코드 수정, 샌드박스 작업을 하나의 흐름으로 묶는 것이다.
+
+#### OpenAI: workspace agents in ChatGPT
+팀이 공유하는 workspace agents는 ChatGPT와 Slack에서 같은 워크플로우를 재사용하게 한다. 승인, 권한, 연결 앱, 장기 작업이 제품 안으로 들어오면서 에이전트가 개인 도구에서 조직 인프라로 넘어가고 있다.
+
+#### Google: Deep Research Max / Gemma 4
+Google은 Deep Research Max로 자율 리서치 에이전트를 한 단계 더 끌어올렸고, Gemma 4는 오픈 모델이 agentic workflows를 직접 겨냥할 수 있음을 보여준다.
+
+### 오늘의 해석
+- 에이전트는 더 똑똑해지는 동시에 더 비싸지고 있다.
+- 서빙 계층은 이제 단순한 모델 호출기가 아니라 워크플로우 최적화 계층이다.
+- 관찰성과 실패 추적이 멀티에이전트 시대의 기본 요건이 된다.
+- 구조화와 압축이 지능만큼 중요한 경쟁축으로 올라왔다.
+
+### 체크포인트
+앞으로는 모델의 정답률보다 **토큰 효율, 샌드박스, 디버깅, 도메인 통합, 지식 구조화**를 함께 봐야 한다. 연구자 입장에서는 agentic system의 비용 구조를 먼저 체크하고, 제품팀은 얼마나 안정적으로 오래 굴릴 수 있는지부터 물어봐야 한다.
