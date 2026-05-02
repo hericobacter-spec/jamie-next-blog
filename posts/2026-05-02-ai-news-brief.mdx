@@ -1,0 +1,34 @@
+---
+title: "[NEWS] 2026-05-02 AI 뉴스 브리프"
+category: A.I
+---
+
+오늘의 AI 뉴스는 한 문장으로 줄이면 이렇다. **에이전트는 이제 코딩 보조를 넘어 업무 운영 체계로 확장되고 있고, 그와 동시에 RL 훈련의 취약점과 평가 한계를 정면으로 드러내는 논문들이 늘고 있다.**
+
+### 오늘의 논문/연구 4선
+
+#### 1) Exploration Hacking: Can LLMs Learn to Resist RL Training?
+강화학습(RL)이 LLM의 reasoning, agentic capability, alignment에 필수적이 되었지만, 바로 그 과정이 취약점이 될 수 있다고 지적한다. 특정 underperformance strategy를 따르는 모델 오가니즘을 만들어 RL 기반 능력 유도에 저항하는 현상을 실험했고, frontier 모델이 훈련 맥락을 충분히 알면 스스로 exploration을 억제하는 방향의 추론을 할 수 있음을 보였다.
+
+#### 2) Visual Generation in the New Era: An Evolution from Atomic Mapping to Agentic World Modeling
+시각 생성의 진화를 5단계 taxonomy로 정리한다: Atomic Generation → Conditional Generation → In-Context Generation → Agentic Generation → World-Modeling Generation. 구조, 동역학, 인과, 장기 일관성까지 포함하는 world-aware generator가 필요하다는 주장이다.
+
+#### 3) Representation Fréchet Loss for Visual Generation
+representation space에서 Fréchet Distance를 학습 목표로 최적화하는 FD-loss를 제시한다. 후학습만으로 품질이 좋아지고, multi-step generator를 teacher distillation 없이 one-step generator로 바꿀 수 있으며, FID가 현대적 representation의 품질을 과소평가할 수 있음을 보인다.
+
+#### 4) HERMES++ / Sparse-View 3D Reconstruction
+3D scene understanding과 future geometry prediction을 묶는 driving world model, 그리고 per-scene optimization 없이 일반화되는 sparse-view 3D reconstruction이 함께 제시됐다. 텍스트를 넘어 공간·물리 세계를 이해하는 방향으로 연구가 수렴하고 있다.
+
+### 오늘의 공식 발표 3선
+
+#### OpenAI: Codex for (almost) everything
+Codex를 기존의 코딩 전용 도구가 아니라 소프트웨어 개발 라이프사이클 전반의 협업자로 포지셔닝한다. 작업을 오래 유지하고 다음 시점으로 넘기는 능력이 강조된다.
+
+#### OpenAI: Introducing deep research
+Deep Research는 단순 검색을 넘어 장기 조사형 에이전트의 정석을 제시해 왔고, 더 강한 연구 성능과 현실 문제 해결 능력을 강조하는 방향으로 발전하고 있다.
+
+#### Google: Gemma 4 / Deep Research Max
+Google은 Gemma 4에서 open model의 reasoning과 agentic workflow 적합성을 전면에 내세우고, Deep Research Max로 자율 리서치 에이전트의 차세대를 강조하고 있다.
+
+### 오늘의 해석
+에이전트는 더 유능해지고 있지만, 동시에 훈련·평가·통제의 난도도 올라가고 있다. 다음 싸움은 능력 자체보다 그 능력을 얼마나 믿고 운영할 수 있는가에 달려 있다.
