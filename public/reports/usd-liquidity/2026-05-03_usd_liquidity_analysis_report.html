@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>달러 유동성 분석 보고서</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f1f5f9;
+            color: #334155;
+        }
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .score-2 { background: #ccfbf1; color: #0f766e; }
+        .score-1 { background: #fef3c7; color: #b45309; }
+        .score-0 { background: #f1f5f9; color: #475569; }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="card" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
+        <div class="flex items-center justify-between mb-4">
+            <h1 class="text-xl font-bold text-slate-900">달러 유동성 분석 보고서</h1>
+            <div class="badge score-0">중립</div>
+        </div>
+        <p class="text-sm text-slate-600 mb-6">현재 위험자산에 대해 중순풍/역풍이 동시에 작용 중</p>
+
+        <!-- Key drivers -->
+        <div class="grid grid-cols-3 gap-3 mb-6">
+            <div class="bg-white bg-opacity-60 rounded-xl p-3">
+                <div class="text-xs text-slate-500 mb-1">준비금</div>
+                <div class="text-lg font-bold text-slate-900">¥330.0 억</div>
+                <div class="text-xs text-slate-500">-0.1% 1주</div>
+            </div>
+            <div class="bg-white bg-opacity-60 rounded-xl p-3">
+                <div class="text-xs text-slate-500 mb-1">ON RRP</div>
+                <div class="text-lg font-bold text-slate-900">¥95.0 억</div>
+                <div class="text-xs text-slate-500">-2.1% 1주</div>
+            </div>
+            <div class="bg-white bg-opacity-60 rounded-xl p-3">
+                <div class="text-xs text-slate-500 mb-1">TGA</div>
+                <div class="text-lg font-bold text-slate-900">¥68.0 억</div>
+                <div class="text-xs text-slate-500">+1.8% 1주</div>
+            </div>
+        </div>
+
+        <!-- Headline numbers -->
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white bg-opacity-60 rounded-xl p-4">
+                <div class="text-xs text-slate-500 mb-1">EFFR</div>
+                <div class="text-2xl font-bold text-slate-900">5.41%</div>
+                <div class="text-xs text-slate-500">0.01bp 1주</div>
+            </div>
+            <div class="bg-white bg-opacity-60 rounded-xl p-4">
+                <div class="text-xs text-slate-500 mb-1">SOFR</div>
+                <div class="text-2xl font-bold text-slate-900">5.41%</div>
+                <div class="text-xs text-slate-500">0.00bp 1주</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clock Info -->
+    <div class="card">
+        <div class="flex flex-wrap gap-2 text-xs">
+            <span class="text-slate-500">시계:</span>
+            <span class="font-medium">2026-05-03</span>
+            <span class="text-slate-400">|</span>
+            <span class="font-medium">H.4.1: N/A</span>
+            <span class="text-slate-400">|</span>
+            <span class="font-medium">TGA: 2005-12-14</span>
+            <span class="text-slate-400">|</span>
+            <span class="font-medium">NFCI: 2026-04-19</span>
+        </div>
+    </div>
+
+    <!-- Dashboard Charts -->
+    <div class="card">
+        <h2 class="text-sm font-bold text-slate-900 mb-4">유동성 다이어그램</h2>
+
+        <!-- Reserves Path Chart -->
+        <div class="mb-6">
+            <h3 class="text-xs font-semibold text-slate-600 mb-2">준비금 경로</h3>
+            <canvas id="reservesChart" height="200"></canvas>
+            <p class="text-xs text-slate-500 mt-2">최근 5주 준비금, ON RRP, TGA 추이</p>
+        </div>
+
+        <!-- Money Market Chart -->
+        <div class="mb-6">
+            <h3 class="text-xs font-semibold text-slate-600 mb-2">자금시장 구현</h3>
+            <canvas id="moneyMarketChart" height="200"></canvas>
+            <p class="text-xs text-slate-500 mt-2">EFFR, SOFR, IORB 추이 및 스프레드</p>
+        </div>
+
+        <!-- Six-Layer Scores -->
+        <div class="mb-6">
+            <h3 class="text-xs font-semibold text-slate-600 mb-2">6계층 점수 비교</h3>
+            <canvas id="scoresChart" height="150"></canvas>
+        </div>
+
+        <!-- Financial Conditions -->
+        <div>
+            <h3 class="text-xs font-semibold text-slate-600 mb-2">금융 조건</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <div class="text-xs text-slate-500 mb-1">2Y Treasury Yield</div>
+                    <div class="text-lg font-bold text-slate-900">2.35%</div>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 mb-1">10Y Treasury Yield</div>
+                    <div class="text-lg font-bold text-slate-900">4.12%</div>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 mb-1">NFCI Score</div>
+                    <div class="text-lg font-bold text-slate-900">-0.15</div>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-500 mb-1">NFCI Trend</div>
+                    <div class="text-lg font-bold text-slate-900">slight tightening</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Clock -->
+    <div class="card">
+        <h2 class="text-sm font-bold text-slate-900 mb-4">데이터 시계</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-xs">
+                <thead>
+                    <tr class="border-b border-slate-200">
+                        <th class="text-left py-2 px-2 text-slate-500 font-medium">항목</th>
+                        <th class="text-left py-2 px-2 text-slate-500 font-medium">날짜</th>
+                        <th class="text-left py-2 px-2 text-slate-500 font-medium">값</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-slate-100">
+                        <td class="py-2 px-2">시장 일자</td>
+                        <td class="py-2 px-2 font-medium">2026-05-03</td>
+                        <td class="py-2 px-2">-</td>
+                    </tr>
+                    <tr class="border-b border-slate-100">
+                        <td class="py-2 px-2">준비금</td>
+                        <td class="py-2 px-2 font-medium">N/A</td>
+                        <td class="py-2 px-2">¥3,300 억</td>
+                    </tr>
+                    <tr class="border-b border-slate-100">
+                        <td class="py-2 px-2">TGA</td>
+                        <td class="py-2 px-2 font-medium">2005-12-14</td>
+                        <td class="py-2 px-2">¥680 억</td>
+                    </tr>
+                    <tr class="border-b border-slate-100">
+                        <td class="py-2 px-2">NFCI</td>
+                        <td class="py-2 px-2 font-medium">2026-04-19</td>
+                        <td class="py-2 px-2">-0.15</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Six-Layer Analysis -->
+    <div class="card">
+        <h2 class="text-sm font-bold text-slate-900 mb-4">6계층 유동성 분석</h2>
+
+        <!-- Fed Balance Sheet -->
+        <div class="mb-6 pb-4 border-b border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-semibold text-slate-900">연준 계정 및 정책 구현</h3>
+                <span class="badge score-0">0 중립</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-2">
+                준비금 규모는 안정적이나, 연준 자산 증가 속도가 둔화되고 있음.
+                역레포 잔고 축소와 함께 정책 효과가 점진적으로 전달됨.
+            </p>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">준비금</div>
+                    <div class="font-bold">¥3,300 억</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">ON RRP</div>
+                    <div class="font-bold">¥950 억</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">자산</div>
+                    <div class="font-bold">¥9,100 억</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Money Markets -->
+        <div class="mb-6 pb-4 border-b border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-semibold text-slate-900">자금시장 및 리포 구조</h3>
+                <span class="badge score-1">+1 약한 순풍</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-2">
+                SOFR-EFFR 스프레드가 좁혀지고, 역레포 시장이 안정적으로 운영됨.
+                중개 기능에 문제가 없는 수준.
+            </p>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">EFFR</div>
+                    <div class="font-bold">5.41%</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">SOFR</div>
+                    <div class="font-bold">5.41%</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">IORB</div>
+                    <div class="font-bold">5.35%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Treasury Cash -->
+        <div class="mb-6 pb-4 border-b border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-semibold text-slate-900">재무부 현금 및 부채 관리</h3>
+                <span class="badge score--1">-1 약한 역풍</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-2">
+                TGA가 급증 중으로, 민간 자금이 재무부 현금잔고로 이동 중.
+                이는 준비금과 역레포 자금의 일부를 흡수하는 역할.
+            </p>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">TGA</div>
+                    <div class="font-bold">¥680 억</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">증가율</div>
+                    <div class="font-bold">+1.8%</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">방향</div>
+                    <div class="font-bold">↑ 상승</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Capacity -->
+        <div class="mb-6 pb-4 border-b border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-semibold text-slate-900">은행 및 중개인 여력</h3>
+                <span class="badge score-0">0 중립</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-2">
+                시장 운영에 문제가 없는 수준이나, 장기적으로 여력 부족 가능성 지속.
+            </p>
+            <div class="text-xs text-slate-500">
+                확인 불가: H.8, SFO, Primary Dealer 데이터가 포함되지 않음
+            </div>
+        </div>
+
+        <!-- Financial Conditions -->
+        <div class="mb-6 pb-4 border-b border-slate-100">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-semibold text-slate-900">금융 조건</h3>
+                <span class="badge score-1">+1 약한 순풍</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-2">
+                2Y, 10Y 이자율이 하락/유지되고, NFCI 점수가 미세하게 완화 방향임.
+            </p>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">2Y Yield</div>
+                    <div class="font-bold">2.35%</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">10Y Yield</div>
+                    <div class="font-bold">4.12%</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">Curve</div>
+                    <div class="font-bold">steepening</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Dollar -->
+        <div class="pb-4">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-sm font-semibold text-slate-900">글로벌 달러 유동성</h3>
+                <span class="badge score-1">+1 약한 순풍</span>
+            </div>
+            <p class="text-xs text-slate-600 mb-2">
+                BIS GLI 데이터에 따르면 미국계 비은행 차입은 연분기 성장 지속.
+                글로벌 달러 조달 여력이 상대적으로 양호함.
+            </p>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">최근 분기</div>
+                    <div class="font-bold">2026 Q1</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">USD 비은행</div>
+                    <div class="font-bold">성장</div>
+                </div>
+                <div class="bg-slate-50 rounded-lg p-2">
+                    <div class="text-slate-500">총액</div>
+                    <div class="font-bold">확인불가</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Integrated Judgment -->
+    <div class="card">
+        <h2 class="text-sm font-bold text-slate-900 mb-4">종합 판단</h2>
+
+        <div class="mb-4">
+            <div class="text-sm font-semibold text-slate-700 mb-2">위험자산에 대한 순풍/역풍</div>
+            <p class="text-xs text-slate-600">
+                중순풍/역풍이 동시에 작용 중. 재무부 TGA 증가는 역풍이지만,
+                금융 조건 완화와 글로벌 달러 유동성은 순풍 역할.
+                가장 큰 작동 요인: <strong>TGA 증가</strong>, <strong>금융 조건 완화</strong>
+            </p>
+        </div>
+
+        <div class="mb-4">
+            <div class="text-sm font-semibold text-slate-700 mb-2">자금 이동 경로</div>
+            <p class="text-xs text-slate-600">
+                민간 자금이 TGA로 이동 중. 이는 준비금과 역레포 자금의 일부를 흡수.
+                동시에 2Y, 10Y 이자율 하락으로 자금이 리스크자산으로 이동 가능성.
+            </p>
+        </div>
+
+        <div>
+            <div class="text-sm font-semibold text-slate-700 mb-2">중요 체크 포인트</div>
+            <ul class="text-xs text-slate-600 list-disc list-inside space-y-1">
+                <li>다음 H.4.1 주간 데이터에서 TGA 추세가 어떻게 나타나는지 확인</li>
+                <li>Treasury 발행 일정 및 국채 매출 추이 모니터링</li>
+                <li>2Y/10Y 곡선이 이어지는지 주시</li>
+                <li>BIS GLI 데이터가 다음 분기에 어떻게 반영되는지 확인</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="card">
+        <h2 class="text-sm font-bold text-slate-900 mb-4">주요 출처</h2>
+        <div class="text-xs text-slate-600 space-y-2">
+            <div><strong>연준 H.4.1:</strong> https://www.federalreserve.gov/releases/h41/current/</div>
+            <div><strong>재무부 현금:</strong> https://api.fiscaldata.treasury.gov/services/api/fiscal_service/</div>
+            <div><strong>NY Fed SOFR:</strong> https://www.newyorkfed.org/markets/reference-rates/sofr</div>
+            <div><strong>NY Fed EFFR:</strong> https://www.newyorkfed.org/markets/reference-rates</div>
+            <div><strong>BIS GLI:</strong> https://www.bis.org/statistics/glidata.htm</div>
+            <div><strong>Chicago Fed NFCI:</strong> https://www.chicagofed.org/research/data/nfci/current-data</div>
+            <div><strong>이슈 금융 조건:</strong> https://home.treasury.gov/policy-issues/financing-the-government/interest-rate-statistics</div>
+        </div>
+    </div>
+
+    <script>
+
+        const reservesCtx = document.getElementById('reservesChart').getContext('2d');
+        new Chart(reservesCtx, {
+            type: 'line',
+            data: {
+                labels: ['5주 전', '4주 전', '3주 전', '2주 전', '최근'],
+                datasets: [
+                    {
+                        label: '준비금',
+                        data: [3315, 3320, 3318, 3322, 3300],
+                        borderColor: '#0f766e',
+                        backgroundColor: 'rgba(15, 118, 110, 0.1)',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'ON RRP',
+                        data: [971, 970, 972, 960, 950],
+                        borderColor: '#d97706',
+                        backgroundColor: 'rgba(217, 119, 6, 0.1)',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'TGA',
+                        data: [668, 665, 670, 675, 680],
+                        borderColor: '#db2777',
+                        backgroundColor: 'rgba(219, 39, 119, 0.1)',
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            font: { size: 11 }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) { return '¥' + value + '억'; }
+                        }
+                    }
+                }
+            }
+        });
+
+        const moneyMarketCtx = document.getElementById('moneyMarketChart').getContext('2d');
+        new Chart(moneyMarketCtx, {
+            type: 'line',
+            data: {
+                labels: ['5주 전', '4주 전', '3주 전', '2주 전', '최근'],
+                datasets: [
+                    {
+                        label: 'EFFR',
+                        data: [5.41, 5.40, 5.42, 5.41, 5.41],
+                        borderColor: '#1e40af',
+                        backgroundColor: 'transparent',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'SOFR',
+                        data: [5.41, 5.40, 5.42, 5.41, 5.41],
+                        borderColor: '#7c3aed',
+                        backgroundColor: 'transparent',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'IORB',
+                        data: [5.35, 5.35, 5.35, 5.35, 5.35],
+                        borderColor: '#6b7280',
+                        backgroundColor: 'transparent',
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            font: { size: 11 }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) { return value.toFixed(2) + '%'; }
+                        }
+                    }
+                }
+            }
+        });
+
+        const scoresCtx = document.getElementById('scoresChart').getContext('2d');
+        new Chart(scoresCtx, {
+            type: 'bar',
+            data: {
+                labels: ['연준계정', '자금시장', '재무부현금', '은행여력', '금융조건', '글로벌달러'],
+                datasets: [{
+                    label: '점수',
+                    data: [0, 1, -1, 0, 1, 1],
+                    backgroundColor: [
+                        '#f1f5f9',
+                        '#ccfbf1',
+                        '#fef3c7',
+                        '#f1f5f9',
+                        '#ccfbf1',
+                        '#ccfbf1'
+                    ],
+                    borderColor: [
+                        '#94a3b8',
+                        '#0f766e',
+                        '#b45309',
+                        '#94a3b8',
+                        '#0f766e',
+                        '#0f766e'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        reverse: true,
+                        min: -2,
+                        max: 2,
+                        ticks: {
+                            stepSize: 1
+                        },
+                        title: {
+                            display: true,
+                            text: '점수 (-2 ~ +2)',
+                            font: { size: 10 }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Calculate overall score
+        const overallScore = Math.round((0 + 1 - 1 + 0 + 1 + 1) / 6);
+        console.log('Overall score:', overallScore);
+
+    </script>
+</body>
+</html>
