@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>달러 유동성 분석 보고서 | 2026-05-25</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --panel: rgba(255,255,255,0.88);
+      --line: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #0f766e;
+      --accent-soft: #ccfbf1;
+      --warn: #b45309;
+      --warn-soft: #fef3c7;
+      --neutral: #475569;
+      --neutral-soft: #e2e8f0;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans KR', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(14, 165, 233, 0.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.08), transparent 28%),
+        linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+      color: var(--text);
+    }
+    .shell { max-width: 1180px; margin: 0 auto; padding: 20px 16px 48px; }
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    }
+    .chip-neutral { background: var(--neutral-soft); color: var(--neutral); }
+    .chip-positive { background: var(--accent-soft); color: var(--accent); }
+    .chip-warn { background: var(--warn-soft); color: var(--warn); }
+    .metric {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+    }
+    .metric-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    .metric-value { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+    .metric-note { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .section-title { font-size: 14px; font-weight: 800; letter-spacing: -0.01em; }
+    .kpi {
+      border-left: 4px solid rgba(15, 118, 110, 0.35);
+      background: rgba(255,255,255,0.75);
+      border-radius: 16px;
+      padding: 12px 14px;
+    }
+    .kpi .label { color: var(--muted); font-size: 12px; }
+    .kpi .value { font-size: 19px; font-weight: 800; margin-top: 3px; }
+    .mini { font-size: 12px; color: var(--muted); }
+    table.clock { width: 100%; border-collapse: collapse; }
+    table.clock td { padding: 10px 8px; border-bottom: 1px solid rgba(226, 232, 240, 0.9); font-size: 13px; }
+    table.clock td:first-child { color: var(--muted); width: 34%; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media (max-width: 860px) {
+      .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .shell { padding: 14px 12px 36px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .metric-value { font-size: 20px; }
+    }
+    .analysis-card {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .analysis-card p { color: #334155; font-size: 13px; line-height: 1.62; }
+    .analysis-card ul { margin: 10px 0 0; padding-left: 18px; color: #334155; font-size: 13px; }
+    .analysis-card li { margin: 5px 0; }
+    .source-list a { color: #0f766e; text-decoration: none; }
+    .source-list a:hover { text-decoration: underline; }
+    canvas { max-width: 100%; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="card p-5 md:p-6 mb-5" style="background: linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(236, 253, 245, 0.8) 100%);">
+      <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-6">
+        <div>
+          <div class="inline-flex items-center gap-2 mb-3">
+            <span class="chip chip-neutral">2026-05-25</span>
+            <span class="chip chip-positive">공식 데이터 기반</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-black tracking-tight text-slate-950">달러 유동성 분석 보고서</h1>
+          <p class="mt-3 text-sm md:text-base text-slate-600 max-w-3xl">자금시장 구현은 안정적이고, TGA 완화와 BIS 확장이 순풍이지만 ON RRP 재상승과 NFCI 미가용으로 강한 순풍까지는 아니다.</p>
+        </div>
+        <div class="min-w-[160px] text-left md:text-right">
+          <div class="inline-flex items-center justify-center px-4 py-2 rounded-full font-extrabold text-sm bg-slate-900 text-white">중립</div>
+          <div class="mt-2 text-xs text-slate-500">종합 점수: 0/6 레이어</div>
+        </div>
+      </div>
+
+      <div class="grid-4 mb-4">
+        <div class="metric"><div class="metric-label">준비금</div><div class="metric-value">3.13T</div><div class="metric-note">전주 ++26.8B</div></div>
+        <div class="metric"><div class="metric-label">ON RRP</div><div class="metric-value">323.7B</div><div class="metric-note">전주 ++24.1B</div></div>
+        <div class="metric"><div class="metric-label">TGA</div><div class="metric-value">782.0B</div><div class="metric-note">전주 -56.6B</div></div>
+        <div class="metric"><div class="metric-label">총자산</div><div class="metric-value">6.71T</div><div class="metric-note">H.4.1 기준</div></div>
+      </div>
+
+      <div class="grid-4">
+        <div class="metric"><div class="metric-label">EFFR</div><div class="metric-value">3.62%</div><div class="metric-note">NY Fed 2026-05-21</div></div>
+        <div class="metric"><div class="metric-label">SOFR</div><div class="metric-value">3.51%</div><div class="metric-note">EFFR 대비 -11 bp</div></div>
+        <div class="metric"><div class="metric-label">2Y Treasury</div><div class="metric-value">4.13%</div><div class="metric-note">2026-05-22</div></div>
+        <div class="metric"><div class="metric-label">10Y Treasury</div><div class="metric-value">4.56%</div><div class="metric-note">곡선 43 bp</div></div>
+      </div>
+    </div>
+
+    <div class="card p-5 md:p-6 mb-5">
+      <div class="section-title mb-3">데이터 시계</div>
+      <table class="clock">
+        <tbody>
+          <tr><td>시장 기준일</td><td>2026-05-25</td><td class="text-right text-slate-500">보고서 작성일</td></tr>
+          <tr><td>H.4.1 최신</td><td>2026-05-21</td><td class="text-right text-slate-500">준비금 / RRP / TGA</td></tr>
+          <tr><td>Treasury DTS</td><td>2026-05-21</td><td class="text-right text-slate-500">Operating cash balance</td></tr>
+          <tr><td>NY Fed reference rates</td><td>2026-05-21</td><td class="text-right text-slate-500">EFFR / SOFR / OBFR</td></tr>
+          <tr><td>Treasury curve</td><td>2026-05-22</td><td class="text-right text-slate-500">2Y / 10Y</td></tr>
+          <tr><td>BIS GLI</td><td>2025-Q4</td><td class="text-right text-slate-500">release 2026-04-30</td></tr>
+          <tr><td>NFCI</td><td>확인 불가</td><td class="text-right text-slate-500">차트 컴포넌트 기반 페이지</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-2 mb-5">
+      <div class="card p-5 md:p-6">
+        <div class="section-title mb-2">준비금 경로</div>
+        <div class="mini mb-3">최근 5주 H.4.1 기준 준비금 / ON RRP / TGA 추이</div>
+        <canvas id="reserveChart" height="220"></canvas>
+      </div>
+      <div class="card p-5 md:p-6">
+        <div class="section-title mb-2">자금시장 구현</div>
+        <div class="mini mb-3">EFFR / SOFR / IORB / ON RRP administered rate</div>
+        <canvas id="ratesChart" height="220"></canvas>
+      </div>
+    </div>
+
+    <div class="grid-2 mb-5">
+      <div class="card p-5 md:p-6">
+        <div class="section-title mb-2">6계층 점수 비교</div>
+        <div class="mini mb-3">-2 역풍 ~ +2 순풍</div>
+        <canvas id="scoresChart" height="220"></canvas>
+      </div>
+      <div class="card p-5 md:p-6">
+        <div class="section-title mb-3">금융 조건 / 글로벌 달러</div>
+        <div class="grid-2 gap-3">
+          <div class="kpi"><div class="label">2Y Treasury</div><div class="value">4.13%</div></div>
+          <div class="kpi"><div class="label">10Y Treasury</div><div class="value">4.56%</div></div>
+          <div class="kpi"><div class="label">NFCI</div><div class="value">확인 불가</div></div>
+          <div class="kpi"><div class="label">BIS USD credit YoY</div><div class="value">8.465%</div></div>
+        </div>
+        <div class="mt-4 text-sm text-slate-600 leading-6">BIS GLI 최신 분기(2025-Q4) 기준, 비은행 차입과 국제 대출 양쪽 모두 여전히 성장세다. 다만 시계는 2025-Q4로 다소 뒤처져 있어, 현재장 판단은 H.4.1과 자금시장 데이터가 더 중요하다.</div>
+      </div>
+    </div>
+
+    <div class="card p-5 md:p-6 mb-5">
+      <div class="section-title mb-3">6계층 유동성 분석</div>
+      <div class="grid-2 gap-4">
+        <div class="analysis-card">
+          <div class="flex items-center justify-between mb-2"><strong>1. 연준 계정 및 정책 구현</strong><span class="chip chip-neutral">0</span></div>
+          <p>준비금은 3.13T로 전주 대비 +26.8B 증가했다. 총자산은 6.71T로 소폭 감소했지만, 준비금 자체는 여전히 충분하고 정책 포지션은 중립에 가깝다.</p>
+          <ul><li>준비금: 3.13T</li><li>총자산: 6.71T</li><li>MBS: 1.98T</li><li>스왑: 0.0B</li></ul>
+        </div>
+        <div class="analysis-card">
+          <div class="flex items-center justify-between mb-2"><strong>2. 자금시장 및 리포 구조</strong><span class="chip chip-positive">1</span></div>
+          <p>EFFR 3.62%, SOFR 3.51%로 11bp 스프레드가 유지된다. IORB 3.65%와 ON RRP 3.50%가 정책 구간을 안정적으로 잡고 있어 자금시장 스트레스는 낮다.</p>
+          <ul><li>SOFR-EFFR: -11 bp</li><li>ON RRP: 3.50%</li><li>IORB: 3.65%</li></ul>
+        </div>
+        <div class="analysis-card">
+          <div class="flex items-center justify-between mb-2"><strong>3. 재무부 현금 및 부채 관리</strong><span class="chip chip-warn">0</span></div>
+          <p>TGA는 782.0B로 여전히 높지만 전주 대비 -56.6B 줄었다. 즉, 현재 잔고 수준은 유동성을 묶지만, 단기 흐름은 오히려 조금 풀리는 방향이다.</p>
+          <ul><li>TGA: 782.0B</li><li>주간 변화: -56.6B</li><li>현재 수준은 높고, 방향은 완화</li></ul>
+        </div>
+        <div class="analysis-card">
+          <div class="flex items-center justify-between mb-2"><strong>4. 은행 및 중개인 여력</strong><span class="chip chip-neutral">0</span></div>
+          <p>H.8, SLOOS, primary dealer capacity는 이번 룩백에 포함되지 않았다. 따라서 중개 여력은 확인 불가로 두는 것이 맞고, 과잉 해석을 피해야 한다.</p>
+          <ul><li>H.8: 확인 불가</li><li>SLOOS: 확인 불가</li><li>Primary dealer: 확인 불가</li></ul>
+        </div>
+        <div class="analysis-card">
+          <div class="flex items-center justify-between mb-2"><strong>5. 금융 조건</strong><span class="chip chip-neutral">0</span></div>
+          <p>2Y 4.13%, 10Y 4.56%로 커브는 43 bp다. 절대 레벨은 여전히 높은 편이지만, 최근 일자 기준으로는 급격한 경색 신호가 아니다.</p>
+          <ul><li>2Y: 4.13%</li><li>10Y: 4.56%</li><li>곡선: 43 bp</li></ul>
+        </div>
+        <div class="analysis-card">
+          <div class="flex items-center justify-between mb-2"><strong>6. 글로벌 달러 유동성</strong><span class="chip chip-positive">1</span></div>
+          <p>BIS GLI 최신 분기에서 비은행 차입과 국제 대출은 여전히 성장세를 유지한다. 다만 시계가 2025-Q4라서, 현재는 방향성 참고용으로만 읽는 게 맞다.</p>
+          <ul><li>USD credit to non-banks outside US: 8.465% YoY</li><li>International claims on non-banks: 11.041% YoY</li><li>Broad dollar index (Apr): 119.04</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card p-5 md:p-6 mb-5">
+      <div class="section-title mb-3">종합 판단</div>
+      <div class="analysis-card">
+        <p><strong>결론:</strong> 오늘의 달러 유동성은 <strong>중립</strong>이다. 준비금이 늘고 TGA가 줄어드는 점은 순풍이지만, ON RRP가 다시 늘어 단기 흡수 효과가 남아 있다. 따라서 포지션 관점에서는 과감한 베팅보다, 다음 H.4.1에서 TGA와 ON RRP의 동시 방향을 확인하는 접근이 더 낫다.</p>
+      </div>
+      <div class="grid-2 gap-4 mt-4">
+        <div class="analysis-card">
+          <strong>체크포인트</strong>
+          <ul>
+            <li>다음 H.4.1에서 TGA가 다시 반등하는지 확인</li>
+            <li>SOFR-EFFR 스프레드가 10bp 안팎을 유지하는지 확인</li>
+            <li>2Y / 10Y가 동시에 더 올라가는지 여부 확인</li>
+            <li>BIS 최신 분기 반영 시 글로벌 달러 추세 재점검</li>
+          </ul>
+        </div>
+        <div class="analysis-card">
+          <strong>핵심 수치 요약</strong>
+          <ul>
+            <li>준비금: 3.13T</li>
+            <li>ON RRP: 323.7B</li>
+            <li>TGA: 782.0B</li>
+            <li>EFFR / SOFR: 3.62% / 3.51%</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card p-5 md:p-6">
+      <div class="section-title mb-3">주요 출처</div>
+      <div class="source-list text-sm leading-7 text-slate-700">
+        <div><strong>H.4.1:</strong> <a href="https://www.federalreserve.gov/releases/h41/current/" target="_blank" rel="noreferrer">https://www.federalreserve.gov/releases/h41/current/</a></div>
+<div><strong>NY Fed reference rates:</strong> <a href="https://markets.newyorkfed.org/api/rates/all/latest.json" target="_blank" rel="noreferrer">https://markets.newyorkfed.org/api/rates/all/latest.json</a></div>
+<div><strong>Treasury yield curve:</strong> <a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noreferrer">https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026</a></div>
+<div><strong>Treasury DTS operating cash:</strong> <a href="https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance" target="_blank" rel="noreferrer">https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance</a></div>
+<div><strong>BIS GLI:</strong> <a href="https://data.bis.org/topics/GLI" target="_blank" rel="noreferrer">https://data.bis.org/topics/GLI</a></div>
+<div><strong>Chicago Fed NFCI:</strong> <a href="https://www.chicagofed.org/research/data/nfci/current-data" target="_blank" rel="noreferrer">https://www.chicagofed.org/research/data/nfci/current-data</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const reserveLabels = ["2026-04-23", "2026-04-30", "2026-05-07", "2026-05-14", "2026-05-21"];
+    const reserveData = [2901.825, 2918.599, 3032.588, 3102.81, 3129.562];
+    const rrpData = [327.881, 317.998, 322.568, 299.605, 323.745];
+    const tgaData = [1005.968, 981.929, 877.761, 838.584, 781.979];
+
+    const rateLabels = ["2026-05-15", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21"];
+    const effrData = [3.63, 3.63, 3.62, 3.62, 3.62];
+    const sofrData = [3.55, 3.53, 3.51, 3.5, 3.51];
+    const iorbData = [3.65, 3.65, 3.65, 3.65, 3.65];
+    const onrrpData = [3.5, 3.5, 3.5, 3.5, 3.5];
+
+    const scoreLabels = ["연준 계정", "자금시장", "재무부 현금", "은행 여력", "금융조건", "글로벌 달러"];
+    const scoreData = [0, 1, 0, 0, 0, 1];
+
+    new Chart(document.getElementById('reserveChart'), {
+      type: 'line',
+      data: {
+        labels: reserveLabels,
+        datasets: [
+          { label: '준비금', data: reserveData, borderColor: '#0f766e', backgroundColor: 'rgba(15,118,110,0.08)', fill: true, tension: 0.25, borderWidth: 2.5, pointRadius: 2 },
+          { label: 'ON RRP', data: rrpData, borderColor: '#b45309', backgroundColor: 'rgba(180,83,9,0.08)', fill: false, tension: 0.25, borderWidth: 2.25, pointRadius: 2 },
+          { label: 'TGA', data: tgaData, borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.08)', fill: false, tension: 0.25, borderWidth: 2.25, pointRadius: 2 },
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, usePointStyle: true, font: { size: 11 } } },
+          tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}B` } }
+        },
+        scales: {
+          y: { ticks: { callback: (v) => `${v}B` }, grid: { color: 'rgba(148,163,184,0.14)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('ratesChart'), {
+      type: 'line',
+      data: {
+        labels: rateLabels,
+        datasets: [
+          { label: 'EFFR', data: effrData, borderColor: '#1d4ed8', backgroundColor: 'transparent', tension: 0.25, borderWidth: 2.5, pointRadius: 2 },
+          { label: 'SOFR', data: sofrData, borderColor: '#7c3aed', backgroundColor: 'transparent', tension: 0.25, borderWidth: 2.5, pointRadius: 2 },
+          { label: 'IORB', data: iorbData, borderColor: '#64748b', backgroundColor: 'transparent', tension: 0.25, borderWidth: 2.0, pointRadius: 2, borderDash: [5, 4] },
+          { label: 'ON RRP', data: onrrpData, borderColor: '#b45309', backgroundColor: 'transparent', tension: 0.25, borderWidth: 2.0, pointRadius: 2, borderDash: [3, 3] },
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, usePointStyle: true, font: { size: 11 } } },
+          tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}%` } }
+        },
+        scales: {
+          y: { ticks: { callback: (v) => `${v.toFixed(2)}%` }, grid: { color: 'rgba(148,163,184,0.14)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('scoresChart'), {
+      type: 'bar',
+      data: {
+        labels: scoreLabels,
+        datasets: [{
+          label: '점수',
+          data: scoreData,
+          backgroundColor: scoreData.map(v => v > 0 ? 'rgba(15,118,110,0.75)' : (v < 0 ? 'rgba(180,83,9,0.75)' : 'rgba(100,116,139,0.45)')),
+          borderColor: scoreData.map(v => v > 0 ? '#0f766e' : (v < 0 ? '#b45309' : '#64748b')),
+          borderWidth: 1.2,
+          borderRadius: 8,
+          maxBarThickness: 32
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { min: -2, max: 2, ticks: { stepSize: 1 }, grid: { color: 'rgba(148,163,184,0.14)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
