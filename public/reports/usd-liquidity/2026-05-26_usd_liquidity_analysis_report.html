@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[REPORT] 2026-05-26 달러 유동성 분석</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: 'Pretendard', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; background: #f4f7fb; color: #0f172a; }
+    .card { background: rgba(255,255,255,0.92); border: 1px solid rgba(148,163,184,0.18); border-radius: 20px; box-shadow: 0 18px 40px rgba(15,23,42,0.07); }
+    .metric { background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,250,252,0.96)); }
+    .pill { border-radius: 999px; padding: 0.35rem 0.75rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; }
+    .score-neutral { background: #e2e8f0; color: #334155; }
+    .score-positive { background: #d1fae5; color: #065f46; }
+    .score-negative { background: #fee2e2; color: #991b1b; }
+    .muted { color: #64748b; }
+    .section-title { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.02em; }
+    .smallcaps { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.7rem; font-weight: 800; }
+  </style>
+</head>
+<body>
+  <main class="max-w-6xl mx-auto px-4 py-6 md:py-8 space-y-5">
+    <section class="card overflow-hidden">
+      <div class="p-5 md:p-7 bg-gradient-to-br from-slate-50 via-white to-cyan-50 border-b border-slate-200/60">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+          <div>
+            <div class="smallcaps text-cyan-700 mb-2">USD Liquidity / Daily Snapshot</div>
+            <h1 class="text-2xl md:text-4xl font-black tracking-tight text-slate-950">2026-05-26 달러 유동성 분석 보고서</h1>
+            <p class="mt-3 text-sm md:text-base text-slate-600 max-w-3xl">순풍과 역풍이 거의 상쇄되어, 오늘 유동성은 중립에 가깝습니다. 오늘 리포트는 연준 H.4.1, 재무부 DTS, NY Fed 레퍼런스레이트, Treasury 수익률, Chicago Fed NFCI, BIS GLI의 공식 소스를 조합해 작성했습니다.</p>
+          </div>
+          <div class="flex flex-col items-start md:items-end gap-3">
+            <span class="pill score-neutral">중립</span>
+            <div class="text-right text-xs text-slate-500">
+              <div>시장 시계: 2026-05-26</div>
+              <div>H.4.1: 2026-05-20 / DTS: 2026-05-21 / NFCI: 2026-05-15 / BIS: 2026-04-30</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 mt-6">
+          <div class="metric rounded-2xl p-4">
+            <div class="text-xs muted mb-1">준비금</div>
+            <div class="text-xl font-extrabold tracking-tight">$3.107T</div>
+            <div class="text-xs muted mt-1">주간 -10.7B</div>
+          </div>
+          <div class="metric rounded-2xl p-4">
+            <div class="text-xs muted mb-1">ON RRP</div>
+            <div class="text-xl font-extrabold tracking-tight">$342.6B</div>
+            <div class="text-xs muted mt-1">주간 +16.3B</div>
+          </div>
+          <div class="metric rounded-2xl p-4">
+            <div class="text-xs muted mb-1">TGA (H.4.1)</div>
+            <div class="text-xl font-extrabold tracking-tight">$782.0B</div>
+            <div class="text-xs muted mt-1">주간 -25.4B</div>
+          </div>
+          <div class="metric rounded-2xl p-4">
+            <div class="text-xs muted mb-1">SOFR / EFFR</div>
+            <div class="text-xl font-extrabold tracking-tight">3.51% / 3.62%</div>
+            <div class="text-xs muted mt-1">SOFR-IORB -14bp</div>
+          </div>
+          <div class="metric rounded-2xl p-4">
+            <div class="text-xs muted mb-1">NFCI / ANFCI</div>
+            <div class="text-xl font-extrabold tracking-tight">-0.52 / -0.48</div>
+            <div class="text-xs muted mt-1">현재는 평균보다 느슨한 편</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-5 md:p-7 grid grid-cols-1 lg:grid-cols-2 gap-4 border-b border-slate-200/70">
+        <div class="card p-4 md:p-5 shadow-none">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <div class="section-title">준비금 경로</div>
+              <div class="text-xs muted">최근 5주 H.4.1 주간 시계열</div>
+            </div>
+            <span class="pill score-neutral">H.4.1</span>
+          </div>
+          <canvas id="reservesChart" height="240"></canvas>
+        </div>
+        <div class="card p-4 md:p-5 shadow-none">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <div class="section-title">자금시장 구현</div>
+              <div class="text-xs muted">SOFR / EFFR / OBFR / IORB 일별 레벨</div>
+            </div>
+            <span class="pill score-positive">안정</span>
+          </div>
+          <canvas id="moneyChart" height="240"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <article class="card p-5">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="section-title">데이터 시계</h2>
+          <span class="pill score-neutral">공식 소스</span>
+        </div>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between gap-4"><span class="muted">H.4.1 주간</span><span class="font-semibold">2026-05-20</span></div>
+          <div class="flex justify-between gap-4"><span class="muted">DTS 일간</span><span class="font-semibold">2026-05-21</span></div>
+          <div class="flex justify-between gap-4"><span class="muted">TGA 종가</span><span class="font-semibold">$785.9B</span></div>
+          <div class="flex justify-between gap-4"><span class="muted">Treasury 수익률</span><span class="font-semibold">2026-05-22</span></div>
+          <div class="flex justify-between gap-4"><span class="muted">NFCI / ANFCI</span><span class="font-semibold">2026-05-15</span></div>
+          <div class="flex justify-between gap-4"><span class="muted">BIS GLI</span><span class="font-semibold">2026-04-30</span></div>
+        </div>
+      </article>
+
+      <article class="card p-5 lg:col-span-2">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="section-title">핵심 해석</h2>
+          <span class="pill score-neutral">중립</span>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4 text-sm leading-7 text-slate-700">
+          <div>
+            <p><strong>연준 계정.</strong> 준비금은 $3.107T로 여전히 충분한 수준입니다. 주간으로는 -10.7B 변동이며, 역레포 잔고가 +16.3B 움직여 레포/MMF 자금의 미세한 재배분이 보입니다.</p>
+            <p class="mt-3"><strong>재무부 현금.</strong> H.4.1 기준 TGA는 $782.0B이고, DTS 일간 종가는 $785.9B입니다. 일간 기준 전일 대비 +3.9B로 소폭 증가해 민간 유동성을 일부 흡수했습니다.</p>
+          </div>
+          <div>
+            <p><strong>자금시장.</strong> SOFR 3.51%, EFFR 3.62%, OBFR 3.61%, IORB 3.65%입니다. SOFR-IORB -14bp, EFFR-IORB -3bp로 금리 스프레드는 좁고 안정적입니다.</p>
+            <p class="mt-3"><strong>금융 조건 및 글로벌 달러.</strong> NFCI -0.52, ANFCI -0.48는 평균보다 느슨한 편입니다. BIS GLI는 2025 Q4 기준 USD 비은행 차입 14,252bn, YoY +8.5%로 성장세가 이어집니다.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <article class="card p-5">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="section-title">6계층 유동성 점수</h2>
+          <span class="pill score-neutral">중립</span>
+        </div>
+        <canvas id="scoresChart" height="240"></canvas>
+      </article>
+      <article class="card p-5">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="section-title">Treasury curve / NFCI</h2>
+          <span class="pill score-positive">완화</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="metric rounded-2xl p-4">
+            <div class="text-xs muted mb-1">2Y Treasury</div>
+            <div class="text-2xl font-black">4.13%</div>
+          </div>
+          <div class="metric rounded-2xl p-4">
+            <div class="text-xs muted mb-1">10Y Treasury</div>
+            <div class="text-2xl font-black">4.56%</div>
+          </div>
+          <div class="metric rounded-2xl p-4">
+            <div class="text-xs muted mb-1">10Y - 2Y</div>
+            <div class="text-2xl font-black">+43bp</div>
+          </div>
+          <div class="metric rounded-2xl p-4">
+            <div class="text-xs muted mb-1">NFCI / ANFCI</div>
+            <div class="text-2xl font-black">-0.52 / -0.48</div>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 leading-7">재무부 수익률 곡선은 2년물 4.13%, 10년물 4.56%로 10Y-2Y가 +43bp입니다. 금융 조건은 가파르게 타이트해지는 국면이 아니라, 상대적으로 완화된 상태를 유지하고 있습니다.</p>
+      </article>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <article class="card p-5">
+        <h2 class="section-title mb-3">연준 계정</h2>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span class="muted">준비금</span><span class="font-semibold">$3.107T</span></div>
+          <div class="flex justify-between"><span class="muted">ON RRP</span><span class="font-semibold">$342.6B</span></div>
+          <div class="flex justify-between"><span class="muted">주간 변화</span><span class="font-semibold">준비금 -10.7B / ON RRP +16.3B</span></div>
+        </div>
+        <p class="mt-3 text-sm text-slate-600 leading-7">준비금은 절대 수준상 여유가 있으며, ON RRP는 다시 조금 늘어났습니다. 즉, 민간 자금의 일부가 안전자산 쪽으로 머물고 있다는 뜻입니다.</p>
+      </article>
+      <article class="card p-5">
+        <h2 class="section-title mb-3">재무부 현금</h2>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span class="muted">H.4.1 TGA</span><span class="font-semibold">$782.0B</span></div>
+          <div class="flex justify-between"><span class="muted">DTS 종가</span><span class="font-semibold">$785.9B</span></div>
+          <div class="flex justify-between"><span class="muted">일간 변화</span><span class="font-semibold">+3.9B</span></div>
+        </div>
+        <p class="mt-3 text-sm text-slate-600 leading-7">TGA가 아직 높은 구간이라 민간 달러 유동성을 일부 흡수하지만, 급격한 점프는 아니어서 역풍 강도는 제한적입니다.</p>
+      </article>
+      <article class="card p-5">
+        <h2 class="section-title mb-3">글로벌 달러</h2>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span class="muted">분기</span><span class="font-semibold">2025 Q4</span></div>
+          <div class="flex justify-between"><span class="muted">USD 비은행 차입</span><span class="font-semibold">14,252bn</span></div>
+          <div class="flex justify-between"><span class="muted">YoY</span><span class="font-semibold">+8.5%</span></div>
+        </div>
+        <p class="mt-3 text-sm text-slate-600 leading-7">미국 달러 표시 비은행 차입의 성장세가 이어지지만, 데이터 시계는 분기 단위라 현재장 해석에는 보조 신호로 사용 최근 분기 흐름만 보면 글로벌 달러 조달은 아직 꺾이지 않았습니다.</p>
+      </article>
+    </section>
+
+    <section class="card p-5">
+      <h2 class="section-title mb-3">현재 판정</h2>
+      <div class="grid md:grid-cols-2 gap-5 text-sm leading-7 text-slate-700">
+        <div>
+          <p>오늘의 결론은 <strong>중립</strong>입니다. 준비금은 충분하고, 자금시장 금리는 안정적이며, 금융 조건도 느슨한 편입니다. 반면 TGA는 여전히 민간 유동성을 일부 빨아들이는 방향이어서 순풍을 강하게 만들 정도는 아닙니다.</p>
+        </div>
+        <div>
+          <p>다음 체크포인트는 H.4.1에서 준비금과 ON RRP가 어떤 조합으로 움직이는지, DTS에서 TGA가 더 높아지는지, 그리고 SOFR-IORB 스프레드가 지금처럼 얇게 유지되는지입니다. 이 세 가지가 현재 유동성 방향을 가장 잘 설명합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card p-5">
+      <h2 class="section-title mb-3">주요 출처</h2>
+      <div class="grid md:grid-cols-2 gap-2 text-xs text-slate-600 leading-6">
+        <div>Fed H.4.1 DDP CSV: <span class="font-mono">https://www.federalreserve.gov/datadownload/Output.aspx?rel=H41&series=f52e72511be65e16f71d4f5858951312&lastobs=5&from=&to=&filetype=csv&label=include&layout=seriescolumn&type=package</span></div>
+        <div>Treasury DTS operating cash balance: <span class="font-mono">https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance</span></div>
+        <div>NY Fed reference rates API: <span class="font-mono">https://markets.newyorkfed.org/read?productCode=50</span></div>
+        <div>Federal Reserve IORB page: <span class="font-mono">https://www.federalreserve.gov/monetarypolicy/reserve-balances.htm</span></div>
+        <div>Treasury yield curve XML: <span class="font-mono">https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml?data=daily_treasury_yield_curve&field_tdr_date_value=2026</span></div>
+        <div>Chicago Fed NFCI: <span class="font-mono">https://www.chicagofed.org/research/data/nfci/current-data</span></div>
+        <div>BIS GLI portal: <span class="font-mono">https://data.bis.org/topics/GLI</span></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const reservesData = {"labels": ["2026-04-22", "2026-04-29", "2026-05-06", "2026-05-13", "2026-05-20"], "reserves": [2914.6, 2919.2, 3051.5, 3117.4, 3106.7], "on_rrp": [325.1, 322.7, 322.7, 326.3, 342.6], "tga": [1007.2, 988.1, 862.8, 807.4, 782.0]};
+    const moneyData = {"labels": ["2026-05-15", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21"], "sofr": [3.55, 3.53, 3.51, 3.5, 3.51], "effr": [3.63, 3.63, 3.62, 3.62, 3.62], "obfr": [3.62, 3.62, 3.62, 3.62, 3.61], "iorb": [3.65, 3.65, 3.65, 3.65, 3.65]};
+    const scoreData = {"labels": ["연준 계정", "자금시장", "재무부 현금", "은행/중개 여력", "금융 조건", "글로벌 달러"], "scores": [0.1, 0.8, -0.4, 0.0, 0.9, 0.7]};
+
+    new Chart(document.getElementById('reservesChart'), {
+      type: 'line',
+      data: {
+        labels: reservesData.labels,
+        datasets: [
+          { label: '준비금 ($B)', data: reservesData.reserves, borderColor: '#0f766e', backgroundColor: 'rgba(15,118,110,0.12)', tension: 0.3, fill: true, pointRadius: 2 },
+          { label: 'ON RRP ($B)', data: reservesData.on_rrp, borderColor: '#d97706', backgroundColor: 'rgba(217,119,6,0.10)', tension: 0.3, fill: true, pointRadius: 2 },
+          { label: 'TGA ($B)', data: reservesData.tga, borderColor: '#be185d', backgroundColor: 'rgba(190,24,93,0.10)', tension: 0.3, fill: true, pointRadius: 2 }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, usePointStyle: true } } },
+        scales: { y: { ticks: { callback: (v) => '$' + Number(v).toFixed(0) + 'B' } } },
+      }
+    });
+
+    new Chart(document.getElementById('moneyChart'), {
+      type: 'line',
+      data: {
+        labels: moneyData.labels,
+        datasets: [
+          { label: 'SOFR', data: moneyData.sofr, borderColor: '#7c3aed', backgroundColor: 'transparent', tension: 0.25, pointRadius: 2 },
+          { label: 'EFFR', data: moneyData.effr, borderColor: '#1d4ed8', backgroundColor: 'transparent', tension: 0.25, pointRadius: 2 },
+          { label: 'OBFR', data: moneyData.obfr, borderColor: '#0f766e', backgroundColor: 'transparent', tension: 0.25, pointRadius: 2 },
+          { label: 'IORB', data: moneyData.iorb, borderColor: '#6b7280', borderDash: [4,4], backgroundColor: 'transparent', tension: 0, pointRadius: 0 }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, usePointStyle: true } } },
+        scales: { y: { ticks: { callback: (v) => Number(v).toFixed(2) + '%' } } },
+      }
+    });
+
+    new Chart(document.getElementById('scoresChart'), {
+      type: 'bar',
+      data: {
+        labels: scoreData.labels,
+        datasets: [{
+          label: '점수 (-1.0 ~ +1.0)',
+          data: scoreData.scores,
+          backgroundColor: ['#bfdbfe', '#86efac', '#fca5a5', '#cbd5e1', '#86efac', '#a7f3d0'],
+          borderColor: ['#3b82f6', '#16a34a', '#dc2626', '#64748b', '#16a34a', '#10b981'],
+          borderWidth: 1,
+          borderRadius: 10,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { x: { min: -1.2, max: 1.2, ticks: { stepSize: 0.4 } } },
+      }
+    });
+  </script>
+</body>
+</html>
