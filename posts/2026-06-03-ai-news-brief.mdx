@@ -1,0 +1,73 @@
+---
+title: "[NEWS] 2026-06-03 AI 뉴스 브리프"
+category: A.I
+---
+
+## 한줄 요약
+오늘의 AI 뉴스는 **에이전트가 모델 기능에서 운영 인프라로 이동하고 있다**는 흐름으로 읽힌다. OpenAI는 Enterprise/Edu 워크스페이스 에이전트에 앱 권한, 배포, Sites, GPT-5.5 선택권을 붙였고, Google은 Gemini API의 Managed Agents를 클라우드 샌드박스와 버전 관리 가능한 `AGENTS.md`/`SKILL.md` 구조로 밀고 있다. Anthropic은 Stainless 인수, 금융권 에이전트 템플릿, 대규모 자금 조달을 통해 Claude가 외부 시스템과 연결되는 개발자 플랫폼을 강화하고 있다. 연구 쪽에서는 장기 작업이 여전히 병목이다. 긴 행동 수열, 지연 보상, 실제 실행 기반 평가가 에이전트 성능의 핵심 변수로 부상했다.
+
+## 오늘의 핵심 포인트
+- 에이전트 경쟁의 초점은 단순 모델 성능보다 **권한, 샌드박스, 커넥터, 실행 로그, 재현성**으로 옮겨가고 있다.
+- OpenAI의 최신 Enterprise/Edu 릴리스는 내부 앱 생성, 워크스페이스 에이전트 권한 제어, Slack 후속 응답 같은 운영 기능을 전면에 둔다.
+- Google Managed Agents는 Gemini API에서 에이전트를 안전한 클라우드 실행 환경과 파일 기반 정의로 다루는 방향을 제시한다.
+- Anthropic은 Stainless 인수로 SDK, CLI, MCP 서버 생성 역량을 끌어안아 에이전트 연결성을 플랫폼 차별점으로 삼고 있다.
+- 최신 arXiv 연구들은 장기 작업에서 성능 저하가 단순 추론 문제가 아니라 **탐색, 크레딧 할당, 실행 평가** 문제임을 강조한다.
+
+## 오늘의 논문/연구 4선
+
+### 1) On Training Large Language Models for Long-Horizon Tasks
+이 연구는 장기 작업에서 행동 수열의 길이 자체가 학습 병목이 된다는 점을 실험적으로 보여준다. 동일한 의사결정 규칙을 유지한 채 horizon 길이만 늘리면 탐색 난도와 크레딧 할당 문제가 급격히 커지고, 학습 안정성이 떨어진다. 흥미로운 지점은 “더 긴 문제를 그냥 더 많이 학습시키는 것”보다 horizon을 줄여 훈련한 뒤 긴 작업으로 일반화시키는 접근이 더 안정적이라는 점이다.
+
+**왜 중요하나:** 장기 에이전트는 큰 모델만으로 해결되지 않는다. 작업을 어떤 단위로 쪼개고, 어느 구간에서 보상을 주며, 실패를 어떻게 귀속할지가 실제 성능을 좌우한다.
+
+### 2) The Long-Horizon Task Mirage?
+HORIZON 벤치마크는 GPT-5 계열과 Claude 모델을 포함한 여러 에이전트를 긴 상호의존 행동 수열에서 평가한다. 논문은 짧은 작업에서 강한 에이전트가 긴 작업에서도 같은 품질을 유지한다는 믿음이 착시일 수 있다고 지적한다. 3,100개 이상의 trajectory를 분석하고, LLM-as-a-Judge 기반 실패 귀속 파이프라인을 인간 평가와 비교해 재현 가능한 진단 틀을 제시한다.
+
+**왜 중요하나:** 에이전트 평가는 정답률 하나로 끝나지 않는다. 어느 단계에서, 어떤 종류의 실패가 반복되는지 보는 진단 체계가 필요하다.
+
+### 3) A Subgoal-driven Framework for Improving Long-Horizon LLM Agents
+이 연구는 긴 웹 탐색과 디지털 작업에서 subgoal decomposition과 milestone reward가 얼마나 중요한지 보여준다. 온라인 실행 중에는 목표를 하위 단계로 나눠 경로를 유지하고, RL 학습에서는 희소 보상 대신 milestone 기반 보상을 제공한다. 논문은 WebArena-Lite에서 proprietary 모델의 성공률을 높이고, Gemma3-12B 기반 에이전트도 큰 폭으로 개선했다고 보고한다.
+
+**왜 중요하나:** 하위 목표와 중간 보상은 “프롬프트 요령”이 아니라 장기 에이전트 학습 구조의 핵심이다.
+
+### 4) AgentSearchBench
+AgentSearchBench는 거의 1만 개의 실제 에이전트를 대상으로, 작업에 맞는 에이전트를 어떻게 찾고 재랭킹할지 평가한다. 단순 설명 문장과 semantic similarity만으로는 실제 실행 성능을 잘 예측하지 못하고, 실행 기반 probing 같은 행동 신호가 ranking 품질을 높인다는 결론을 낸다.
+
+**왜 중요하나:** 에이전트가 많아질수록 “좋은 에이전트를 만드는 문제”만큼 “올바른 에이전트를 찾는 문제”가 커진다.
+
+## 오늘의 공식 발표 4선
+
+### OpenAI: ChatGPT Enterprise & Edu 릴리스 노트
+2026년 6월 2일 릴리스 노트에서 OpenAI는 ChatGPT Sites preview와 워크스페이스 에이전트 기능 강화를 공개했다. Enterprise/Edu 사용자는 Codex로 경량 JavaScript/TypeScript 앱을 만들고 내부 URL로 배포할 수 있으며, 관리자는 Sites 활성화와 접근 권한을 RBAC로 통제한다. 5월 28일 항목에서는 GPT-5.5 선택, reasoning effort 설정, 앱별 행동 safeguard, 역할 기반 publish 권한, guided agent setup, 음성 파일 생성, Slack thread 후속 응답이 추가됐다.
+
+### Google: Managed Agents in the Gemini API
+Google은 2026년 5월 19일 Gemini API에 Managed Agents를 도입했다. Antigravity agent는 Gemini 3.5 Flash 기반으로 Interactions API와 Google AI Studio에서 제공되며, 안전한 ephemeral Linux 환경에서 reasoning, tool use, code execution을 수행한다. 기업용으로는 Gemini Enterprise Agent Platform preview와 연결되고, 에이전트 정의를 `AGENTS.md`와 `SKILL.md` 같은 버전 관리 가능한 파일로 다룬다는 점이 특징이다.
+
+### Anthropic: Stainless 인수
+Anthropic은 2026년 5월 18일 Stainless 인수를 발표했다. Stainless는 SDK, CLI, MCP 서버 생성을 지원하는 개발자 도구 회사이며, Anthropic은 이를 Claude Platform의 agent connectivity 강화로 연결한다. 메시지는 명확하다. 에이전트는 API와 데이터에 닿을 수 있어야 쓸모가 있고, 그 연결 계층을 공식 플랫폼 안으로 가져오겠다는 것이다.
+
+### Anthropic: 금융권 에이전트 템플릿
+Anthropic은 2026년 5월 5일 금융 서비스용 에이전트 템플릿을 공개했다. pitchbook, KYC, month-end close 같은 업무를 위한 reference architecture를 제시하고, 각 템플릿을 skills, connectors, subagents로 구성했다. Claude Cowork, Claude Code, Claude Managed Agents를 통해 실제 금융 업무에 투입할 수 있도록 설계한 점이 중요하다.
+
+## 오늘의 해석
+오늘의 큰 흐름은 “에이전트의 제품화”다. 연구는 장기 작업에서 실패를 더 정밀하게 진단하고 있고, 빅테크는 그 실패를 줄이기 위한 실행 인프라를 제품으로 만들고 있다. OpenAI는 워크스페이스 내부 앱과 권한 제어로 기업 배포 문제를 다루고, Google은 클라우드 샌드박스와 파일 기반 에이전트 정의를 API 레벨에 올렸다. Anthropic은 MCP와 SDK 생태계를 강화하면서 에이전트가 외부 시스템에 닿는 방식을 통제 가능한 플랫폼으로 만들고 있다.
+
+이 흐름에서 중요한 질문은 “어떤 모델이 가장 똑똑한가”보다 “어떤 환경에서 오래 일해도 무너지지 않는가”다. 긴 작업은 모델의 추론력뿐 아니라 작업 분해, 중간 보상, 권한 경계, 실행 로그, 재시도 전략, 커넥터 품질에 의해 결정된다. 특히 기업 환경에서는 에이전트가 할 수 있는 행동을 세밀하게 제한하고, 누가 배포할 수 있는지 통제하며, 실패했을 때 어디서 왜 실패했는지 추적할 수 있어야 한다.
+
+## 체크포인트
+1. OpenAI Sites와 workspace agents가 Enterprise/Edu 내부 앱 제작 흐름을 얼마나 바꿀지.
+2. Google Managed Agents의 `AGENTS.md`/`SKILL.md`식 파일 정의가 에이전트 배포 표준으로 확장될지.
+3. Stainless 인수가 Anthropic MCP 생태계와 공식 SDK 품질에 어떤 속도로 반영될지.
+4. 장기 작업 벤치마크가 단일 성공률이 아니라 trajectory-level failure attribution으로 이동할지.
+5. 에이전트 검색과 매칭 시장이 커질 경우, 설명 기반 검색보다 실행 기반 평가가 표준이 될지.
+
+## Sources
+- OpenAI Help Center: ChatGPT Enterprise & Edu Release Notes — https://help.openai.com/en/articles/10128477-chatgpt-enterprise-edu-%CF%83%CE%B7%CE%BC%CE%B5%CE%B9%CF%8E%CF%83%CE%B5%CE%B9%CF%82-%CE%AD%CE%BA%CE%B4%CE%BF%CF%83%CE%B7%CF%82
+- OpenAI: The next evolution of the Agents SDK — https://openai.com/index/the-next-evolution-of-the-agents-sdk
+- Google: Introducing Managed Agents in the Gemini API — https://blog.google/innovation-and-ai/technology/developers-tools/managed-agents-gemini-api/
+- Anthropic: Anthropic acquires Stainless — https://www.anthropic.com/news/anthropic-acquires-stainless
+- Anthropic: Agents for financial services — https://www.anthropic.com/news/finance-agents
+- arXiv: On Training Large Language Models for Long-Horizon Tasks — https://arxiv.org/abs/2605.02572
+- arXiv: The Long-Horizon Task Mirage? — https://arxiv.org/abs/2604.11978
+- arXiv: A Subgoal-driven Framework for Improving Long-Horizon LLM Agents — https://arxiv.org/abs/2603.19685
+- arXiv: AgentSearchBench — https://arxiv.org/abs/2604.22436
