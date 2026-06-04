@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026-06-05 달러 유동성 분석 보고서</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--ink:#172033;--muted:#667085;--line:#d9e1ec;--bg:#f7f9fc;--panel:#fff;--teal:#0f766e;--amber:#b45309;--rose:#be123c;--blue:#2563eb;--slate:#475569}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55} .wrap{max-width:1120px;margin:0 auto;padding:18px} .hero{background:linear-gradient(180deg,#fff,#eef4fb);border-bottom:1px solid var(--line)} h1{font-size:clamp(28px,5vw,48px);line-height:1.05;margin:0 0 12px;letter-spacing:0} h2{font-size:20px;margin:0 0 14px} h3{font-size:15px;margin:0 0 8px} .kicker{font-size:13px;color:var(--muted);font-weight:700} .verdict{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-weight:700} .grid{display:grid;gap:12px} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;box-shadow:0 1px 2px rgba(16,24,40,.04)} .metric .label{font-size:12px;color:var(--muted)} .metric .value{font-size:24px;font-weight:800} .metric .sub{font-size:12px;color:var(--muted)} .badge{border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;display:inline-block} .bneg{background:#fff1f2;color:var(--rose)} .bpos{background:#ecfdf5;color:var(--teal)} .bneu{background:#f1f5f9;color:#475569} table{width:100%;border-collapse:collapse;font-size:13px} th,td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top} th{color:var(--muted);font-size:12px} .note{font-size:13px;color:var(--muted)} .answer{border-left:3px solid var(--line);padding-left:12px;margin:10px 0} .source a{color:#1d4ed8;word-break:break-all} canvas{max-height:260px} @media(max-width:760px){.g3,.g2{grid-template-columns:1fr} .wrap{padding:14px} .metric .value{font-size:21px}}
+</style></head><body>
+<section class="hero"><div class="wrap">
+<div class="kicker">USD LIQUIDITY MONITOR · 2026-06-05 07:00 KST</div>
+<h1>달러 유동성 분석</h1>
+<p class="verdict">종합 판단: 중립 <span class="badge bneu">총점 +0.0</span></p>
+<p class="note">TGA와 ON RRP가 동시에 흡수 방향으로 움직이며 준비금이 주간 기준 감소했다. 다만 단기 자금시장 레이트는 연준 corridor 안에서 안정적이고 NFCI는 평균보다 완화된 구간이다.</p>
+<div class="grid g3">
+<div class="card metric"><div class="label">준비금(H.4.1)</div><div class="value">$3,045.7bn</div><div class="sub">주간 평균 변화 -53bn</div></div>
+<div class="card metric"><div class="label">TGA(H.4.1 / DTS)</div><div class="value">$845.7bn</div><div class="sub">DTS 2026-06-03 $845.7bn</div></div>
+<div class="card metric"><div class="label">SOFR / EFFR</div><div class="value">3.61% / 3.62%</div><div class="sub">SOFR-EFFR -1bp</div></div>
+</div></div></section>
+<main class="wrap grid">
+<section class="card"><h2>데이터 시계</h2><table><thead><tr><th>항목</th><th>최신 시점</th><th>핵심값</th><th>해석상 주의</th></tr></thead><tbody>
+<tr><td>시장/레이트</td><td>2026-06-03</td><td>SOFR 3.61%, EFFR 3.62%</td><td>일별 데이터가 H.4.1보다 빠르게 갱신됨</td></tr>
+<tr><td>Fed H.4.1</td><td>Jun 3, 2026</td><td>준비금 $3,045.7bn</td><td>수요일 잔고와 주간 평균을 구분해야 함</td></tr>
+<tr><td>Treasury DTS</td><td>2026-06-03</td><td>TGA closing $845.7bn</td><td>H.4.1의 수요일 TGA와 직접 대조 가능</td></tr>
+<tr><td>ON RRP 운영</td><td>2026-06-04</td><td>$1.12bn</td><td>일별 운영액은 H.4.1 주간 평균보다 작고 빠르게 움직임</td></tr>
+<tr><td>NFCI</td><td>05/29/2026</td><td>NFCI -0.49, ANFCI -0.44</td><td>주간 금융조건 지표, 평균보다 낮으면 완화</td></tr>
+<tr><td>BIS GLI</td><td>확인 불가</td><td>이번 자동 수집에 미포함</td><td>글로벌 달러 판단은 보수적으로 중립 처리</td></tr>
+</tbody></table></section>
+<section class="grid g2"><div class="card"><h2>준비금 브리지</h2><canvas id="bridgeChart"></canvas><p class="note">H.4.1 기준 전주 평균과 최근 수요일 잔고 비교. TGA와 ON RRP 상승은 준비금을 흡수하는 방향이다.</p></div><div class="card"><h2>자금시장 구현</h2><canvas id="ratesChart"></canvas><p class="note">SOFR, EFFR 모두 목표범위 안에서 움직인다. IORB 3.65% 대비 SOFR -4bp, EFFR -3bp.</p></div></section>
+<section class="card"><h2>6계층 유동성 점수</h2><canvas id="scoreChart"></canvas></section>
+<section class="card"><h2>6계층 분석</h2>
+<table><thead><tr><th>계층</th><th>스냅샷</th><th>전달 경로</th><th>점수</th></tr></thead><tbody>
+<tr><td>연준 계정</td><td>준비금 $3,045.7bn, 주간 평균 -53bn; Fed credit $6,664.4bn</td><td>TGA와 ON RRP 상승이 reserve balances를 압박. Fed 자산 자체는 큰 완충을 주지 못함.</td><td><span class="badge bneg">-1</span></td></tr>
+<tr><td>자금시장</td><td>SOFR 3.61%, EFFR 3.62%, OBFR 3.62%, IORB 3.65%</td><td>SOFR-EFFR 스프레드가 좁아 funding stress 신호는 제한적. TGCR/BGCR도 SOFR 아래에서 안정.</td><td><span class="badge bpos">+1</span></td></tr>
+<tr><td>재무부 현금</td><td>H.4.1 TGA $845.7bn, 주간 평균 +45bn; DTS 최신 $845.7bn</td><td>TGA 증가는 민간부문 현금을 재무부 계정으로 끌어 reserve drain을 만든다.</td><td><span class="badge bneg">-1</span></td></tr>
+<tr><td>은행/딜러</td><td>Primary dealer/H.8 세부 자동 수집은 확인 불가. Repo rates는 안정.</td><td>딜러 capacity는 공급 충격의 전달 병목. 현재 레이트만 보면 급성 스트레스는 약함.</td><td><span class="badge bneu">+0</span></td></tr>
+<tr><td>금융조건</td><td>NFCI -0.49, 2Y 4.05%, 10Y 4.47%</td><td>NFCI가 음수라 평균보다 완화. 금리 레벨은 높지만 credit/risk channel은 완화 쪽.</td><td><span class="badge bpos">+1</span></td></tr>
+<tr><td>글로벌 달러</td><td>BIS GLI 자동 수집 확인 불가</td><td>미국 내 준비금만으로 offshore dollar liquidity를 단정하지 않음. 이번 점수는 중립.</td><td><span class="badge bneu">+0</span></td></tr>
+</tbody></table></section>
+<section class="card"><h2>핵심 질문 답변</h2>
+<div class="answer"><b>준비금은 실제로 줄고 있는가?</b><br>예. H.4.1 주간 평균 기준 준비금은 -53bn 감소했고, 최근 수요일 잔고는 $3,045.7bn이다. 감소 폭의 상당 부분은 TGA와 ON RRP 쪽 흡수와 연결된다.</div>
+<div class="answer"><b>ON RRP 변화는 유동성 공급인가?</b><br>이번 주 H.4.1 평균 ON RRP는 +24bn 증가라 공급보다는 reserve-absorbing liability 증가에 가깝다. 다만 NY Fed 일별 ON RRP는 2026-06-04 $1.12bn로 매우 낮아, MMF cash의 대부분은 이미 다른 단기상품에 머무는 구간이다.</div>
+<div class="answer"><b>TGA는 reserves를 얼마나 압박하는가?</b><br>H.4.1 평균 TGA는 +45bn 증가했다. 기계적으로는 같은 규모만큼 reserve balance에 역풍을 준다.</div>
+<div class="answer"><b>Repo 시장은 안정적인가?</b><br>SOFR 3.61%, EFFR 3.62%, TGCR 3.59%로 단기 레이트는 질서정연하다. 급성 balance-sheet stress 신호는 약하다.</div>
+<div class="answer"><b>위험자산에는 순풍인가 역풍인가?</b><br>단기 plumbing은 안정적이나 Fed/Treasury accounting liquidity는 약한 역풍이다. 결론은 중립: 위험자산에는 금리·신용조건 완화가 완충이지만, TGA와 준비금 감소를 계속 확인해야 한다.</div>
+</section>
+<section class="card"><h2>출처</h2><div class="source"><p><b>Federal Reserve H.4.1 current release:</b> <a href="https://www.federalreserve.gov/releases/h41/current/h41.htm">https://www.federalreserve.gov/releases/h41/current/h41.htm</a></p><p><b>Federal Reserve IORB PRATES:</b> <a href="https://www.federalreserve.gov/monetarypolicy/reserve-balances.htm">https://www.federalreserve.gov/monetarypolicy/reserve-balances.htm</a></p><p><b>U.S. Treasury Daily Treasury Statement API:</b> <a href="https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance">https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance</a></p><p><b>New York Fed reference rates:</b> <a href="https://www.newyorkfed.org/markets/reference-rates">https://www.newyorkfed.org/markets/reference-rates</a></p><p><b>New York Fed reverse repo operations:</b> <a href="https://www.newyorkfed.org/markets/desk-operations/reverse-repo">https://www.newyorkfed.org/markets/desk-operations/reverse-repo</a></p><p><b>Treasury daily yield curve XML:</b> <a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml">https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml</a></p><p><b>Chicago Fed NFCI current data:</b> <a href="https://www.chicagofed.org/research/data/nfci/current-data">https://www.chicagofed.org/research/data/nfci/current-data</a></p><p><b>BIS Global Liquidity Indicators:</b> <a href="https://data.bis.org/topics/GLI">https://data.bis.org/topics/GLI</a></p></div></section>
+</main>
+<script>
+const labels=["전주 평균", "최근 수요일"];
+new Chart(document.getElementById('bridgeChart'),{type:'bar',data:{labels,datasets:[{label:'준비금',data:[3066.6, 3045.7],backgroundColor:'#0f766e'},{label:'TGA',data:[830.3, 845.7],backgroundColor:'#b45309'},{label:'RRP',data:[301.4, 325.8],backgroundColor:'#2563eb'}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>'$'+v+'bn'}}}}});
+new Chart(document.getElementById('ratesChart'),{type:'line',data:{labels:["05-28", "05-29", "06-01", "06-02", "06-03"],datasets:[{label:'SOFR',data:[3.62, 3.63, 3.65, 3.63, 3.61],borderColor:'#2563eb',tension:.2},{label:'EFFR',data:[3.62, 3.62, 3.62, 3.62, 3.62],borderColor:'#0f766e',tension:.2}]},options:{responsive:true,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>v.toFixed(2)+'%'}}}}});
+new Chart(document.getElementById('scoreChart'),{type:'bar',data:{labels:["연준계정", "자금시장", "재무부현금", "은행/딜러", "금융조건", "글로벌달러"],datasets:[{data:[-1, 1, -1, 0, 1, 0],backgroundColor:["#fecdd3", "#ccfbf1", "#fecdd3", "#e2e8f0", "#ccfbf1", "#e2e8f0"]}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{min:-2,max:2,ticks:{stepSize:1}}}}});
+</script></body></html>
