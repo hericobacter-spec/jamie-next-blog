@@ -4,6 +4,17 @@ import matter from 'gray-matter'
 
 const postsDir = path.join(process.cwd(),'posts')
 
+function dateFromSlug(slug: string){
+  const match = slug.match(/^(\d{4}-\d{2}-\d{2})/)
+  return match?.[1]
+}
+
+function sortableDate(post: any){
+  const rawDate = post.date ?? dateFromSlug(post.slug)
+  const value = rawDate ? new Date(rawDate).valueOf() : NaN
+  return Number.isFinite(value) ? value : 0
+}
+
 export function getPostSlugs(){
   return fs.readdirSync(postsDir).filter(f => f.endsWith('.mdx') || f.endsWith('.md'))
 }
@@ -14,9 +25,10 @@ export function getAllPosts(){
     const full = path.join(postsDir,s)
     const raw = fs.readFileSync(full,'utf8')
     const { data } = matter(raw)
-    return { slug: s.replace(/\.mdx?$/,''), ...data }
+    const slug = s.replace(/\.mdx?$/,'')
+    return { slug, ...data, date: data.date ?? dateFromSlug(slug) }
   }).filter((p:any) => p.published !== false)
-  .sort((a:any,b:any)=> new Date(b.date).valueOf() - new Date(a.date).valueOf())
+  .sort((a:any,b:any)=> sortableDate(b) - sortableDate(a))
 }
 
 import readingTime from 'reading-time'
