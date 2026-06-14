@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
-const categories = ['All', 'Blog', 'Foodie', 'A.I', 'Life']
+const categories = ['All', 'Blog', 'Foodie', 'A.I', 'Life', 'News']
 
 function getHref(category: string) {
   return category === 'All'

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
 }
 
-type Category = 'All' | 'Blog' | 'Foodie' | 'A.I' | 'Life'
+type Category = 'All' | 'Blog' | 'Foodie' | 'A.I' | 'Life' | 'News'
 
 type SearchParamsInput = { category?: string } | Promise<{ category?: string }> | undefined
 
@@ -30,6 +30,7 @@ function normalizeCategory(input?: string): Category {
   if (value === 'blog') return 'Blog'
   if (value === 'foodie') return 'Foodie'
   if (value === 'life') return 'Life'
+  if (value === 'news') return 'News'
   const aiVariants = ['a.i', 'ai', 'a.i.', 'a i']
   if (aiVariants.includes(value)) return 'A.I'
   return 'All'
