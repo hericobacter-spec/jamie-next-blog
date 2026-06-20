@@ -3,57 +3,122 @@ import styled from 'styled-components'
 
 const Card = styled.article`
   background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 14px;
-  padding: 20px;
-  transition: all 0.25s ease;
-  display:flex;
-  flex-direction:column;
-  height:100%;
-  box-shadow: var(--card-shadow);
-  &:hover{
-    transform: translateY(-4px);
-    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-    border-color: rgba(255,255,255,0.16);
+  border-radius: var(--radius-card, 28px);
+  padding: 28px;
+  transition: opacity 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: none;
+
+  &:hover {
+    opacity: 0.85;
   }
-  @media (max-width:640px){padding:16px}
 `
+
+const TitleLink = styled(Link)`
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-ink, #1d1d1f);
+  line-height: 1.29;
+  letter-spacing: -0.015em;
+  margin: 0;
+  flex: 1;
+
+  &:hover {
+    color: var(--color-ink, #1d1d1f);
+    opacity: 0.7;
+  }
+`
+
 const Meta = styled.div`
-  color:var(--muted);
-  font-size:13px;
-  margin-top:10px;
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
+  color: var(--muted, #707070);
+  font-size: 14px;
+  margin-top: 8px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
 `
+
 const Tag = styled.span`
-  background:var(--code-bg);color:var(--foreground);padding:4px 8px;border-radius:999px;font-size:12px;
+  background: var(--card-muted, #f5f5f7);
+  color: var(--color-ink, #1d1d1f);
+  padding: 4px 10px;
+  border-radius: var(--radius-button, 999px);
+  font-size: 12px;
+  font-weight: 400;
 `
-const CategoryBadge = styled.span<{color?:string}>`
-  padding:6px 10px;border-radius:999px;font-size:12px;color:#fff;background:${p=>p.color || '#2563eb'};
+
+const CategoryBadge = styled.span<{ $color?: string }>`
+  padding: 4px 10px;
+  border-radius: var(--radius-button, 999px);
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  background: ${(p) => p.$color || 'var(--color-azure, #0071e3)'};
 `
-const Reading = styled.span`
-  color:var(--muted);font-size:13px;margin-left:8px;
+
+const Description = styled.p`
+  color: var(--muted, #707070);
+  margin-top: 10px;
+  flex: 1;
+  line-height: 1.47;
+  font-size: 17px;
+  letter-spacing: -0.006em;
 `
-export default function PostCard({post}:{post:any}){
+
+const Footer = styled.div`
+  margin-top: 16px;
+`
+
+const ReadLink = styled(Link)`
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-cobalt-link, #0066cc);
+
+  &:hover {
+    color: var(--color-azure, #0071e3);
+  }
+`
+
+export default function PostCard({ post }: { post: any }) {
   const category = post.meta?.category || post.category
   const reading = post.readingTime || post.meta?.readingTime
+
   return (
     <Card>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',gap:12}}>
-        <h3 style={{margin:0,fontSize:18,color:'var(--foreground)'}}><Link href={`/posts/${post.slug}`}>{post.title}</Link></h3>
-        {category ? <CategoryBadge color={category==='Foodie'? '#fb923c' : category==='A.I'? '#7c3aed' : category==='Life'? '#10b981' : '#2563eb'}>{category}</CategoryBadge> : null}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+        <TitleLink href={`/posts/${post.slug}`}>{post.title}</TitleLink>
+        {category ? (
+          <CategoryBadge
+            $color={
+              category === 'Foodie'
+                ? '#34c759'
+                : category === 'A.I'
+                  ? '#5856d6'
+                  : category === 'Life'
+                    ? '#ff9500'
+                    : category === 'News'
+                      ? '#0071e3'
+                      : 'var(--color-azure, #0071e3)'
+            }
+          >
+            {category}
+          </CategoryBadge>
+        ) : null}
       </div>
       <Meta>
         <span>{post.date}</span>
-        {reading ? <Reading>{reading}</Reading> : null}
-        {post.meta?.tags?.map((t:string)=> <Tag key={t}>{t}</Tag>)}
+        {reading ? <span>· {reading}</span> : null}
+        {post.meta?.tags?.map((t: string) => (
+          <Tag key={t}>{t}</Tag>
+        ))}
       </Meta>
-      <p style={{color:'var(--foreground)',marginTop:12,flex:1,lineHeight:1.6,fontSize:15}}>{post.description}</p>
-      <div style={{marginTop:12,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-        <Link href={`/posts/${post.slug}`}>Read →</Link>
-        <div style={{color:'#9ca3af',fontSize:13}}>{/* placeholder for extra actions */}</div>
-      </div>
+      <Description>{post.description}</Description>
+      <Footer>
+        <ReadLink href={`/posts/${post.slug}`}>Learn more ›</ReadLink>
+      </Footer>
     </Card>
   )
 }

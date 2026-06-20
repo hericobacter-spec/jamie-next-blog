@@ -16,15 +16,15 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main style={{ maxWidth: 900, margin: '0 auto', padding: 24, lineHeight: 1.8 }}>
-      <h1 style={{ fontSize: 36, fontWeight: 700, marginBottom: 20 }}>Privacy Policy</h1>
+    <main style={{ maxWidth: 800, margin: '80px auto 120px', padding: '0 24px', lineHeight: 1.47, color: 'var(--color-ink, #1d1d1f)' }}>
+      <h1 style={{ fontSize: 40, fontWeight: 600, marginBottom: 24, letterSpacing: '-0.022em', color: 'var(--color-ink, #1d1d1f)' }}>Privacy Policy</h1>
 
       <p>
         Jamie Next Blog는 AI, 기술, 맛집, 여행 등 다양한 주제의 콘텐츠를 제공하는 개인 블로그입니다.
         본 페이지는 방문자 정보 처리와 쿠키 사용, 향후 광고 서비스 연동 가능성에 대해 안내하기 위해 작성되었습니다.
       </p>
 
-      <h2 style={{ marginTop: 36, fontSize: 28 }}>1. 수집할 수 있는 정보</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>1. 수집할 수 있는 정보</h2>
       <p>이 블로그는 일반적인 웹사이트 운영 과정에서 다음과 같은 정보가 자동으로 수집될 수 있습니다.</p>
       <ul>
         <li>접속 시간 및 방문 기록</li>
@@ -33,7 +33,7 @@ export default function PrivacyPolicyPage() {
         <li>IP 주소 등 기본적인 접속 로그</li>
       </ul>
 
-      <h2 style={{ marginTop: 36, fontSize: 28 }}>2. 정보 이용 목적</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>2. 정보 이용 목적</h2>
       <p>수집된 정보는 다음 목적을 위해 사용될 수 있습니다.</p>
       <ul>
         <li>사이트 운영 및 오류 확인</li>
@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
         <li>광고 서비스 또는 분석 도구 연동 시 성과 측정</li>
       </ul>
 
-      <h2 style={{ marginTop: 36, fontSize: 28 }}>3. 쿠키(Cookies) 사용</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>3. 쿠키(Cookies) 사용</h2>
       <p>
         이 블로그는 서비스 품질 향상 및 방문 통계 확인을 위해 쿠키를 사용할 수 있습니다.
         또한 향후 Google AdSense 등 제3자 광고 서비스를 사용할 경우, 해당 서비스가 맞춤형 광고 제공 및 성과 측정을 위해 쿠키를 사용할 수 있습니다.
@@ -52,7 +52,7 @@ export default function PrivacyPolicyPage() {
         다만 일부 기능은 제한될 수 있습니다.
       </p>
 
-      <h2 style={{ marginTop: 36, fontSize: 28 }}>4. 제3자 서비스</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>4. 제3자 서비스</h2>
       <p>이 블로그는 운영 과정에서 다음과 같은 외부 서비스를 사용할 수 있습니다.</p>
       <ul>
         <li>Vercel (호스팅 및 배포)</li>
@@ -64,25 +64,25 @@ export default function PrivacyPolicyPage() {
         각 외부 서비스는 자체 개인정보처리방침을 따르며, 해당 서비스 이용 과정에서 별도의 데이터 처리가 발생할 수 있습니다.
       </p>
 
-      <h2 style={{ marginTop: 36, fontSize: 28 }}>5. 개인정보 보호</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>5. 개인정보 보호</h2>
       <p>
         운영자는 방문자의 개인정보 보호를 중요하게 생각하며, 직접적으로 수집한 개인정보를 판매하거나 임의로 제3자에게 제공하지 않습니다.
         단, 법령에 따른 요청이 있는 경우에는 관련 법규에 따라 제공될 수 있습니다.
       </p>
 
-      <h2 style={{ marginTop: 36, fontSize: 28 }}>6. 정책 변경</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>6. 정책 변경</h2>
       <p>
         본 개인정보처리방침은 사이트 운영 방식, 법령 변경, 광고/분석 도구 도입 등에 따라 수정될 수 있습니다.
         변경 시 본 페이지를 통해 업데이트됩니다.
       </p>
 
-      <h2 style={{ marginTop: 36, fontSize: 28 }}>7. 문의</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>7. 문의</h2>
       <p>
         블로그 운영 또는 본 정책 관련 문의는 현재 블로그 소개 페이지를 통해 확인할 수 있으며,
         별도의 연락 수단이 추가될 경우 본 페이지에도 반영될 예정입니다.
       </p>
 
-      <p style={{ marginTop: 40, color: '#6b7280' }}>최종 업데이트: 2026-03-21</p>
+      <p style={{ marginTop: 48, color: 'var(--muted, #707070)', fontSize: 14 }}>최종 업데이트: 2026-03-21</p>
     </main>
   )
 }

@@ -6,9 +6,7 @@ import { useSearchParams } from 'next/navigation'
 const categories = ['All', 'Blog', 'Foodie', 'A.I', 'Life', 'News']
 
 function getHref(category: string) {
-  return category === 'All'
-    ? '/posts'
-    : `/posts?category=${encodeURIComponent(category)}`
+  return category === 'All' ? '/posts' : `/posts?category=${encodeURIComponent(category)}`
 }
 
 export default function CategoriesClient() {
@@ -19,8 +17,8 @@ export default function CategoriesClient() {
     <div
       style={{
         display: 'flex',
-        gap: 12,
-        marginBottom: 20,
+        gap: 8,
+        marginBottom: 24,
         flexWrap: 'wrap',
       }}
     >
@@ -33,15 +31,15 @@ export default function CategoriesClient() {
             href={getHref(category)}
             prefetch={false}
             style={{
-              padding: '8px 14px',
-              borderRadius: 999,
-              border: '1px solid',
-              borderColor: isActive ? '#111827' : '#d1d5db',
-              background: isActive ? '#111827' : '#ffffff',
-              color: isActive ? '#ffffff' : '#111827',
+              padding: '8px 16px',
+              borderRadius: 'var(--radius-button, 999px)',
+              border: isActive ? 'none' : '1px solid var(--border-strong, #d2d2d7)',
+              background: isActive ? 'var(--color-azure, #0071e3)' : 'transparent',
+              color: isActive ? '#ffffff' : 'var(--color-ink, #1d1d1f)',
               textDecoration: 'none',
               fontSize: 14,
-              fontWeight: 500,
+              fontWeight: 400,
+              transition: 'background 0.15s ease, border-color 0.15s ease',
             }}
           >
             {category}

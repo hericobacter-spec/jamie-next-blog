@@ -2,27 +2,58 @@ import Link from 'next/link'
 import styled from 'styled-components'
 
 const Wrap = styled.footer`
-  background: white;border-top:1px solid #e6edf3;padding:32px 0;margin-top:48px;
+  margin-top: 80px;
+  border-top: 1px solid var(--border);
+  background: var(--card-bg);
 `
+
 const Inner = styled.div`
-  max-width:960px;margin:0 auto;padding:0 24px;text-align:center;color:#6b7280;font-size:14px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  text-align: center;
 `
+
 const Links = styled.div`
-  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 `
-export default function Footer(){
+
+const FooterLink = styled(Link)`
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-ink, #1d1d1f);
+
+  &:hover {
+    opacity: 0.65;
+    color: var(--color-ink, #1d1d1f);
+  }
+`
+
+const Copy = styled.div`
+  color: var(--muted, #707070);
+  font-size: 12px;
+`
+
+export default function Footer() {
   return (
     <Wrap>
       <Inner>
         <Links>
-          <Link href="/">Home</Link>
-          <Link href="/posts">Posts</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
-          <Link href="/privacy-policy">Privacy Policy</Link>
-          <Link href="/rss.xml" target="_blank" rel="noopener noreferrer">RSS</Link>
+          <FooterLink href="/">Home</FooterLink>
+          <FooterLink href="/posts">Posts</FooterLink>
+          <FooterLink href="/about">About</FooterLink>
+          <FooterLink href="/contact">Contact</FooterLink>
+          <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
+          <FooterLink href="/rss.xml" target="_blank" rel="noopener noreferrer">
+            RSS
+          </FooterLink>
         </Links>
-        <div>© {new Date().getFullYear()} Jamie — Built with Next.js</div>
+        <Copy>© {new Date().getFullYear()} Jamie — Built with Next.js</Copy>
       </Inner>
     </Wrap>
   )

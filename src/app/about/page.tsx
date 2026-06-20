@@ -12,8 +12,8 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main style={{ maxWidth: 900, margin: "0 auto", padding: 24, lineHeight: 1.7 }}>
-      <h1 style={{ fontSize: 36, fontWeight: 700, marginBottom: 20 }}>
+    <main style={{ maxWidth: 800, margin: '80px auto 120px', padding: '0 24px', lineHeight: 1.47, color: 'var(--color-ink, #1d1d1f)' }}>
+      <h1 style={{ fontSize: 40, fontWeight: 600, marginBottom: 24, letterSpacing: '-0.022em', color: 'var(--color-ink, #1d1d1f)' }}>
         About This Blog
       </h1>
 
@@ -26,7 +26,7 @@ export default function AboutPage() {
         자동 배포 시스템을 통해 운영되는 개발 중심 블로그입니다.
       </p>
 
-      <h2 style={{ marginTop: 40, fontSize: 28 }}>Author</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>Author</h2>
 
       <p>
         이 블로그는 AI 개발 도구와 최신 웹 기술을 활용해 개인이 직접 플랫폼을 구축할 수 있는지를
@@ -45,7 +45,7 @@ export default function AboutPage() {
         <li>맛집 탐방</li>
       </ul>
 
-      <h2 style={{ marginTop: 40, fontSize: 28 }}>Technology Stack</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>Technology Stack</h2>
 
       <p>이 블로그는 다음 기술을 기반으로 구축되었습니다.</p>
 
@@ -57,7 +57,7 @@ export default function AboutPage() {
         <li>OpenClaw AI 개발 도구</li>
       </ul>
 
-      <h2 style={{ marginTop: 40, fontSize: 28 }}>Blog Categories</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>Blog Categories</h2>
 
       <ul>
         <li>
@@ -74,7 +74,7 @@ export default function AboutPage() {
         </li>
       </ul>
 
-      <h2 style={{ marginTop: 40, fontSize: 28 }}>Why This Blog Exists</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>Why This Blog Exists</h2>
 
       <p>
         대부분의 블로그 플랫폼은 사용하기 편리하지만,
@@ -96,7 +96,7 @@ export default function AboutPage() {
         <li>Next.js 기반 개인 미디어 구축</li>
       </ul>
 
-      <h2 style={{ marginTop: 40, fontSize: 28 }}>Future Plans</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>Future Plans</h2>
 
       <p>이 블로그는 앞으로 다음 방향으로 발전할 예정입니다.</p>
 
@@ -107,7 +107,7 @@ export default function AboutPage() {
         <li>AI 기반 블로그 자동화</li>
       </ul>
 
-      <h2 style={{ marginTop: 40, fontSize: 28 }}>Contact</h2>
+      <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>Contact</h2>
 
       <p>
         블로그 관련 문의나 협업 제안은 언제든지 환영합니다.

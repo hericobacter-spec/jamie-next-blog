@@ -8,13 +8,13 @@ import CategoriesClient from '@/components/CategoriesClient'
 
 export const metadata: Metadata = {
   title: 'Posts',
-  description: 'Jamie Next Blog의 전체 포스트 목록. AI, 맛집, 여행, 블로그 제작 기록을 카테고리별로 볼 수 있습니다.',
-  alternates: {
-    canonical: '/posts',
-  },
+  description:
+    'Jamie Next Blog의 전체 포스트 목록. AI, 맛집, 여행, 블로그 제작 기록을 카테고리별로 볼 수 있습니다.',
+  alternates: { canonical: '/posts' },
   openGraph: {
     title: 'Posts | Jamie Next Blog',
-    description: 'AI, 맛집, 여행, 블로그 제작 기록을 카테고리별로 볼 수 있습니다.',
+    description:
+      'AI, 맛집, 여행, 블로그 제작 기록을 카테고리별로 볼 수 있습니다.',
     url: 'https://jamie-next-blog.vercel.app/posts',
     type: 'website',
   },
@@ -36,12 +36,12 @@ function normalizeCategory(input?: string): Category {
   return 'All'
 }
 
-function filterPostsByCategory(posts: any[], category: Category){
-  if(category === 'All') return posts
-  return posts.filter(p => normalizeCategory(p.category ?? p?.meta?.category) === category)
+function filterPostsByCategory(posts: any[], category: Category) {
+  if (category === 'All') return posts
+  return posts.filter((p) => normalizeCategory(p.category ?? p?.meta?.category) === category)
 }
 
-export default async function PostsPage({ searchParams }: { searchParams?: SearchParamsInput }){
+export default async function PostsPage({ searchParams }: { searchParams?: SearchParamsInput }) {
   const resolvedSearchParams = await Promise.resolve(searchParams)
   const allPosts = getAllPosts()
   const rawCategory = resolvedSearchParams?.category
@@ -49,13 +49,36 @@ export default async function PostsPage({ searchParams }: { searchParams?: Searc
   const filteredPosts = filterPostsByCategory(allPosts, currentCategory)
 
   return (
-    <div style={{maxWidth:960,margin:'0 auto',padding:24}}>
-      <h1 style={{fontSize:32,fontWeight:700,marginBottom:16}}>Posts</h1>
-      <React.Suspense fallback={<div /> }>
+    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px 120px' }}>
+      <h1
+        style={{
+          fontSize: 40,
+          fontWeight: 600,
+          letterSpacing: '-0.01em',
+          margin: '0 0 24px',
+          color: 'var(--color-ink, #1d1d1f)',
+        }}
+      >
+        Posts
+      </h1>
+      <React.Suspense fallback={<div />}>
         <CategoriesClient />
       </React.Suspense>
-      <div key={currentCategory} style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:20}}>
-        {filteredPosts.map((post:any)=> <PostCard key={post.slug} post={post} />)}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
+          gap: 1,
+          background: 'var(--border)',
+          borderRadius: 'var(--radius-card, 28px)',
+          overflow: 'hidden',
+        }}
+      >
+        {filteredPosts.map((post: any) => (
+          <div key={post.slug} style={{ background: 'var(--card-bg)' }}>
+            <PostCard post={post} />
+          </div>
+        ))}
       </div>
     </div>
   )

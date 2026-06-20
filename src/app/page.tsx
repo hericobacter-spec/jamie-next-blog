@@ -8,125 +8,240 @@ import PostCard from '@/components/PostCard'
 import CategoriesClient from '@/components/CategoriesClient'
 
 const Hero = styled.section`
-  background:linear-gradient(180deg,#ffffff, #f8fafc);padding:80px 0 40px;border-bottom:1px solid #eef2f7;
+  padding: 80px 24px 60px;
+  text-align: center;
 `
-const HeroInner = styled.div`
-  max-width:960px;margin:0 auto;padding:0 24px;display:flex;gap:24px;align-items:center;justify-content:space-between;
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
+const HeroEyebrow = styled.p`
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-azure, #0071e3);
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+`
+
+const HeroTitle = styled.h1`
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  margin: 0;
+  color: var(--color-ink, #1d1d1f);
+`
+
+const HeroSubtitle = styled.p`
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--color-graphite, #707070);
+  max-width: 600px;
+  margin: 16px auto 0;
+  letter-spacing: -0.01em;
+`
+
+const CTAs = styled.div`
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 28px;
+`
+
+const PrimaryButton = styled(Link)`
+  padding: 8px 20px;
+  border-radius: var(--radius-button, 999px);
+  font-size: 17px;
+  font-weight: 400;
+  background: var(--color-azure, #0071e3);
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.88;
+    color: #ffffff;
   }
 `
-const CTAs = styled.div`
-  display:flex;gap:12px;margin-top:12px;
+
+const GhostButton = styled(Link)`
+  padding: 8px 20px;
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--color-cobalt-link, #0066cc);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-azure, #0071e3);
+  }
 `
-const CTAButtonLink = styled(Link)`
-  padding:10px 14px;border-radius:8px;background:#111827;color:#fff;text-decoration:none;font-weight:600;
-`
+
 const Section = styled.section`
-  padding:36px 0;
+  padding: 0 24px 80px;
+`
+
+const SectionInner = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+`
+
+const SectionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 28px;
+`
+
+const SectionTitle = styled.h2`
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--color-ink, #1d1d1f);
+`
+
+const PostCount = styled.span`
+  color: var(--muted, #707070);
+  font-size: 14px;
+`
+
+const PostGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 0;
+  background: var(--border);
+  gap: 1px;
+  border-radius: var(--radius-card, 28px);
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const PostGridItem = styled.div`
+  background: var(--card-bg);
+`
+
+const ContactSection = styled.section`
+  padding: 0 24px 120px;
+`
+
+const ContactPanel = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 48px;
+  background: var(--card-bg);
+  border-radius: var(--radius-card, 28px);
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 40px 28px;
+  }
+`
+
+const ContactTitle = styled.h3`
+  font-size: 40px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+  color: var(--color-ink, #1d1d1f);
+`
+
+const ContactText = styled.p`
+  color: var(--muted, #707070);
+  font-size: 20px;
+  font-weight: 300;
+  margin: 0;
 `
 
 const ContactLinks = styled.div`
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:12px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 28px;
 `
 
 const ContactButton = styled.a`
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:10px 14px;
-  border-radius:999px;
-  background:#f3f4f6;
-  border:1px solid #e5e7eb;
-  color:#111827;
-  text-decoration:none;
-  font-weight:600;
-  transition:all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 20px;
+  border-radius: var(--radius-button, 999px);
+  border: 1px solid var(--border-strong, #d2d2d7);
+  color: var(--color-ink, #1d1d1f);
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 400;
+  transition: opacity 0.15s ease;
 
   &:hover {
-    background:#111827;
-    border-color:#111827;
-    color:#ffffff;
-    transform:translateY(-1px);
+    opacity: 0.65;
+    color: var(--color-ink, #1d1d1f);
   }
 `
 
 export const metadata: Metadata = {
   title: 'Jamie Next Blog',
-  description: 'OpenClaw와 Next.js로 운영하는 개인 블로그. AI 실험, 맛집 후기, 여행 기록, 블로그 제작 과정을 담습니다.',
-  alternates: {
-    canonical: '/',
-  },
+  description:
+    'OpenClaw와 Next.js로 운영하는 개인 블로그. AI 실험, 맛집 후기, 여행 기록, 블로그 제작 과정을 담습니다.',
+  alternates: { canonical: '/' },
   openGraph: {
     title: 'Jamie Next Blog',
-    description: 'OpenClaw와 Next.js로 운영하는 개인 블로그. AI 실험, 맛집 후기, 여행 기록, 블로그 제작 과정을 담습니다.',
+    description:
+      'OpenClaw와 Next.js로 운영하는 개인 블로그. AI 실험, 맛집 후기, 여행 기록, 블로그 제작 과정을 담습니다.',
     url: 'https://jamie-next-blog.vercel.app',
     type: 'website',
   },
 }
 
-export default function Home(){
+export default function Home() {
   const all = getAllPosts()
-  const posts = all.slice(0,8)
-  const tags = Array.from(new Set(all.flatMap((p:any)=> p?.meta?.tags || [])))
+  const posts = all.slice(0, 6)
+
   return (
     <div>
       <Hero>
-        <HeroInner>
-          <div>
-            <h1 style={{fontSize:'clamp(2.25rem, 7vw, 3.5rem)',margin:0,lineHeight:1.02}}>Jamie Next Blog</h1>
-            <p style={{fontSize:'clamp(1rem, 3.5vw, 1.125rem)',color:'#374151',maxWidth:640,marginTop:12}}>A refined starter blog — MDX-driven, fast, and minimal. I write about engineering, food, AI experiments, and daily life.</p>
-            <CTAs>
-              <CTAButtonLink href="/posts">Posts</CTAButtonLink>
-              <CTAButtonLink href="/about" style={{background:'#4b5563'}}>About</CTAButtonLink>
-            </CTAs>
-          </div>
-          <div style={{ width: 'min(560px, 100%)', aspectRatio: '7 / 4', borderRadius: 12, overflow: 'hidden', flexShrink: 0, boxShadow: '0 10px 30px rgba(0,0,0,0.08)', alignSelf: 'stretch', maxWidth: 560 }}>
-            <Image
-              src="/images/hero-main.jpg"
-              alt="Jamie Blog hero image"
-              width={560}
-              height={320}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              priority
-            />
-          </div>
-        </HeroInner>
+        <HeroEyebrow>Personal Blog</HeroEyebrow>
+        <HeroTitle>Jamie Next</HeroTitle>
+        <HeroSubtitle>
+          MDX-driven, fast, and minimal. AI experiments, food, travel, and engineering notes.
+        </HeroSubtitle>
+        <CTAs>
+          <PrimaryButton href="/posts">Browse Posts</PrimaryButton>
+          <GhostButton href="/about">Learn more ›</GhostButton>
+        </CTAs>
       </Hero>
 
       <Section>
-        <div className="container" style={{maxWidth:960,margin:'0 auto',padding:24}}>
-          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-            <h2 style={{fontSize:28,marginBottom:16}}>All posts</h2>
-            <div style={{color:'#6b7280'}}>{all.length} posts</div>
-          </div>
-          <div style={{marginTop:8}}>
-            <React.Suspense fallback={<div /> }>
-              <CategoriesClient />
-            </React.Suspense>
-          </div>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:24,marginTop:20,alignItems:'stretch'}}>
-            {posts.map((p:any)=> <PostCard key={p.slug} post={p} />)}
-          </div>
-        </div>
+        <SectionInner>
+          <SectionHeader>
+            <SectionTitle>Recent Posts</SectionTitle>
+            <PostCount>{all.length} total</PostCount>
+          </SectionHeader>
+          <PostGrid>
+            {posts.map((p: any) => (
+              <PostGridItem key={p.slug}>
+                <PostCard post={p} />
+              </PostGridItem>
+            ))}
+          </PostGrid>
+        </SectionInner>
       </Section>
 
-      <Section style={{borderTop:'1px solid #eef2f7'}}>
-        <div className="container" style={{maxWidth:960,margin:'0 auto',padding:24}}>
-          <h3 style={{marginBottom:8}}>Contact</h3>
-          <p style={{color:'#374151'}}>Connect with me:</p>
+      <ContactSection>
+        <ContactPanel>
+          <ContactTitle>Connect</ContactTitle>
+          <ContactText>Always happy to talk.</ContactText>
           <ContactLinks>
-            <ContactButton href="https://github.com/hericobacter-spec" target="_blank" rel="noopener noreferrer">GitHub</ContactButton>
-            <ContactButton href="mailto:hericobacter1@gmail.com">E-mail</ContactButton>
-            <ContactButton href="https://www.instagram.com/jamiesuyong/" target="_blank" rel="noopener noreferrer">Instagram</ContactButton>
+            <ContactButton href="https://github.com/hericobacter-spec" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </ContactButton>
+            <ContactButton href="mailto:hericobacter1@gmail.com">Email</ContactButton>
+            <ContactButton href="https://www.instagram.com/jamiesuyong/" target="_blank" rel="noopener noreferrer">
+              Instagram
+            </ContactButton>
           </ContactLinks>
-        </div>
-      </Section>
+        </ContactPanel>
+      </ContactSection>
     </div>
   )
 }

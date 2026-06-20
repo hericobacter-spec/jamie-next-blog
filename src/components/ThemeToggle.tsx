@@ -1,34 +1,45 @@
 "use client"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
-export default function ThemeToggle(){
-  const toggle = ()=>{
-    try{
-      const cur = localStorage.getItem("theme") === "dark" ? "dark" : "light"
-      const next = cur === "dark" ? "light" : "dark"
-      localStorage.setItem("theme", next)
-      // notify ThemeProviderClient
-      window.dispatchEvent(new CustomEvent("theme-change", { detail: { mode: next }}))
-      document.documentElement.setAttribute("data-theme", next)
-      // directly set CSS vars to ensure immediate visual update
-      if(typeof document !== 'undefined'){
-        if(next === 'dark'){
-          document.documentElement.style.setProperty('--background','#0b1220')
-          document.documentElement.style.setProperty('--foreground','#e6eef8')
-          document.documentElement.style.setProperty('--card-bg','#071024')
-          document.documentElement.style.setProperty('--muted','#9ca3af')
-          document.documentElement.style.setProperty('--code-bg','#071024')
-        } else {
-          document.documentElement.style.setProperty('--background','#ffffff')
-          document.documentElement.style.setProperty('--foreground','#171717')
-          document.documentElement.style.setProperty('--card-bg','#ffffff')
-          document.documentElement.style.setProperty('--muted','#6b7280')
-          document.documentElement.style.setProperty('--code-bg','#f8fafc')
-        }
-      }
-    }catch(e){/* ignore */}
+export default function ThemeToggle() {
+  const [mode, setMode] = useState<'light' | 'dark'>('light')
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const saved = localStorage.getItem('theme')
+    const initial = saved === 'dark' ? 'dark' : 'light'
+    setMode(initial)
+    setMounted(true)
+  }, [])
+
+  const toggle = () => {
+    const next = mode === 'dark' ? 'light' : 'dark'
+    setMode(next)
+    localStorage.setItem('theme', next)
+    document.documentElement.setAttribute('data-theme', next)
+    window.dispatchEvent(new CustomEvent('theme-change', { detail: { mode: next } }))
   }
+
   return (
-    <button id="theme-toggle" aria-label="Toggle theme" onClick={toggle} style={{marginLeft:12, padding:"6px 8px", borderRadius:6, border:"1px solid #e6edf3", background:"transparent", cursor:"pointer"}}>🌓</button>
+    <button
+      id="theme-toggle"
+      aria-label="Toggle theme"
+      onClick={toggle}
+      style={{
+        marginLeft: 4,
+        padding: "6px 10px",
+        borderRadius: "var(--radius-button, 999px)",
+        border: "none",
+        background: "transparent",
+        cursor: "pointer",
+        fontSize: 14,
+        lineHeight: 1,
+        opacity: 0.7,
+        color: "var(--color-ink, #1d1d1f)",
+        transition: "opacity 0.15s ease",
+      }}
+    >
+      {mounted ? (mode === 'dark' ? '☀' : '☾') : '◑'}
+    </button>
   )
 }

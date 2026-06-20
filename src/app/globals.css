@@ -1,62 +1,129 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ────────────────────────────────────────────
+   Apple Design System (from design2.md)
+   Gallery wall at natural light — flat, luminous
+   ──────────────────────────────────────────── */
 
 :root {
-  --card-bg: #ffffff;
-  --muted: #6b7280;
-  --code-bg: #f8fafc;
+  /* Colors */
+  --color-ink: #1d1d1f;
+  --color-graphite: #707070;
+  --color-slate: #474747;
+  --color-ash: #333333;
+  --color-fog: #f5f5f7;
+  --color-snow: #ffffff;
+  --color-obsidian: #000000;
+  --color-silver-mist: #e8e8ed;
+  --color-azure: #0071e3;
+  --color-cobalt-link: #0066cc;
+  --color-caution: #b64400;
+
+  /* Typography */
+  --font-sf-pro-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sf-pro-text: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-cosmica: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Type Scale */
+  --text-caption: 12px;
+  --text-body-sm: 14px;
+  --text-body: 17px;
+  --text-subheading: 20px;
+  --text-heading-sm: 24px;
+  --text-heading: 40px;
+  --text-heading-lg: 56px;
+  --text-display: 96px;
+
+  /* Semantic mapping */
+  --background: var(--color-fog);
+  --foreground: var(--color-ink);
+  --card-bg: var(--color-snow);
+  --card-muted: var(--color-fog);
+  --muted: var(--color-graphite);
+  --code-bg: var(--color-silver-mist);
+  --border: var(--color-silver-mist);
+  --border-strong: #d2d2d7;
+  --primary: var(--color-azure);
+  --primary-foreground: var(--color-snow);
+
+  /* Radii */
+  --radius-card: 28px;
+  --radius-card-compact: 20px;
+  --radius-badge: 10px;
+  --radius-input: 10px;
+  --radius-button: 999px;
+  --radius-pill: 999px;
+
+  /* Shadows — none for cards (Apple principle) */
+  --shadow-subtle: none;
+  --shadow-md: none;
+  --shadow-primary-button: none;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-:root[data-theme="dark"], html[data-theme="dark"] {
-  --background: #0b1220;
-  --foreground: #e6eef8;
-}
-
-:root[data-theme="light"], html[data-theme="light"] {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-card: var(--card-bg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --font-sans: var(--font-cosmica);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-cosmica);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-
-:root[data-theme="dark"] {
- --background: #0b1220;
- --foreground: #e5eefc;
-
- --card-bg: #162238;
- --card-border: rgba(255,255,255,0.14);
-
- --muted: #a9bad6;
- --code-bg: #0f172a;
-
- --card-shadow: 0 18px 44px rgba(0,0,0,0.42);
+a {
+  color: var(--color-cobalt-link);
+  text-decoration: none;
+  transition: color 0.15s ease;
 }
 
-:root[data-theme="light"] {
- --background: #ffffff;
- --foreground: #0f172a;
+a:hover {
+  color: var(--color-azure);
+}
 
- --card-bg: #ffffff;
- --card-border: rgba(15,23,42,0.08);
+* {
+  box-sizing: border-box;
+}
 
- --muted: #64748b;
- --code-bg: #f1f5f9;
+/* ── Dark theme — high-contrast for readability ── */
+:root[data-theme="dark"],
+html[data-theme="dark"] {
+  --color-ink: #f5f5f7;
+  --color-graphite: #a1a1a6;
+  --color-slate: #c7c7cc;
+  --color-ash: #e5e5ea;
+  --color-fog: #1d1d1f;
+  --color-snow: #2c2c2e;
+  --color-obsidian: #000000;
+  --color-silver-mist: #3a3a3c;
+  --color-azure: #2997ff;
+  --color-cobalt-link: #64b5f6;
+  --color-caution: #ff9800;
 
- --card-shadow: 0 6px 18px rgba(15,23,42,0.08);
+  --background: #000000;
+  --foreground: #f5f5f7;
+  --card-bg: #1d1d1f;
+  --card-muted: #2c2c2e;
+  --muted: #a1a1a6;
+  --code-bg: #2c2c2e;
+  --border: #3a3a3c;
+  --border-strong: #48484a;
+  --primary: #2997ff;
+  --primary-foreground: #ffffff;
+}
+
+:root[data-theme="dark"] body {
+  background: #000000;
+  color: #f5f5f7;
 }

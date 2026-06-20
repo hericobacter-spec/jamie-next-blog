@@ -1,14 +1,14 @@
 import { Providers } from './providers'
+import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import GlobalStyle from '@/styles/global'
 import React from 'react'
-import { Inter, Merriweather } from 'next/font/google'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
 import Script from 'next/script'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', weight: ['300','400','600','700'] })
-const merri = Merriweather({ subsets: ['latin'], variable: '--font-merri', weight: ['400','700'] })
+const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-cosmica', weight: ['300','400','500','600','700','800'] })
 
 const siteUrl = 'https://jamie-next-blog.vercel.app'
 const siteName = 'Jamie Next Blog'
@@ -80,8 +80,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }){
   return (
-    <html lang="ko" className={`${inter.variable} ${merri.variable}`}>
+    <html lang="ko" className={`${jakarta.variable}`} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`,
+          }}
+        />
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4030752098152003"

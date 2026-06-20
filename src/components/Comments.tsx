@@ -1,19 +1,29 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.section`
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid #e5e7eb;
+  margin-top: 60px;
+`
+
+const Inner = styled.div`
+  border-radius: var(--radius-card, 28px);
+  padding: 32px;
+  background: var(--card-bg);
+
+  @media (max-width: 640px) {
+    padding: 24px;
+    border-radius: var(--radius-card-compact, 20px);
+  }
 `
 
 const Title = styled.h2`
-  margin: 0 0 16px;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #111827;
+  margin: 0 0 24px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-ink, #1d1d1f);
 `
 
 const GISCUS_CONFIG = {
@@ -25,7 +35,6 @@ const GISCUS_CONFIG = {
   strict: '0',
   reactionsEnabled: '1',
   inputPosition: 'bottom',
-  theme: 'preferred_color_scheme',
   lang: 'ko',
 }
 
@@ -35,7 +44,26 @@ type CommentsProps = {
 
 export default function Comments({ term }: CommentsProps) {
   const ref = useRef<HTMLDivElement>(null)
+  const [mode, setMode] = useState<'light' | 'dark'>('light')
 
+  // Determine initial theme
+  useEffect(() => {
+    const saved = localStorage.getItem('theme')
+    const initial = saved === 'dark' ? 'dark' : 'light'
+    setMode(initial)
+  }, [])
+
+  // Listen for theme changes from the toggle
+  useEffect(() => {
+    const handler = (e: any) => {
+      const m = e?.detail?.mode || (localStorage.getItem('theme') === 'dark' ? 'dark' : 'light')
+      setMode(m)
+    }
+    window.addEventListener('theme-change', handler as EventListener)
+    return () => window.removeEventListener('theme-change', handler as EventListener)
+  }, [])
+
+  // (Re)load Giscus when mode changes
   useEffect(() => {
     const container = ref.current
     if (!container) return
@@ -46,6 +74,8 @@ export default function Comments({ term }: CommentsProps) {
     script.src = 'https://giscus.app/client.js'
     script.async = true
     script.crossOrigin = 'anonymous'
+
+    const giscusTheme = mode === 'dark' ? 'dark_dimmed' : 'light'
 
     script.setAttribute('data-repo', GISCUS_CONFIG.repo)
     script.setAttribute('data-repo-id', GISCUS_CONFIG.repoId)
@@ -59,17 +89,19 @@ export default function Comments({ term }: CommentsProps) {
     script.setAttribute('data-reactions-enabled', GISCUS_CONFIG.reactionsEnabled)
     script.setAttribute('data-emit-metadata', '0')
     script.setAttribute('data-input-position', GISCUS_CONFIG.inputPosition)
-    script.setAttribute('data-theme', GISCUS_CONFIG.theme)
+    script.setAttribute('data-theme', giscusTheme)
     script.setAttribute('data-lang', GISCUS_CONFIG.lang)
     script.setAttribute('data-loading', 'lazy')
 
     container.appendChild(script)
-  }, [term])
+  }, [mode, term])
 
   return (
     <Wrapper>
-      <Title>Comments</Title>
-      <div ref={ref} />
+      <Inner>
+        <Title>Comments</Title>
+        <div ref={ref} />
+      </Inner>
     </Wrapper>
   )
 }

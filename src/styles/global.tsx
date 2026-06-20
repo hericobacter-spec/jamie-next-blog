@@ -1,29 +1,44 @@
 import { createGlobalStyle } from 'styled-components'
-import theme from './theme'
 
 const GlobalStyle = createGlobalStyle`
-  :root{
-    --color-primary: ${theme.colors.primary};
-    --color-accent: ${theme.colors.accent};
-    --color-muted: ${theme.colors.muted};
-    --font-sans: ${theme.fonts.sans};
-    --font-serif: ${theme.fonts.serif};
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
-  :root{--font-inter: var(--font-inter); --font-merri: var(--font-merri)}
-  body{font-family: var(--font-inter), ${theme.fonts.sans};}
-  html,body,#root{height:100%;}
-  body{
-    margin:0;
-    font-family: var(--font-sans);
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
     background: var(--background);
     color: var(--foreground);
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
+    font-family: var(--font-cosmica, 'Plus Jakarta Sans', system-ui, sans-serif);
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.006em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  a{color:var(--color-accent);}
-  .container{max-width:960px;margin:0 auto;padding:0 24px}
-  .prose{line-height:1.75;font-size:18px}
-  /* include prose module */
+
+  a {
+    color: var(--color-cobalt-link, #0066cc);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  a:hover {
+    color: var(--color-azure, #0071e3);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
 `
 
 export default GlobalStyle
