@@ -1,0 +1,105 @@
+---
+title: "[NEWS] 2026-06-20 AI 뉴스 브리프"
+date: "2026-06-20"
+description: "Anthropic의 서울 오피스와 한국 파트너십, Google DeepMind의 AI Control Roadmap, NVIDIA AgentPerf, John Jumper의 Anthropic 합류, 최신 에이전트·멀티모달 연구를 정리합니다."
+category: "A.I"
+tags:
+  - AI
+  - 생성형AI
+  - AI에이전트
+  - AI안전
+  - AI인프라
+keywords: "AI 뉴스, Anthropic 서울 오피스, Claude Code NAVER, Google DeepMind AI Control Roadmap, NVIDIA AgentPerf, John Jumper Anthropic, arXiv, AI 에이전트, 멀티모달 AI, AI 안전"
+published: true
+---
+
+## 한줄 요약
+
+오늘의 AI 흐름은 **모델 자체의 성능 경쟁이 인재, 지역 생태계, 에이전트 보안, 인프라 효율, 장기 기억 구조를 둘러싼 운영 경쟁으로 넓어지고 있다**는 말로 압축된다. Anthropic은 서울 오피스를 열고 한국 과학기술정보통신부와 AI 안전 MOU를 체결했으며, NAVER, Nexon, LG CNS, Samsung SDS, Hanwha Solutions, Channel Corp 같은 국내 기업의 Claude 활용 사례를 전면에 내세웠다. Google DeepMind는 내부 AI 에이전트를 잠재적 insider threat로 보고 sandboxing, supervisor AI, synchronous blocking, threat taxonomy를 결합하는 AI Control Roadmap을 공개했다. NVIDIA는 AgentPerf 결과를 통해 에이전트 AI가 단일 채팅 응답과 다른 인프라 부하를 만든다고 강조했다. 여기에 AlphaFold 핵심 연구자 John Jumper가 Google DeepMind를 떠나 Anthropic에 합류한다는 보도가 겹치며, frontier AI 경쟁이 연구 인력 확보전으로도 번지고 있다.
+
+## 오늘의 핵심 포인트
+
+- Anthropic은 6월 17일 서울 오피스를 열고 한국 과기정통부와 AI safety, cybersecurity, Korean-language model safety evaluation 협력을 포함한 MOU를 체결했다고 밝혔다.
+- Anthropic은 NAVER 전사 엔지니어링 조직의 Claude Code 배포, Nexon의 live-service game 개발 활용, LG CNS와 Samsung SDS의 사내 확산, Hanwha의 AWS Bedrock 기반 배포를 한국 시장 사례로 제시했다.
+- Google DeepMind는 AI Control Roadmap에서 에이전트를 “정렬되었을 것”이라고 믿는 대신, 검증된 행동에 비례해 권한을 부여하고 supervisor AI로 reasoning, action, plan을 감시하는 방식을 제안했다.
+- NVIDIA는 AgentPerf가 agentic AI workload를 위한 첫 인프라 benchmark라고 설명하며, GB300 NVL72가 Hopper/H200 계열 대비 agent-per-megawatt 지표에서 큰 우위를 보였다고 주장했다.
+- John Jumper의 Anthropic 합류 보도는 AI 과학 인재가 빅테크 연구소에서 frontier AI 스타트업으로 이동하는 흐름을 상징한다.
+- 최신 arXiv 연구는 persistent memory, temporal verification, policy ledger, spatial tool-use, diffusion-model transparency, certificate-bound execution처럼 “에이전트가 오래 일하고 실제 시스템을 건드릴 때 필요한 구조”에 집중한다.
+
+## 산업 뉴스와 정책 흐름
+
+### 1) Anthropic 서울 오피스: 한국은 Claude의 테스트베드가 아니라 핵심 시장이 됐다
+
+Anthropic은 6월 17일 서울 오피스를 공식화하며 한국 AI 생태계와의 파트너십을 발표했다. 가장 눈에 띄는 부분은 단순한 영업 거점 발표가 아니라, 한국 과학기술정보통신부와의 MOU를 통해 공공 부문 AI 도입, AI 안전, 사이버보안, 한국어 모델 안전 평가, AI-enabled cyber threat 정보 교환을 함께 다루겠다고 한 점이다. 이는 한국 시장 진출이 엔터프라이즈 판매만이 아니라 안전 거버넌스와 정책 협력까지 묶인 형태로 진행된다는 뜻이다.
+
+기업 사례도 구체적이다. Anthropic은 NAVER가 Claude Code를 전체 엔지니어링 조직에 배포해 수천 명의 엔지니어가 코딩 도구를 다변화하고 생산성을 높이고 있다고 밝혔다. Nexon은 라이브 서비스 게임 개발에서 Claude Code를 코드 작성, 리뷰, 배포 흐름에 활용하고 있고, LG CNS는 LG 그룹 전반으로 Claude를 확산할 계획이라고 설명했다. Samsung SDS는 Samsung Electronics 직원들에게 Claude Cowork와 Claude Code를 포함한 Claude 도구를 제공해 knowledge work, agentic workflow, software development를 확장하고 있다.
+
+이 발표가 중요한 이유는 한국 기업들이 AI를 “챗봇 도입”이 아니라 개발 조직, 고객 상담, 법률·복지 업무, 대기업 내부 생산성, 스타트업 제품 내장 기능까지 넓게 쓰고 있다는 점이다. 특히 한국어 안전 평가와 공공 부문 협력은 글로벌 모델이 지역 언어와 제도 안에서 작동하려면 현지 생태계와 함께 검증 체계를 만들어야 한다는 현실을 보여준다.
+
+### 2) DeepMind AI Control Roadmap: 에이전트는 내부자 권한을 가진 실행 주체다
+
+Google DeepMind의 6월 18일 발표는 에이전트 시대의 안전 논의를 한 단계 현실적인 보안 문제로 끌어내린다. DeepMind는 AI agent가 cyber defense, scientific discovery, product development 같은 복잡한 작업을 자율적으로 수행할수록 더 정교한 safeguard가 필요하다고 전제한다. 핵심은 alignment만으로는 충분하지 않다는 판단이다. 모델이 친절하고 안전하게 답하도록 학습되어도, 실제 시스템을 조작하는 에이전트는 파일 삭제, 코드 변경, 내부 API 호출, 권한 상승, 민감 데이터 접근 같은 행동을 할 수 있다.
+
+로드맵은 traditional safeguard, sandboxing, endpoint security, prompt injection resistance 위에 AI control layer를 얹는다. 이 계층은 에이전트를 잠재적으로 misaligned될 수 있는 내부자처럼 취급하고, 검증된 행동에 따라 권한을 점진적으로 부여한다. 또 trusted supervisor AI가 working agent의 reasoning, actions, plans를 감시하고, 위험한 행동이 보이면 실행 전에 차단하는 synchronous response로 전환한다. DeepMind는 이미 coding agent trajectories 백만 건을 분석해 live monitor를 개선하고 있다고 설명했다.
+
+여기서 중요한 관찰은 “위험한 에이전트”가 반드시 악의적이라는 뜻은 아니라는 점이다. DeepMind는 많은 flagged event가 adversarial intent보다 agent misinterpretation이나 overeagerness에서 나온다고 설명한다. 실제 업무 에이전트의 위험은 악성 행위뿐 아니라, 사용자의 목표를 과도하게 밀어붙이다가 잘못된 파일을 지우거나, 정책상 금지된 tool call을 수행하거나, 오래된 상태를 기준으로 결정을 내리는 데서도 나온다. 따라서 에이전트 보안은 모델 윤리의 부록이 아니라 엔터프라이즈 운영의 핵심 레이어가 되고 있다.
+
+### 3) NVIDIA AgentPerf: 에이전트 인프라는 “토큰 처리량”만으로 설명되지 않는다
+
+NVIDIA는 AgentPerf 결과를 소개하며 agentic AI workload가 기존 inference benchmark와 다르다고 강조했다. 일반 채팅 completion은 하나의 큰 모델 호출과 응답에 가깝지만, 에이전트는 목표를 여러 단계로 쪼개고, context를 모으고, 추론하고, 도구를 호출하고, 결과를 관찰하고, 다시 다음 행동을 고르는 relay에 가깝다. NVIDIA는 이런 흐름이 수십에서 수백 번의 LLM call과 tool call을 연결하기 때문에 부하가 단순히 더해지는 것이 아니라 곱셈처럼 커진다고 설명한다.
+
+AgentPerf가 중요한 이유는 에이전트 경제성의 단위가 달라지기 때문이다. 기업이 알고 싶은 것은 한 번의 응답이 얼마나 빠른가만이 아니다. 동시에 몇 개의 에이전트를 안정적으로 돌릴 수 있는지, 각 에이전트가 service-level objective를 만족하는지, watt와 dollar당 얼마나 많은 유용한 작업을 수행하는지가 중요해진다. NVIDIA는 GB300 NVL72가 첫 AgentPerf 결과에서 DeepSeek V4 Pro 기반 agentic workload를 실행하며 높은 agents-per-megawatt 성능을 보였다고 주장했다.
+
+이 흐름은 DeepMind의 통제 로드맵과도 맞물린다. 에이전트가 많아질수록 비용과 지연시간만 커지는 것이 아니라, 감시·로그·차단·복구 체계도 함께 커진다. 앞으로 AI 인프라 경쟁은 “더 큰 모델을 빠르게 돌리는가”에서 “수많은 장기 실행 에이전트를 비용, 전력, 정책, 보안 기준 안에서 얼마나 안정적으로 운영하는가”로 이동할 가능성이 높다.
+
+### 4) John Jumper의 Anthropic 합류: AI 과학 인재 전쟁의 상징
+
+Reuters와 여러 매체는 AlphaFold 핵심 연구자 John Jumper가 Google DeepMind를 떠나 Anthropic에 합류할 예정이라고 보도했다. Jumper는 Demis Hassabis와 함께 AlphaFold 성과로 2024년 노벨 화학상을 공동 수상한 인물이며, 단백질 구조 예측을 AI 기반 과학의 대표적 성공 사례로 끌어올린 연구자다. 구체적인 역할은 아직 알려지지 않았지만, 이 이동은 Anthropic이 단순한 챗봇 회사가 아니라 과학, 안전, frontier model research 인재를 끌어들이는 연구 조직으로 자리 잡으려는 흐름과 맞닿아 있다.
+
+이 뉴스는 과학 AI의 전략적 가치도 다시 보여준다. OpenAI, Anthropic, Google DeepMind, Meta, NVIDIA의 경쟁은 모델 API와 consumer product만의 싸움이 아니다. 생명과학, 로보틱스, agentic coding, 보안, 인프라 최적화처럼 다음 단계의 breakthrough를 만들 수 있는 분야별 핵심 연구자가 어디에 모이느냐가 중요해지고 있다. 특히 AlphaFold 계열 연구 경험은 모델이 실제 과학 문제를 해결하는 데 필요한 데이터, 평가, 검증, 전문가 workflow를 이해한다는 점에서 가치가 크다.
+
+## 최신 연구 포커스
+
+### 1) MemoryWAM: 로봇의 세계 모델에는 오래가는 기억이 필요하다
+
+`MemoryWAM: Efficient World Action Modeling with Persistent Memory`는 로봇 조작에서 현재 관찰만으로는 부족하고, 과거 관찰과 dynamics modeling이 함께 필요하다고 본다. 기존 world action model은 긴 history를 유지하면 비용이 커지고, 최근 window만 쓰면 non-Markovian task에서 약해진다. MemoryWAM은 최근 프레임, event-boundary anchor frame, compact gist token을 결합한 hybrid memory로 긴 맥락을 효율적으로 압축한다. 이는 로봇이 “지금 보이는 것”보다 “이전에 무엇을 봤고 어떤 변화가 있었는가”를 바탕으로 행동해야 한다는 방향을 잘 보여준다.
+
+### 2) TimeProVe: 긴 비디오는 전체를 보는 대신 가설을 세우고 검증해야 한다
+
+`TimeProVe`는 hours-long untrimmed video에서 sparse evidence를 찾아야 하는 long video QA 문제를 다룬다. 모든 프레임을 고가의 VLM에 넣는 방식은 비용이 크고, caption 기반 sparse reasoning은 motion-centric evidence를 놓치기 쉽다. TimeProVe는 lightweight module이 action-grounded answer-evidence hypothesis를 먼저 만들고, 비싼 VLM은 targeted verification에만 호출한다. 논문은 OTB benchmark에서 baseline 대비 성능을 높이면서 VLM call을 75%, inference cost를 93% 줄였다고 보고한다. 에이전트식 비디오 이해의 핵심이 “많이 보기”보다 “검증할 후보를 잘 고르기”로 이동하는 사례다.
+
+### 3) LedgerAgent: 정책 준수 에이전트에는 별도 상태 장부가 필요하다
+
+`LedgerAgent`는 customer-service tool-calling agent가 여러 턴에 걸쳐 상태를 유지하고 정책을 지켜야 하는 문제를 다룬다. 표준 에이전트는 관찰, tool return, policy instruction을 prompt에 모두 넣고 매번 필요한 상태를 재구성하게 한다. 이 방식은 stale state, missing fact, policy-dependent constraint 위반을 만들 수 있다. LedgerAgent는 observed task state를 별도 ledger에 유지하고, 환경을 바꾸는 tool call 전에 상태 의존 정책 제약을 검사해 위반을 막는다. DeepMind의 AI Control Roadmap과 연결하면, 좋은 에이전트 설계는 모델 reasoning만이 아니라 상태, 권한, 정책을 분리해 다루는 구조에서 나온다.
+
+### 4) S-Agent: 공간 지능은 frame-level recognition이 아니라 evidence accumulation이다
+
+`S-Agent`는 continuous multi-view images와 video에서 spatial reasoning을 수행하는 tool-use agentic paradigm을 제안한다. VLM은 semantic planner로 동작해 어떤 evidence가 필요한지 결정하고, spatial tools와 experts가 2D object grounding, 3D geometric evidence, high-level spatial knowledge를 만든다. Scene Memory와 Agent Memory가 시간에 따른 장면 상태와 reasoning context를 유지한다는 점도 중요하다. 이는 멀티모달 모델이 이미지 설명기에서 벗어나 실제 공간을 측정하고, 관계를 추적하고, 행동 가능한 구조로 변환하는 방향으로 가고 있음을 보여준다.
+
+### 5) DiffusionGemma 투명성: reasoning이 토큰 밖에서 일어날 때 어떻게 감시할 것인가
+
+`How Transparent is DiffusionGemma?`는 diffusion-style language model의 reasoning transparency를 분석한다. autoregressive model은 token-by-token 과정이 비교적 자연스럽게 드러나지만, diffusion model은 continuous latent space와 denoising step 안에서 계산이 진행되므로 중간 상태 해석이 더 어렵다. 연구진은 interpretable token bottleneck을 통해 variable transparency를 개선할 수 있음을 보였지만, algorithmic transparency는 여전히 더 어렵다고 설명한다. DeepMind가 말한 “모델이 보이는 reasoning을 숨기거나 opaque reasoning을 사용할 때 감시가 어려워진다”는 문제와 직접 연결된다.
+
+### 6) Sovereign Execution Broker: 생산 시스템 변경 권한은 추론 과정 안에 두면 안 된다
+
+`Sovereign Execution Brokers`는 autonomous agent가 cloud, deployment, data-control workflow에 연결될 때 production mutation authority를 nondeterministic reasoning process 안에 둬서는 안 된다고 주장한다. 제안된 SEB는 인증서로 묶인 실행 계약을 검증하고, validity window, policy epoch, revocation epoch, live-state drift를 확인한 뒤 scoped execution identity를 발급한다. 요지는 proposal, admission, execution을 분리해 agent의 제안과 실제 인프라 변경 사이에 강제 집행 경계를 두자는 것이다. 기업용 agent control plane이 앞으로 어떤 방향으로 설계될지 보여주는 연구다.
+
+## 오늘의 관찰
+
+오늘 브리프의 공통 키워드는 “장기 실행”이다. Anthropic의 한국 발표는 Claude가 한국 기업의 실제 개발·업무 조직 안으로 들어가고 있음을 보여주고, DeepMind의 로드맵은 그런 에이전트가 권한을 가질 때 어떤 감시와 차단이 필요한지 설명한다. NVIDIA의 AgentPerf는 수많은 tool call과 LLM call을 묶는 장기 실행 workload가 인프라 지표 자체를 바꾼다고 말한다. arXiv 연구들도 같은 방향이다. 로봇은 과거 관찰을 기억해야 하고, 긴 비디오는 후보를 만들고 검증해야 하며, 고객지원 에이전트는 상태 장부를 유지해야 하고, 공간 에이전트는 장면 evidence를 누적해야 한다.
+
+따라서 2026년 중반의 AI 경쟁을 볼 때는 “어느 모델이 더 똑똑한가”만 보면 부족하다. 누가 지역별 안전 평가와 파트너십을 확보하는가, 누가 에이전트 권한을 통제하는가, 누가 전력과 비용당 더 많은 에이전트를 안정적으로 운영하는가, 누가 장기 기억과 상태 관리를 모델 밖의 시스템으로 설계하는가가 중요하다. 모델은 점점 더 강해지고 있지만, 실제 가치를 만드는 것은 그 모델이 오래 일할 수 있도록 둘러싼 운영 체계다.
+
+## 참고 링크
+
+- [Anthropic: Anthropic opens Seoul office and announces new partnerships across the Korean AI ecosystem](https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem)
+- [Google DeepMind: Securing the future of AI agents](https://deepmind.google/blog/securing-the-future-of-ai-agents/)
+- [NVIDIA: NVIDIA Blackwell Leads on First Agentic AI Infrastructure Benchmark](https://blogs.nvidia.com/blog/nvidia-blackwell-agentperf-artificial-analysis/)
+- [NVIDIA Developer: Leading agentic coding performance on AgentPerf](https://developer.nvidia.com/blog/nvidia-achieves-leading-agentic-coding-performance-on-first-agentic-ai-benchmark/)
+- [Yahoo Finance / Reuters: US scientist John Jumper to leave Google DeepMind for Anthropic](https://finance.yahoo.com/technology/ai/articles/us-scientist-john-jumper-leave-204039431.html)
+- [arXiv: MemoryWAM](https://arxiv.org/abs/2606.20562v1)
+- [arXiv: TimeProVe](https://arxiv.org/abs/2606.20561v1)
+- [arXiv: LedgerAgent](https://arxiv.org/abs/2606.20529v1)
+- [arXiv: S-Agent](https://arxiv.org/abs/2606.20515v1)
+- [arXiv: How Transparent is DiffusionGemma?](https://arxiv.org/abs/2606.20560v1)
+- [arXiv: Sovereign Execution Brokers](https://arxiv.org/abs/2606.20520v1)
