@@ -1,0 +1,115 @@
+---
+title: "[NEWS] 2026-06-25 AI 뉴스 브리프"
+date: "2026-06-25"
+description: "OpenAI의 위협 보고서와 Broadcom 추론 칩, Anthropic의 Claude Tag와 Claude Corps, NVIDIA AgentPerf, 최신 에이전트·멀티모달 연구를 정리합니다."
+category: "A.I"
+tags:
+  - AI
+  - 생성형AI
+  - AI에이전트
+  - AI안전
+  - AI인프라
+keywords: "AI 뉴스, OpenAI 위협 보고서, OpenAI Broadcom 추론 칩, Anthropic Claude Tag, Claude Corps, NVIDIA AgentPerf, OpenThoughts-Agent, InSight VLA, FLUX3D, arXiv"
+published: true
+---
+
+## 한줄 요약
+
+오늘의 AI 흐름은 **에이전트가 실제 업무 권한을 갖기 시작하면서, 모델 성능보다 신원, 권한, 평가, 인프라 효율, 데이터 레시피가 더 중요한 경쟁 축으로 떠오르고 있다**는 말로 정리된다. OpenAI는 PRC-linked influence operations가 AI 논쟁 자체를 겨냥하고 있다고 분석하며, frontier AI가 정보전과 정책 여론의 장 안으로 들어왔음을 보여줬다. 동시에 Broadcom과 LLM 최적화 추론 칩을 공개하며, 대규모 AI 확산의 병목이 모델뿐 아니라 맞춤형 compute 공급망이라는 점을 드러냈다. Anthropic은 Claude Tag와 Claude Corps를 통해 에이전트 신원 관리와 사회적 배포 프로그램을 전면에 세웠고, AI-enabled cyber threats 분석으로 실제 공격 전술을 MITRE ATT&CK 관점에서 추적했다. NVIDIA의 AgentPerf는 에이전트 워크로드를 별도 인프라 벤치마크로 격상시켰다.
+
+## 오늘의 핵심 포인트
+
+- OpenAI는 중국 관련 영향력 작전이 AI 정책 논쟁과 여론 형성을 겨냥한다고 분석한 2026년 6월 위협 보고서를 공개했다.
+- OpenAI와 Broadcom은 LLM inference에 최적화된 Jalapeno 추론 칩을 공개하며, 모델 배포 경쟁이 custom silicon과 multi-generation platform 경쟁으로 확장되고 있음을 보여줬다.
+- Anthropic은 Claude Tag를 통해 에이전트와 애플리케이션의 신원을 관리하는 접근 모델을 강조했다. 에이전트가 조직 안에서 행동하려면 사람 계정처럼 추적 가능한 identity가 필요해진다.
+- Anthropic의 Claude Corps는 AI를 비영리, 지역사회, 초기 커리어 인재와 연결하는 공익형 배포 프로그램이다. frontier AI 기업들이 노동시장과 지역사회 적응을 직접 다루는 흐름이다.
+- Anthropic은 1년치 AI-enabled cyber threats를 MITRE ATT&CK로 매핑하며, Project Glasswing과 보안 생태계 협력을 계속 확대하고 있다.
+- NVIDIA AgentPerf는 agentic AI workload의 핵심 지표가 token/s가 아니라 동시 에이전트 수, 지연시간, 비용, 전력 효율, agents-per-megawatt임을 분명히 했다.
+- 최신 arXiv 연구는 agentic model data recipe, VLA의 자율 skill acquisition, agentic data analysis 평가, 구조적 world model certification, 3D 생성 alignment처럼 실제 배포형 AI 시스템의 병목에 집중한다.
+
+## 산업 뉴스와 정책 흐름
+
+### 1) OpenAI 위협 보고서: AI 논쟁은 정보전의 대상이 됐다
+
+OpenAI는 6월 위협 보고서에서 PRC-linked influence operations가 AI 관련 논쟁을 겨냥하고 있다고 밝혔다. 중요한 점은 AI가 단순히 정보전을 자동화하는 도구가 되는 데서 그치지 않고, AI 규제와 산업정책, 모델 접근성, 국제 경쟁에 대한 여론 자체가 공격 표면이 되고 있다는 점이다. frontier AI가 국가 경쟁력과 안보의 핵심 인프라로 인식될수록, 누가 어떤 narrative를 만들고 퍼뜨리는지가 기술 배포만큼 중요해진다.
+
+이 흐름은 AI 안전 논의를 더 복잡하게 만든다. 과거에는 모델이 허위 정보를 생성할 수 있는가가 주요 질문이었다. 이제는 AI 기업의 정책 발표, 정부 규제, 오픈모델 논쟁, 수출통제, 데이터센터 투자 같은 이슈가 영향력 작전의 소재가 된다. 즉 AI 거버넌스는 모델 평가와 사용 정책뿐 아니라, 여론 조작과 지정학적 이해관계까지 함께 다뤄야 하는 영역으로 이동하고 있다.
+
+### 2) OpenAI와 Broadcom: 추론 칩은 AI 접근성의 병목을 직접 겨냥한다
+
+OpenAI와 Broadcom의 LLM 최적화 추론 칩 발표는 모델 경쟁의 다음 장면을 보여준다. OpenAI는 이 칩을 LLM inference에 최적화된 플랫폼으로 설명하며, 9개월 tape-out과 OpenAI 모델을 활용한 설계 가속, multi-generation platform 구축을 강조했다. 이 발표의 핵심은 “더 좋은 모델”을 만드는 것만으로는 충분하지 않다는 점이다. 수억 명의 사용자와 기업 workflow에 AI를 안정적으로 공급하려면 추론 비용, 전력, latency, 공급망을 모두 통제해야 한다.
+
+특히 에이전트형 AI가 확산되면 추론 수요는 단순 채팅보다 훨씬 빠르게 증가한다. 하나의 업무 완료 요청이 수십 번의 모델 호출, 도구 호출, 검증, 재시도를 포함하기 때문이다. 따라서 AI 접근성을 넓히겠다는 메시지는 곧 저비용 고효율 추론 인프라를 확보하겠다는 전략과 연결된다. OpenAI의 칩 발표는 “AI가 모두에게 이롭다”는 철학적 문구와, 실제로 이를 감당할 compute stack을 만들겠다는 산업 전략이 같은 문제의 양면임을 보여준다.
+
+### 3) Anthropic Claude Tag: 에이전트 시대의 기본 단위는 계정이 아니라 신원 있는 행위자다
+
+Anthropic의 Claude Tag는 에이전트와 애플리케이션에 추적 가능한 identity를 부여하는 방향으로 읽힌다. 조직이 에이전트를 내부 도구, 코드 저장소, 문서, 티켓 시스템, 고객지원 환경에 연결하면 가장 먼저 부딪히는 문제는 “이 행동을 누가 했는가”다. 기존 SaaS 권한 모델은 사람 계정과 서비스 계정 중심으로 설계되어 있지만, 에이전트는 사람의 위임을 받아 여러 시스템을 넘나들며 상태를 바꾼다.
+
+Claude Tag가 중요한 이유는 AI 에이전트 보안을 프롬프트나 모델 필터가 아니라 identity and access management 문제로 다룬다는 점이다. 에이전트가 어떤 사용자 또는 조직 정책을 대신하는지, 어떤 권한 범위에서 행동하는지, 어떤 로그와 감사 추적을 남겨야 하는지, 실패했을 때 누구의 책임 경계로 돌아가야 하는지가 명확해야 한다. 이는 Google DeepMind의 AI Control Roadmap이나 최근 certificate-bound execution broker 연구와 같은 흐름, 즉 에이전트의 reasoning과 execution boundary를 분리하려는 움직임과도 맞닿아 있다.
+
+### 4) Claude Corps와 AI-enabled cyber threats: 배포와 방어가 동시에 커진다
+
+Anthropic은 Claude Corps를 통해 초기 커리어 인재와 비영리, 지역사회 조직을 연결하는 fellowship 프로그램을 발표했다. 이는 frontier AI 기업이 단순히 API와 모델을 파는 데서 그치지 않고, AI 확산이 노동시장과 지역사회에 미치는 영향을 직접 관리하려는 흐름이다. AI가 생산성 도구로 자리 잡을수록, 조직이 이를 어떻게 배우고 현장 문제에 맞게 적용하는지가 중요해진다.
+
+동시에 Anthropic은 1년치 AI-enabled cyber threats를 MITRE ATT&CK 프레임워크로 매핑한 분석을 공개했다. Project Glasswing과 Frontier Red Team 활동을 통해 공격자들이 AI를 어떻게 reconnaissance, credential access, malware support, social engineering에 붙이는지 추적한다는 메시지다. 이는 AI 배포가 넓어질수록 방어 체계도 더 구체적이어야 함을 뜻한다. “AI를 잘 쓰는 조직”은 모델을 빠르게 도입하는 조직이 아니라, 권한, 로그, threat intelligence, 교육, incident response를 함께 갖춘 조직이 될 가능성이 높다.
+
+### 5) NVIDIA AgentPerf: 에이전트 인프라의 단위가 바뀐다
+
+NVIDIA의 AgentPerf 발표는 에이전트 AI가 인프라 벤치마크의 새로운 범주가 되었음을 보여준다. 일반적인 LLM inference 벤치마크는 prompt 하나와 completion 하나를 중심으로 생각하기 쉽다. 하지만 에이전트는 목표를 여러 단계로 나누고, 컨텍스트를 수집하고, 도구를 호출하고, 결과를 확인하고, 다시 계획을 수정한다. 따라서 병목은 token/s 하나로 설명되지 않는다.
+
+AgentPerf가 강조하는 지표는 동시에 몇 개의 에이전트를 운영할 수 있는지, 각 에이전트가 service-level objective를 지키는지, 전력과 비용당 얼마나 많은 유용한 일을 끝내는지다. NVIDIA는 Blackwell Ultra NVL72가 Hopper 세대 대비 agents-per-megawatt에서 큰 우위를 보였다고 주장한다. 이 메시지는 OpenAI의 맞춤형 추론 칩 전략과도 연결된다. 에이전트가 많아질수록 모델 호출 수와 감시 비용이 기하급수적으로 늘어나기 때문에, AI 인프라 경쟁은 “큰 모델을 빠르게 돌리기”에서 “장기 실행 에이전트를 효율적으로, 안전하게, 많이 돌리기”로 이동하고 있다.
+
+## 최신 연구 포커스
+
+### 1) OpenThoughts-Agent: 범용 에이전트 모델에는 공개 데이터 레시피가 필요하다
+
+`OpenThoughts-Agent: Data Recipes for Agentic Models`는 agentic language model을 훈련하기 위한 공개 데이터 큐레이션 파이프라인을 제안한다. 기존 오픈 노력은 SWE-Smith, SERA, Nemotron-Terminal처럼 특정 벤치마크에 최적화된 경우가 많았다. 이 논문은 100개 이상의 ablation으로 task source와 diversity가 agentic generalization에 어떤 영향을 주는지 분석하고, 100K 예시 데이터셋으로 Qwen3-32B를 fine-tune해 7개 agentic benchmark 평균 44.8%를 보고한다.
+
+이 연구가 중요한 이유는 에이전트 성능이 모델 크기만으로 결정되지 않는다는 점을 보여주기 때문이다. 실제 업무 에이전트는 코드, 브라우징, 파일 조작, 추론, 도구 사용, 실패 복구를 넘나든다. 따라서 데이터 레시피는 단순 instruction tuning이 아니라, 어떤 task source를 섞고 어떤 trajectory를 남기고 어떤 실패를 포함할지까지 다루는 운영 지식이 된다.
+
+### 2) InSight: VLA는 시연을 따라 하는 모델에서 스스로 skill gap을 채우는 모델로 간다
+
+`InSight: Self-Guided Skill Acquisition via Steerable VLAs`는 vision-language-action 모델이 데모 데이터에 없는 조작 기술을 스스로 보강하는 구조를 제안한다. 핵심은 시연을 primitive action 단위로 분해하고, VLM이 새로운 과제에 필요한 missing primitive를 식별한 뒤, data flywheel로 추가 데이터를 모아 VLA를 steerable하게 만드는 것이다.
+
+로보틱스와 물리 에이전트에서 이 접근은 중요하다. 실제 환경은 long-tail skill로 가득하고, 모든 행동을 사람이 데모로 제공하기 어렵다. 에이전트가 “병을 들어 올린다”, “그릇 쪽으로 이동한다”, “기울여 붓는다” 같은 원시 행동을 조합하고 부족한 행동을 찾아내야 한다. 이는 AI가 단순히 텍스트 계획을 세우는 단계에서 벗어나, 물리적 skill inventory를 스스로 확장하는 방향을 보여준다.
+
+### 3) Grading the Grader: 에이전트 평가는 정답 매칭보다 채점 오류 분리가 먼저다
+
+`Grading the Grader`는 agentic data analysis system의 평가가 얼마나 어려운지를 다룬다. 에이전트 데이터 분석 결과는 코드, 숫자, 텍스트 진단, 중간 산출물을 모두 포함한다. 따라서 출력과 정답이 다를 때 그것이 진짜 오류인지, 채점기가 놓친 동치 표현인지, 중간 계산을 잘못 해석한 채점 artifact인지 분리해야 한다.
+
+논문은 LAMBDA라는 multi-agent data analysis system을 QRData 과제에 적용하고, regex 기반 엄격 채점, LLM 기반 lenient grading, human inspection을 결합한 세 단계 cascade를 제안한다. 이 연구는 에이전트 벤치마크의 다음 병목이 “더 어려운 문제 만들기”만이 아니라 “채점 자체를 신뢰할 수 있게 만들기”임을 보여준다. 기업에서 에이전트 성능을 측정할 때도 같은 문제가 생긴다. 성공률 숫자를 믿기 전에, 그 숫자를 만든 grader가 무엇을 놓치고 무엇을 과대평가하는지 봐야 한다.
+
+### 4) World Models in Pieces: 범용 에이전트에는 부분 구조 인증이 필요하다
+
+`World Models in Pieces`는 일반 에이전트를 하나의 균일한 worst-case guarantee로 평가하는 방식이 큰 세계에서는 정보가 적다고 지적한다. 에이전트는 모든 전이를 똑같이 잘 이해할 수 없고, 실제로는 critical bottleneck과 irrelevant failure가 섞여 있다. 논문은 bounded goal-conditioned performance를 agent internal world model의 entry-wise guarantee로 연결하는 structural certification을 제안한다.
+
+이 관점은 에이전트 안전 평가에 실용적이다. 어떤 에이전트가 전체 환경에서 완벽하지 않더라도, 실제 업무에서 중요한 전이와 권한 있는 행동에 대해 구조적으로 인증할 수 있다면 배포 가능성이 높아진다. 반대로 평균 성능이 좋아도 핵심 bottleneck을 이해하지 못하면 위험하다. 에이전트가 조직 시스템을 조작하는 시대에는 “어디까지 아는가”보다 “어떤 전이를 신뢰할 수 있는가”가 더 중요한 질문이 된다.
+
+### 5) FLUX3D와 IV-CoT: 멀티모달 생성은 구조 계획과 렌더링을 분리한다
+
+`FLUX3D`는 image-to-3D Gaussian Splatting 생성에서 2D 이미지 토큰과 sparse 3D voxel latent 사이의 alignment 병목을 다룬다. 기존 방식은 의미 추상화에 강한 2D feature를 써서 고주파 시각 세부사항이 사라지고, diffusion transformer가 dense 2D token과 sparse 3D latent를 잘 맞추지 못하는 문제가 있었다. FLUX3D는 representation learning과 cross-modal alignment를 함께 개선해 더 충실한 3D 생성을 목표로 한다.
+
+`IV-CoT`는 text-to-image generation에서 object count, spatial relation, attribute binding 같은 구조적 prompt following을 개선하기 위해 latent visual reasoning을 도입한다. 두 연구는 서로 다른 영역이지만 같은 방향을 가리킨다. 멀티모달 생성이 더 어려운 과제로 갈수록, “보기 좋은 이미지”보다 “구조적으로 맞는 장면”이 중요해지고, 이를 위해 planning, alignment, rendering을 분리하는 설계가 필요해진다.
+
+## 오늘의 관찰
+
+오늘 브리프의 공통 키워드는 “신뢰할 수 있는 실행”이다. OpenAI의 위협 보고서는 AI 정책 논쟁이 정보전의 장이 되었음을 보여주고, Broadcom 추론 칩은 AI를 넓게 배포하려면 compute supply chain을 직접 설계해야 한다는 점을 보여준다. Anthropic의 Claude Tag는 에이전트가 행동할 때 identity와 권한 경계가 필요하다는 사실을 제품 수준에서 드러낸다. Claude Corps는 AI 확산이 지역사회와 노동시장 적응 문제로 이어진다는 점을 보여주며, AI-enabled cyber threats 분석은 방어자가 AI 악용의 실제 전술을 추적해야 한다는 점을 강조한다.
+
+연구 쪽에서도 같은 흐름이 보인다. OpenThoughts-Agent는 범용 에이전트를 만들려면 데이터 레시피가 필요하다고 말하고, InSight는 물리 에이전트가 부족한 skill을 스스로 찾아야 한다고 말한다. Grading the Grader와 World Models in Pieces는 에이전트를 평가하려면 단순 점수보다 채점 신뢰성과 부분 구조 인증이 중요하다고 본다. FLUX3D와 IV-CoT는 멀티모달 생성에서 구조 계획과 렌더링의 분리를 요구한다.
+
+결국 2026년 중반 AI 경쟁은 “모델이 얼마나 똑똑한가”에서 “모델이 어떤 권한으로, 어떤 신원으로, 어떤 인프라 위에서, 어떤 평가 체계 아래 실행되는가”로 이동하고 있다. 에이전트가 실제 업무를 맡을수록 모델 성능은 출발점일 뿐이다. 다음 경쟁력은 identity, access control, inference efficiency, benchmark quality, data recipe, structural certification을 얼마나 촘촘하게 설계하느냐에서 갈릴 가능성이 크다.
+
+## 참고 링크
+
+- [OpenAI: PRC-linked influence operations are targeting AI debates](https://openai.com/index/prc-linked-influence-operations-ai-debates)
+- [OpenAI: OpenAI and Broadcom unveil LLM-optimized inference chip](https://openai.com/index/openai-broadcom-jalapeno-inference-chip)
+- [Anthropic: Introducing Claude Tag](https://www.anthropic.com/news/introducing-claude-tag)
+- [Anthropic: Introducing Claude Corps](https://www.anthropic.com/news/claude-corps)
+- [Anthropic: What we learned mapping a year's worth of AI-enabled cyber threats](https://www.anthropic.com/news/AI-enabled-cyber-threats-mitre-attack)
+- [NVIDIA: NVIDIA Blackwell Leads on First Agentic AI Infrastructure Benchmark](https://blogs.nvidia.com/blog/nvidia-blackwell-agentperf-artificial-analysis)
+- [arXiv: OpenThoughts-Agent](https://arxiv.org/abs/2606.24855v1)
+- [arXiv: InSight](https://arxiv.org/abs/2606.24884v1)
+- [arXiv: Grading the Grader](https://arxiv.org/abs/2606.24839v1)
+- [arXiv: World Models in Pieces](https://arxiv.org/abs/2606.24842v1)
+- [arXiv: FLUX3D](https://arxiv.org/abs/2606.24874v1)
+- [arXiv: IV-CoT](https://arxiv.org/abs/2606.24849v1)
