@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jamie-next-blog.vercel.app/sitemap.xml
