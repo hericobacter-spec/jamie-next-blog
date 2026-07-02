@@ -1,0 +1,160 @@
+---
+title: "[NEWS] 2026-07-02 AI 뉴스 브리프"
+date: "2026-07-02"
+description: "Google BigQuery Conversational Analytics GA, ADK Go 2.0, Anthropic Fable 5 재배포, OpenAI GPT-5.6 Sol preview와 최신 AI 에이전트 평가 논문을 중심으로 2026년 7월 2일 AI 흐름을 정리했습니다."
+category: "A.I"
+tags:
+  - AI
+  - 생성형AI
+  - AI에이전트
+  - GoogleCloud
+  - Anthropic
+  - OpenAI
+  - AI보안
+  - 코딩에이전트
+keywords: "AI 뉴스, AI 에이전트, Google BigQuery Conversational Analytics, ADK Go 2.0, Anthropic Fable 5, OpenAI GPT-5.6 Sol, AgentHazard, REAP, OmniCode, SlopCodeBench"
+published: true
+---
+
+## 한줄 요약
+
+오늘의 AI 흐름은 **에이전트를 잘 만드는 법**보다 **에이전트를 조직 안에서 오래, 안전하게, 검증 가능하게 굴리는 법**으로 더 뚜렷하게 이동했습니다. Google은 BigQuery 안에 자연어 분석 에이전트를 일반 제공하며 데이터 웨어하우스를 "질문에 답하는 창고"에서 "조사를 수행하는 업무 시스템"으로 바꾸고 있고, ADK Go 2.0은 graph 기반 workflow, human-in-the-loop, durable resume를 agent framework의 기본 기능으로 끌어올렸습니다. Anthropic은 Fable 5 재배포 과정에서 jailbreak severity framework와 정부 사전 테스트 협력을 전면에 내세웠고, OpenAI는 GPT-5.6 Sol preview에서 agentic coding, biology, cybersecurity, subagent 기반 ultra mode를 강조했습니다.
+
+## 오늘의 핵심 포인트
+
+- **데이터 분석 에이전트가 정식 엔터프라이즈 제품이 됐습니다.** Google Cloud는 Conversational Analytics in BigQuery를 GA로 전환하며, 자연어 질의, 다단계 분석, 시각 보고서, 감사 가능한 SQL, 권한 상속, 비용 통제를 한 번에 묶었습니다.
+- **에이전트 프레임워크의 중심은 graph와 human approval입니다.** ADK Go 2.0은 single agent와 multi-agent graph를 같은 runtime 위에서 실행하고, workflow가 사람의 승인을 기다렸다가 재개되는 구조를 제공합니다.
+- **프런티어 모델 배포는 보안 운영 문제로 바뀌고 있습니다.** Anthropic은 Fable 5 재배포와 함께 새 cyber safety classifier, 99% 이상 차단률, false positive tradeoff, jailbreak severity scoring 기준을 공개했습니다.
+- **OpenAI의 GPT-5.6 preview는 agentic capability를 전면에 둡니다.** Sol, Terra, Luna 세 모델과 함께 max reasoning effort, subagent를 쓰는 ultra mode, Codex/API preview를 예고했습니다.
+- **연구 커뮤니티는 에이전트 평가를 실행 궤적과 장기 품질로 옮기고 있습니다.** AgentHazard, REAP, OmniCode, SlopCodeBench는 모두 단일 정답률보다 실제 업무 세션, 장기 반복, tool-mediated action, production-derived signal을 강조합니다.
+
+## 산업 뉴스와 제품 흐름
+
+### Google Cloud: BigQuery가 "대화형 BI"를 넘어 분석 에이전트가 된다
+
+Google Cloud는 **Conversational Analytics in BigQuery**를 일반 제공한다고 발표했습니다. 이 기능은 사용자가 BigQuery 안에서 자연어로 질문하면 Gemini 기반 에이전트가 데이터를 찾고, SQL을 생성하고, 다단계 분석을 수행하고, 시각 보고서까지 만들 수 있게 합니다. 단순한 챗봇형 BI가 아니라, BigQuery Studio와 Data Canvas 안에서 바로 작동하는 분석 에이전트입니다.
+
+이번 발표에서 중요한 지점은 "답변"보다 **근거와 통제**입니다. Google은 에이전트가 Knowledge Catalog, glossary, profile scan, context bundle, BigQuery Graph, verified query, custom instruction에 grounding된다고 설명합니다. 사용자는 에이전트가 만든 SQL, reasoning step, 참조한 테이블과 glossary를 확인할 수 있고, 질문이 모호하면 에이전트가 추측하지 않고 되묻습니다. 이는 엔터프라이즈 데이터 분석에서 AI가 확산될 때 가장 먼저 부딪히는 신뢰 문제를 겨냥합니다.
+
+보안과 거버넌스도 제품의 핵심입니다. Conversational Analytics는 BigQuery의 기존 권한 모델을 상속하므로 사용자는 자신에게 허용된 데이터만 조회할 수 있고, 쿼리는 BigQuery compliance framework 안에서 감사 로그로 남습니다. Access Transparency, CMEK, Private IP, VPC Service Controls, EU/US multi-region 데이터 레지던시도 언급됐습니다. 즉 Google은 "누구나 데이터에 질문할 수 있다"를 말하면서도, 실제 기업이 요구하는 감사 가능성과 비용 통제까지 함께 제시하고 있습니다.
+
+더 흥미로운 부분은 agentic workflow입니다. Google은 에이전트가 일정에 맞춰 데이터를 모니터링하고, 이벤트를 reasoning하고, 다단계 조사를 수행한 뒤 결과를 chat으로 전달할 수 있다고 설명했습니다. 월요일 아침 보고서나 일일 이상 탐지처럼, 사람이 SQL을 요청하기 전에 에이전트가 조사 루프를 시작하는 형태입니다. 이는 dashboard의 다음 단계가 "더 예쁜 시각화"가 아니라 **데이터 위에서 움직이는 scheduled agent**라는 신호입니다.
+
+### Google ADK Go 2.0: graph-first agent runtime이 표준이 된다
+
+Google Developers Blog는 **ADK for Go 2.0**을 공개하며 agent workflow를 graph로 구성하는 방식을 전면에 내세웠습니다. 실제 agent application은 단일 prompt가 아니라 classification, branching, fan-out, specialist delegation, retry, loop, human approval을 포함합니다. ADK 2.0은 이를 ad hoc control flow가 아니라 node와 edge로 구성된 graph로 표현하고, scheduler가 concurrent execution, state persistence, pause/resume를 관리하게 합니다.
+
+새 버전의 핵심은 graph-based workflow engine, human-in-the-loop, dynamic orchestration, LLM agent modes, unified node runtime입니다. function node, agent node, tool node, join node, dynamic node, workflow node, parallel worker가 모두 graph 구성 요소가 됩니다. single agent도 full graph도 같은 runner 위에서 실행되므로, 작은 prototype에서 production workflow로 옮길 때 실행 모델을 갈아엎을 필요가 줄어듭니다.
+
+Human-in-the-loop가 built-in primitive가 된 점도 중요합니다. Production agent는 결제 승인, 환불 승인, 고객 응답, 코드 변경, 데이터 접근 같은 단계에서 사람이 개입해야 합니다. ADK 2.0은 어떤 node든 사람에게 질문하고 workflow를 durable하게 멈춘 뒤, 나중에 응답이 오면 handoff 또는 re-entry 방식으로 재개할 수 있습니다. 이는 "AI가 모든 것을 자동으로 끝낸다"보다 실제 기업 환경에 가까운 설계입니다.
+
+또한 ADK 2.0은 Chat, Task, SingleTurn agent mode를 제공합니다. coordinator는 사용자와 대화하고, sub-agent는 조용히 task를 끝내고, single-turn agent는 한 번의 판단을 수행하는 식으로 역할을 나눌 수 있습니다. 이 구조는 multi-agent system이 단순히 여러 bot을 묶는 것이 아니라, **권한, history isolation, output delegation, resume semantics를 가진 workflow runtime**으로 진화하고 있음을 보여줍니다.
+
+### Anthropic: Fable 5 재배포는 모델 출시가 아니라 governance 사건이었다
+
+Anthropic은 **Fable 5와 Mythos 5 접근을 복구**한다고 발표했습니다. 6월 12일 미국 정부가 두 모델에 export control을 적용하면서 Anthropic은 국적을 실시간 검증할 수 없다는 이유로 두 모델 접근을 전면 중단했습니다. 이후 6월 30일 export control이 해제됐고, Fable 5는 7월 1일부터 Claude Platform, Claude.ai, Claude Code, Claude Cowork에서 글로벌 제공을 재개했습니다. Mythos 5는 6월 26일 정부 승인을 받은 일부 미국 조직 대상으로 복구됐습니다.
+
+이 사건의 핵심은 Amazon 연구진이 Fable 5 safeguard를 우회해 일부 vulnerability identification과 exploit demonstration을 유도한 보고서였습니다. Anthropic은 자체 테스트 결과 같은 취약점 식별과 exploit demonstration이 Fable 5만의 고유 capability는 아니었고, Claude Opus 4.8, GPT-5.5, Kimi K2.7, 더 작은 모델에서도 재현됐다고 설명했습니다. 하지만 회사는 정부 및 파트너와 협력해 보고된 bypass를 겨냥한 새 safety classifier를 훈련했고, 해당 기법을 99% 이상 차단한다고 밝혔습니다.
+
+여기에는 tradeoff가 있습니다. Anthropic은 새 classifier가 routine coding과 debugging 요청에서도 benign request를 더 자주 flag할 수 있다고 인정했습니다. 즉 frontier model 안전성은 "모델이 유용한가"와 "위험을 얼마나 보수적으로 막는가" 사이의 제품 경험 문제로도 나타납니다. 공격 표면을 줄이면 합법적 개발자의 작업도 더 자주 우회되거나 fallback될 수 있습니다.
+
+가장 중요한 발표는 **jailbreak severity framework**입니다. Anthropic은 Amazon, Microsoft, Google, Glasswing 파트너들과 함께 jailbreak의 심각도를 평가하는 공통 기준을 만들겠다고 밝혔습니다. 제안된 기준은 capability gain, breadth of capability gain, ease of weaponization, discoverability입니다. 이는 AI 안전 논의가 "jailbreak가 있었다/없었다"에서 벗어나, 어떤 우회가 실제 공격 능력을 얼마나 높이고, 얼마나 넓게 적용되며, 얼마나 쉽게 weaponize되고, 얼마나 쉽게 확산되는지를 평가해야 한다는 뜻입니다.
+
+### OpenAI: GPT-5.6 Sol preview는 reasoning effort와 subagent orchestration을 강조한다
+
+OpenAI는 **GPT-5.6 series preview**를 통해 Sol, Terra, Luna 세 모델을 예고했습니다. Exa 검색으로 확인된 OpenAI 발표 요약에 따르면 Sol은 flagship model, Terra는 일상 작업용 balanced model, Luna는 빠르고 저렴한 모델로 소개됐습니다. OpenAI는 GPT-5.6 Sol을 coding, biology, cybersecurity에서 개선된 agentic capability를 갖춘 모델로 설명했고, API와 Codex에서 일부 trusted partner를 대상으로 제한 preview를 시작한다고 밝혔습니다.
+
+눈에 띄는 변화는 reasoning effort입니다. GPT-5.6에는 Sol이 더 오래 깊게 추론할 수 있는 `max` reasoning effort가 들어가고, 단일 agent의 한계를 넘어 subagent를 활용하는 `ultra` mode도 소개됐습니다. 이는 모델 경쟁이 단일 forward pass의 점수 경쟁이 아니라, **얼마나 많은 작업을 여러 agent에게 분해하고, 실행하고, 다시 합칠 수 있는가**로 이동하고 있음을 보여줍니다.
+
+가격과 접근 방식도 메시지를 가집니다. OpenAI는 Terra가 GPT-5.5와 경쟁력 있는 성능을 더 낮은 비용으로 제공하고, Luna는 낮은 비용으로 강한 capability를 제공한다고 설명했습니다. 동시에 정부와의 cyber Executive Order framework 협의를 언급하며, 제한 preview가 장기 기본값이 되어서는 안 된다고 밝혔습니다. Anthropic의 Fable 5 사건과 함께 보면, 프런티어 모델 출시는 이제 기술 발표, 가격 정책, 국가 안보 검토, red-team, partner preview가 얽힌 거버넌스 이벤트입니다.
+
+### NVIDIA와 agent infrastructure: 전문 에이전트는 open stack과 secure runtime을 요구한다
+
+NVIDIA의 최근 메시지는 계속 같은 방향을 가리킵니다. 기업용 에이전트는 좋은 모델 하나가 아니라 open model, skill, tool, secure runtime, accelerated infrastructure의 조합으로 만들어집니다. NVIDIA Agent Toolkit은 Nemotron open model, NemoClaw blueprint, OpenShell secure runtime을 묶어 기업이 자신들의 워크플로우에 맞는 specialized AI coworker를 만들도록 돕습니다.
+
+이번 흐름에서 Google ADK와 NVIDIA OpenShell은 같은 문제의 다른 층을 담당합니다. ADK가 workflow orchestration과 human-in-the-loop를 개발자 경험으로 끌어온다면, OpenShell은 agent가 파일, 네트워크, credential, tool을 어떤 정책 아래 사용할지 제어하는 실행 환경을 겨냥합니다. Anthropic의 classifier와 jailbreak severity framework, Google BigQuery의 권한 상속과 감사 로그도 모두 같은 방향입니다. 에이전트 제품의 진짜 경쟁력은 모델 응답 품질이 아니라 **권한 있는 행동을 안전하게 운영하는 전체 스택**에서 나옵니다.
+
+## 최신 연구 포커스
+
+### AgentHazard: 에이전트 안전성은 prompt가 아니라 trajectory에서 깨진다
+
+arXiv 논문 **"AgentHazard: A Benchmark for Evaluating Harmful Behavior in Computer-Use Agents"**는 computer-use agent의 안전성을 다룹니다. 논문은 chat system과 달리 computer-use agent가 파일, tool, execution environment 위에서 state를 유지하고 행동으로 이어지기 때문에, 위험이 단일 prompt에서가 아니라 여러 locally acceptable step의 조합에서 생긴다고 봅니다.
+
+AgentHazard는 2,653개 instance를 포함하며, harmful objective와 겉보기에는 정당한 operational step sequence를 짝지어 agent가 누적 맥락, 반복 tool use, intermediate action, dependency를 통해 생기는 harm을 중간에 인식하고 멈출 수 있는지 평가합니다. 저자들은 Claude Code, OpenClaw, IFlow를 open 또는 openly deployable model 계열과 함께 평가했고, Qwen3-Coder 기반 Claude Code에서 73.63% attack success rate가 관찰됐다고 보고했습니다.
+
+이 연구가 중요한 이유는 명확합니다. 에이전트는 더 이상 "나쁜 답변을 거절하는가"만으로 안전성을 판단할 수 없습니다. 실제 위험은 "각 단계는 그럴듯하지만 전체 trajectory는 위험한 행동"에서 생깁니다. Anthropic의 Fable 5 사건과 Google/ADK의 workflow runtime 논의가 모두 이 문제와 맞닿아 있습니다.
+
+### REAP: production coding agent 평가는 실제 세션에서 자동으로 재구성해야 한다
+
+**"REAP: Automatic Curation of Coding Agent Benchmarks from Interactive Production Usage"**는 production AI coding agent 평가를 다룹니다. 기존 public benchmark는 언어 분포, prompt style, codebase structure가 실제 산업 사용과 다르고, online A/B test는 느리고 사용자 경험을 위험하게 만들 수 있습니다. Shadow deployment는 reproducible signal을 주기 어렵습니다.
+
+REAP는 실제 developer-agent session에서 benchmark를 자동으로 구성하는 pipeline입니다. LLM 기반 task classification, agentic test-relevance validation, multi-run stability check를 사용해 untestable prompt, misaligned test, flaky test를 걸러냅니다. 이를 통해 Harvest라는 benchmark를 만들었고, real developer prompt와 fail-to-pass test로 agent code change를 검증합니다. 보고된 solve rate는 frontier model 다섯 개에서 42.9%에서 58.2% 범위였습니다.
+
+이 논문은 기업이 coding agent를 도입할 때 "SWE-Bench 점수가 높다"만으로는 충분하지 않다는 점을 보여줍니다. 각 회사의 monorepo, test infrastructure, prompt style, 언어 분포에 맞춘 in-distribution benchmark가 필요하고, 그것도 한 번 만드는 것이 아니라 계속 재구성되어야 합니다.
+
+### OmniCode: 코딩 에이전트는 bug fixing만 잘해서는 부족하다
+
+**"OmniCode: A Benchmark for Evaluating Software Engineering Agents"**는 소프트웨어 엔지니어링 에이전트 평가 범위를 넓힙니다. HumanEval이나 SWE-Bench는 coding contest나 patch generation에 가까운 task에 집중하지만, 실제 개발자는 bug fixing, test generation, code review response, style fixing, 여러 언어와 codebase 맥락을 모두 다룹니다.
+
+OmniCode는 Python, Java, C++ 세 언어와 네 가지 task category에 걸쳐 1,794개 task를 제공합니다. 논문은 SWE-Agent 같은 agent framework가 Python bug fixing에서는 상대적으로 잘할 수 있지만, test generation이나 Java/C++ task에서는 크게 약해진다고 보고합니다. 예를 들어 C++ test generation에서 DeepSeek-V3.1 기반 SWE-Agent의 최고 성능은 25.0%로 제시됐습니다.
+
+이는 agentic coding 경쟁의 다음 병목을 보여줍니다. 코드 생성 모델이 "패치 하나"를 잘 만드는 것과, 실제 엔지니어가 하는 다양한 유지보수 작업을 안정적으로 처리하는 것은 다릅니다. Codex, Claude Code, ADK류 workflow가 넓어질수록 평가도 더 넓어져야 합니다.
+
+### SlopCodeBench: 장기 반복 작업에서 코드는 점점 망가진다
+
+**"SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks"**는 단일 task 성공률보다 장기 반복의 품질 저하를 측정합니다. 소프트웨어 개발은 한 번의 patch로 끝나지 않고, 기존 코드를 계속 확장하고 요구사항을 바꾸며 유지보수합니다. SlopCodeBench는 36개 문제와 196개 checkpoint에서 agent가 자기 이전 solution을 반복적으로 확장하도록 만들고, structural erosion과 verbosity를 측정합니다.
+
+결과는 꽤 날카롭습니다. 15개 coding agent를 평가했을 때 어떤 agent도 문제를 end-to-end로 완전히 해결하지 못했고, 최고 agent도 checkpoint의 14.8%만 통과했습니다. 구조적 침식은 77% trajectory에서, verbosity는 75.5% trajectory에서 증가했습니다. open-source Python repository와 비교하면 agent code는 2.3배 더 verbose하고 2.0배 더 eroded됐습니다.
+
+이 논문은 "테스트를 통과했다"가 충분한 평가가 아니라는 점을 분명히 합니다. 에이전트가 만든 코드는 첫 checkpoint에서는 괜찮아 보여도, 다음 요구사항을 받을수록 복잡도가 몰리고 중복이 늘어날 수 있습니다. 장기 agent workflow를 제품에 넣는 기업은 pass rate뿐 아니라 maintainability와 architecture drift를 같이 봐야 합니다.
+
+### AgentDoG와 MOSAIC: guardrail도 agent trajectory를 봐야 한다
+
+AgentHazard와 함께 눈여겨볼 흐름은 trajectory-aware guardrail입니다. **AgentDoG**는 agentic risk를 source, failure mode, consequence 세 축으로 분류하고, 500개 full execution trajectory와 1,575개 unique tool을 포함한 ATBench를 제안합니다. 단순 binary unsafe label이 아니라, 왜 agent가 특정 unsafe action 또는 seemingly safe but unreasonable action을 했는지 provenance와 진단을 제공하려는 접근입니다.
+
+**"Learning When to Act or Refuse"** 계열 연구도 비슷한 문제를 다룹니다. multi-step tool use 환경에서 agent가 언제 행동하고 언제 거절해야 하는지 학습시키며, prompt injection, privacy leakage, malicious tool execution을 줄이면서 benign task 성능을 보존하려 합니다. 핵심은 모든 요청을 더 보수적으로 거절하는 것이 아니라, 맥락과 tool trajectory를 보고 calibrated refusal을 하는 것입니다.
+
+Anthropic이 Fable 5에서 classifier safety margin을 넓히며 false positive가 증가한다고 밝힌 점을 생각하면, 이 연구들은 매우 실용적입니다. 에이전트 보안의 목표는 무조건 막는 것이 아니라, **실행 맥락을 이해하고 위험한 궤적만 정확히 끊는 것**입니다.
+
+## 투자자와 빌더를 위한 체크포인트
+
+1. **데이터 웨어하우스가 agent runtime이 됩니다.** BigQuery Conversational Analytics GA는 자연어 분석이 BI 표면이 아니라 governed data platform 안으로 들어간다는 신호입니다.
+2. **에이전트 framework의 필수 기능은 graph, pause/resume, HITL, observability입니다.** ADK Go 2.0이 보여준 방향은 OpenClaw, LangGraph, AutoGen류 생태계와 같은 문제를 겨냥합니다.
+3. **프런티어 모델 출시는 보안 classifier, 정부 협력, partner preview, jailbreak severity scoring과 함께 움직입니다.** Anthropic과 OpenAI 사례 모두 모델 배포가 governance event가 됐다는 점을 보여줍니다.
+4. **코딩 에이전트 평가는 생산 환경에 가까워져야 합니다.** REAP, OmniCode, SlopCodeBench는 단일 issue 해결률보다 실제 prompt, fail-to-pass test, 다양한 작업 유형, 장기 유지보수 품질을 봅니다.
+5. **안전성은 답변 필터가 아니라 행동 로그 평가입니다.** AgentHazard와 AgentDoG가 보여주듯, 위험은 locally acceptable action들이 이어지는 trajectory에서 생깁니다.
+
+## 오늘의 결론
+
+2026년 7월 2일의 AI 뉴스는 에이전트가 본격적으로 운영 시스템의 언어를 배우고 있음을 보여줍니다. Google은 BigQuery 안에서 에이전트가 SQL을 만들고 다단계 조사를 수행하게 만들고, ADK는 graph, HITL, durable resume를 runtime의 기본 단위로 만듭니다. Anthropic은 모델 접근 재개를 보안 classifier와 jailbreak severity framework로 설명하고, OpenAI는 GPT-5.6 preview에서 reasoning effort와 subagent orchestration을 강조합니다.
+
+이제 AI 에이전트의 경쟁력은 "모델이 얼마나 똑똑한가"만으로 설명되지 않습니다. 중요한 것은 어떤 데이터에 접근할 수 있는지, 어떤 권한으로 행동하는지, 어디서 사람이 승인하는지, 어떤 로그가 남는지, 어떤 기준으로 위험한 trajectory를 끊는지, 그리고 시간이 지나도 코드와 workflow 품질이 무너지지 않는지입니다.
+
+다음 단계의 승자는 가장 화려한 데모를 만드는 팀이 아니라, 에이전트를 조직의 실제 workflow 안에 넣고도 신뢰, 비용, 보안, 유지보수를 감당할 수 있는 팀일 가능성이 큽니다.
+
+## 참고 출처
+
+- Google Cloud, "Conversational analytics in BigQuery brings trusted agentic reasoning to everyone"  
+  https://cloud.google.com/blog/products/data-analytics/conversational-analytics-in-bigquery-now-ga
+- Google Developers Blog, "Build reliable multi-agent applications with ADK Go 2.0"  
+  https://developers.googleblog.com/announcing-adk-go-20/
+- Google Developers Blog, "Why we built ADK 2.0"  
+  https://developers.googleblog.com/why-we-built-adk-20/
+- Anthropic, "Redeploying Fable 5"  
+  https://www.anthropic.com/news/redeploying-fable-5
+- OpenAI, "Previewing GPT-5.6 Sol: a next-generation model"  
+  https://openai.com/index/previewing-gpt-5-6-sol/
+- NVIDIA, "How Businesses Are Building Specialized AI They Can Trust"  
+  https://blogs.nvidia.com/blog/nvidia-agent-toolkit-open-models-tools-skills-secure-runtime-ai-agents/
+- arXiv: AgentHazard: A Benchmark for Evaluating Harmful Behavior in Computer-Use Agents  
+  https://arxiv.org/abs/2604.02947
+- arXiv: REAP: Automatic Curation of Coding Agent Benchmarks from Interactive Production Usage  
+  https://arxiv.org/abs/2604.01527
+- arXiv: OmniCode: A Benchmark for Evaluating Software Engineering Agents  
+  https://arxiv.org/abs/2602.02262
+- arXiv: SlopCodeBench: Benchmarking How Coding Agents Degrade Over Long-Horizon Iterative Tasks  
+  https://arxiv.org/abs/2603.24755
+- arXiv: AgentDoG: A Diagnostic Guardrail Framework for AI Agent Safety and Security  
+  https://arxiv.org/abs/2601.18491
+- arXiv: Learning When to Act or Refuse: Guarding Agentic Reasoning Models for Safe Multi-Step Tool Use  
+  https://arxiv.org/abs/2603.03205
