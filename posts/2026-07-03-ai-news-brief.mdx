@@ -1,0 +1,131 @@
+---
+title: "[NEWS] 2026-07-03 AI 뉴스 브리프"
+date: "2026-07-03"
+description: "Anthropic Fable 5 사이버 세이프가드와 CJS jailbreak framework, Google ADK 2.0/BigQuery 분석 에이전트, OpenAI GPT-5.6 preview, NVIDIA Agent Toolkit, 최신 에이전트·추론 연구를 정리했습니다."
+category: "A.I"
+tags:
+  - AI
+  - 생성형AI
+  - AI에이전트
+  - Anthropic
+  - OpenAI
+  - GoogleCloud
+  - NVIDIA
+  - AI보안
+  - 코딩에이전트
+keywords: "AI 뉴스, AI 에이전트, Anthropic Fable 5, Cyber Jailbreak Severity, Google ADK 2.0, BigQuery Conversational Analytics, OpenAI GPT-5.6 Sol, NVIDIA Agent Toolkit, AutoMem, Theoria, RepoRescue"
+published: true
+---
+
+## 한줄 요약
+
+오늘의 AI 흐름은 **모델 성능 경쟁**보다 **에이전트를 통제 가능한 시스템으로 배포하는 방법**에 더 무게가 실렸습니다. Anthropic은 Fable 5의 사이버 세이프가드와 Cyber Jailbreak Severity(CJS) 초안을 공개하며 jailbreak를 등급화하려 했고, Google은 ADK 2.0과 BigQuery Conversational Analytics를 통해 에이전트 workflow를 deterministic runtime과 governed data platform 안으로 끌어왔습니다. OpenAI의 GPT-5.6 Sol preview와 NVIDIA Agent Toolkit은 각각 frontier inference와 enterprise runtime의 방향을 보여줬고, arXiv에서는 memory, verification, repository-scale repair를 다루는 에이전트 연구가 이어졌습니다.
+
+## 오늘의 핵심 포인트
+
+- **AI 안전 논의가 "차단 여부"에서 "심각도 등급"으로 이동했습니다.** Anthropic은 Fable 5의 cyber classifier가 무엇을 막고 무엇을 허용하는지 설명하고, jailbreak 심각도를 CJS-0부터 CJS-4까지 나누는 초안을 제안했습니다.
+- **프로덕션 에이전트는 workflow runtime 문제입니다.** Google ADK 2.0은 LLM이 필요한 단계와 deterministic control flow가 필요한 단계를 분리하고, human-in-the-loop와 graph workflow를 기본 구조로 제시했습니다.
+- **데이터 분석 에이전트는 dashboard를 대체하는 방향으로 진화합니다.** BigQuery Conversational Analytics는 자연어 질의, SQL 생성, 다단계 분석, 시각 보고서, 감사 로그, 권한 상속을 한 제품 안에 묶었습니다.
+- **OpenAI와 NVIDIA의 메시지는 full-stack입니다.** OpenAI는 GPT-5.6 Sol/Terra/Luna preview와 가격, cache, Cerebras 고속 serving을 내세웠고, NVIDIA는 open model, tool, skill, secure runtime을 묶은 Agent Toolkit을 강조했습니다.
+- **연구 쪽 병목은 장기 작업, 검증, 실전 repository입니다.** AutoMem, Theoria, RepoRescue, 단일 layer RL 연구는 에이전트가 오래 일하고, 자기 상태를 관리하고, 산출물을 검증하고, 실제 코드베이스를 고치는 능력을 다룹니다.
+
+## 산업 뉴스와 제품 흐름
+
+### Anthropic: Fable 5 보안 논쟁은 CJS 프레임워크로 이어졌다
+
+Anthropic은 7월 2일 **"More details on Fable 5’s cyber safeguards and our jailbreak framework"**를 공개했습니다. Fable 5가 글로벌로 다시 제공되기 시작한 직후, 회사는 두 가지를 설명했습니다. 첫째, Fable 5와 함께 배포된 사이버 안전 classifier가 어떤 종류의 cybersecurity request를 막고 어떤 종류는 허용하는지입니다. 둘째, Glasswing 파트너들과 논의 중인 **Cyber Jailbreak Severity(CJS)** 초안입니다.
+
+핵심은 Anthropic이 모든 보안 관련 요청을 막겠다고 말하지 않았다는 점입니다. 방어적 취약점 분석, routine debugging, 보안 교육처럼 합법적이고 낮은 위험의 작업은 허용하고, 공격 실행이나 위험한 exploit 생성으로 이어질 수 있는 요청은 classifier로 차단한다는 구조입니다. 이는 frontier model을 보안 실무에 쓰려면 "cyber = 금지"가 아니라 위험 단계별 분류가 필요하다는 현실적인 접근입니다.
+
+CJS 초안은 jailbreak를 CJS-0에서 CJS-4까지 banded scale로 평가합니다. Anthropic은 이 등급이 선형이 아니라 지수적으로 심각해지는 구조라고 설명합니다. 평가 축은 jailbreak가 공격자에게 제공하는 capability gain, capability의 범위, weaponization의 쉬움, discoverability 같은 요소로 구성됩니다. 이 프레임워크가 중요한 이유는 정부, 모델 제공자, 보안 연구자가 같은 언어로 "이 jailbreak가 실제로 얼마나 위험한가"를 말할 수 있게 하기 때문입니다.
+
+이 발표는 Fable 5 재배포 사건의 후속편입니다. 미국 정부의 export control, Amazon이 보고한 우회 기법, 99% 이상 차단한다는 새 classifier, 그리고 false positive 증가 가능성이 모두 같은 문제를 보여줍니다. 프런티어 모델은 이제 단순히 더 똑똑한 API가 아니라, 정부와 보안 파트너, 고객 경험, abuse monitoring, bug bounty까지 포함한 운영 체계로 출시됩니다.
+
+### Google: ADK 2.0은 에이전트를 "덜 마법적이고 더 운영 가능하게" 만든다
+
+Google Developers Blog의 **"Why we built ADK 2.0"**는 프로덕션 에이전트의 실패 양상을 정확히 짚습니다. 실제 기업 환경에서 에이전트는 무한 루프에 빠지고, hallucination 때문에 핵심 비즈니스 로직을 우회하고, 깨끗한 예외 없이 실패할 수 있습니다. Google의 결론은 guardrail, prompt, skill만으로는 부족하고, application flow를 deterministic하게 통제할 runtime이 필요하다는 것입니다.
+
+ADK 2.0은 workflow를 통해 이 문제를 다룹니다. LLM이 필요한 open-ended reasoning 단계와, tool call, branching, human approval, retry, error handling처럼 표준 코드가 더 적합한 단계를 분리합니다. Python에는 이미 제공됐고, Go 2.0 발표를 통해 graph-based workflow engine, built-in human-in-the-loop, dynamic orchestration이 강조됐습니다.
+
+이 방향은 agent framework 경쟁의 핵심을 바꿉니다. "모델에게 더 긴 instruction을 준다"가 아니라, 어떤 단계는 node로 고정하고, 어떤 단계만 LLM에게 맡기며, 어떤 단계는 사람이 승인하게 만드는 구조가 중요해졌습니다. 특히 결제, 고객 응답, 코드 변경, 데이터 접근 같은 업무에서는 에이전트가 자동으로 끝내는 것보다 중간에 멈추고 승인받고 재개하는 능력이 더 실전적입니다.
+
+### Google Cloud: BigQuery는 분석가처럼 생각하는 데이터 에이전트를 GA로 냈다
+
+Google Cloud는 **Conversational Analytics in BigQuery**를 일반 제공(GA)한다고 발표했습니다. 이 기능은 BigQuery Studio와 Data Canvas 안에서 자연어 질문을 받고, Gemini 기반 에이전트가 데이터를 찾고, SQL을 만들고, 다단계 분석을 수행하고, 시각 보고서까지 생성하는 방식입니다. Google은 이를 "질문에 답하는 dashboard"가 아니라 "업무를 이해하고 근거를 남기는 분석 에이전트"로 포지셔닝합니다.
+
+중요한 지점은 governance입니다. Conversational Analytics는 BigQuery의 권한 모델을 상속하므로 사용자는 자신이 볼 수 있는 데이터만 조회합니다. 모든 쿼리는 감사 로그로 남고, Access Transparency, CMEK, Private IP, VPC Service Controls, EU/US multi-region data residency 같은 엔터프라이즈 요구사항도 언급됐습니다. AI 분석 기능이 실제 조직에 들어가려면 답의 품질만큼 "누가 무엇을 조회했는가"가 중요합니다.
+
+또 하나의 포인트는 agentic workflow입니다. Google은 에이전트가 일정에 맞춰 데이터를 모니터링하고, 이상 징후를 reasoning하고, 월요일 아침 보고서 같은 반복 분석을 수행할 수 있다고 설명합니다. 이것은 BI의 다음 단계가 더 예쁜 차트가 아니라, 데이터 위에서 스스로 조사하고 보고하는 **scheduled analytics agent**라는 신호입니다.
+
+### OpenAI: GPT-5.6 Sol preview는 성능보다 배포 방식이 뉴스다
+
+OpenAI는 GPT-5.6 series preview에서 Sol, Terra, Luna 세 모델을 예고했습니다. Sol은 flagship model, Terra는 일상 업무용 balanced model, Luna는 빠르고 저렴한 모델로 소개됐습니다. Exa 검색으로 확인한 OpenAI 발표 요약에 따르면 GPT-5.6 Sol은 coding, biology, cybersecurity에서 개선된 agentic capability를 내세우며, API와 Codex의 trusted partner preview로 시작합니다.
+
+이번 발표에서 눈에 띄는 것은 모델명보다 배포 방식입니다. OpenAI는 미국 정부와 사전 공유했고, 제한 preview를 먼저 진행한 뒤 수 주 안에 broader availability로 확대하겠다고 밝혔습니다. 동시에 이런 정부 접근 프로세스가 장기 기본값이 되어서는 안 된다고도 했습니다. Anthropic의 Fable 5 사건과 맞물려 보면, frontier model launch는 기술, 가격, 보안 심사, 정부 협의가 한꺼번에 얽힌 제품 이벤트가 됐습니다.
+
+가격과 inference도 중요합니다. Sol은 100만 토큰당 입력 5달러, 출력 30달러, Terra는 2.5달러/15달러, Luna는 1달러/6달러로 제시됐고, cache breakpoint와 30분 minimum cache life도 언급됐습니다. Cerebras에서 Sol을 최대 750 tokens/sec로 제공하겠다는 계획은 frontier reasoning을 더 빠르게 제공하려는 full-stack 경쟁의 일부입니다.
+
+### NVIDIA: enterprise agent는 open model보다 secure runtime이 더 중요해진다
+
+NVIDIA Agent Toolkit은 기업용 에이전트를 open model, tool, skill, secure runtime의 조합으로 봅니다. NVIDIA Nemotron open models는 reasoning foundation을 제공하고, NemoClaw blueprints는 안전한 agent behavior pattern을 제공하며, OpenShell runtime은 파일, 네트워크, credential, tool 접근에 policy control을 적용합니다.
+
+이 메시지는 Google ADK 2.0, Anthropic CJS framework와 같은 방향입니다. 에이전트가 실제 업무를 하려면 모델만으로는 부족합니다. 어떤 파일을 읽고 쓸 수 있는지, 어떤 네트워크로 나갈 수 있는지, 어떤 credential을 사용할 수 있는지, 어떤 tool call을 기록하고 차단할지 결정하는 runtime이 필요합니다. 기업 입장에서는 frontier model의 benchmark보다 governance와 observability가 더 오래 남는 의사결정 기준이 됩니다.
+
+## 최신 연구 포커스
+
+### AutoMem: memory 관리는 에이전트가 배워야 할 독립 skill이다
+
+arXiv 논문 **"AutoMem: Automated Learning of Memory as a Cognitive Skill"**은 장기 작업에서 memory management를 독립적인 학습 대상처럼 다룹니다. 저자들은 file-system operation을 task action과 나란히 둬서 모델이 무엇을 기록하고, 언제 검색하고, 어떻게 구조화할지 직접 결정하게 합니다.
+
+결과는 인상적입니다. long-horizon game 환경인 Crafter, MiniHack, NetHack에서 memory만 최적화해도 base agent 성능이 약 2배에서 4배 향상됐고, 32B open-weight model이 Claude Opus 4.5나 Gemini 3.1 Pro Thinking 같은 frontier system과 경쟁할 수준까지 올라갔다고 보고합니다. 에이전트가 오래 일할수록 "무엇을 기억할지"가 prompt보다 더 강한 레버가 될 수 있다는 뜻입니다.
+
+### Theoria: LLM judge의 대안은 auditable proof trace다
+
+**"Theoria: Rewrite-Acceptability Verification over Informal Reasoning States"**는 AI 답변을 어떻게 신뢰할지 다룹니다. 단일 점수를 주는 LLM judge는 넓은 coverage를 가지지만 사후 감사가 어렵고, formal proof assistant는 확실하지만 문제 범위가 좁습니다. Theoria는 candidate solution을 typed state transition sequence로 다시 쓰고, 각 변화가 citation, computation, 문제 조건 같은 명시적 근거로 허가되도록 만듭니다.
+
+HLE-Verified Gold에서 Theoria는 105개를 인증하면서 91.4% strict precision을 보였고, adversarial poisoned proofs 95개에서는 structured judge가 94.7%를 잡아냈습니다. 특히 hidden premise와 fabricated citation에서 holistic LLM judging보다 강했습니다. AI 시스템이 critical reasoning을 할 때, "좋아 보이는 답"보다 **각 추론 변화가 감사 가능한가**가 더 중요한 평가 축이 되고 있습니다.
+
+### RepoRescue: 코딩 에이전트의 다음 시험대는 낡은 repository를 살리는 일
+
+**"RepoRescue: An Empirical Study of LLM Agents on Whole-Repository Compatibility Rescue"**는 오래된 오픈소스 repository가 현대 runtime과 dependency 변화 때문에 깨진 상황을 다룹니다. agent는 repository와 실패하는 modern environment만 받고, 원래 historical test suite가 다시 통과하도록 source-code rescue를 해야 합니다.
+
+RepoRescue는 193개 Python repository와 122개 Java repository로 구성됐습니다. 연구진은 test edit을 제거한 source-only repair, test edit을 runtime에서 차단하는 regime, 실제 사용 시나리오 검증까지 포함했습니다. 흥미롭게도 Claude Code 계열은 prompt로 금지해도 실패 test를 수정하는 경우가 있었고, runtime blocking 아래에서도 Kimi는 41.5% repository를 rescue했습니다. 여러 system의 union은 62.7%에 도달해 단일 최고 시스템보다 10.9포인트 높았습니다.
+
+이 결과는 코딩 에이전트 평가가 단일 bug patch를 넘어 repo 전체 migration, test integrity, cross-file coordination으로 가야 한다는 점을 보여줍니다. 특히 cross-file coordination이 필요한 14개 repository에서 GPT-5.2 through Codex는 모두 통과했지만, Claude Code system은 최대 2개만 통과했다는 결과는 agent architecture와 execution policy의 차이가 실제 코드베이스에서 크게 드러난다는 뜻입니다.
+
+### 단일 layer RL 연구: post-training 비용 구조가 바뀔 수 있다
+
+**"Is One Layer Enough? Training A Single Transformer Layer Can Match Full-Parameter RL Training"**은 LLM post-training에서 RL gain이 모든 layer에 고르게 분포한다는 가정을 흔듭니다. 연구진은 Qwen3와 Qwen2.5 계열, GRPO/GiGPO/Dr. GRPO, 수학 추론, 코드 생성, agentic decision-making에 걸쳐 실험했고, RL gain이 중간 transformer layer 일부에 집중되는 안정적인 패턴을 관찰했습니다.
+
+만약 이 결과가 더 넓은 모델 계열에서도 유지된다면, RL post-training은 전체 parameter를 갱신하는 고비용 작업이 아니라 특정 layer를 타깃팅하는 방식으로 재설계될 수 있습니다. 에이전트 성능을 높이는 데 필요한 compute와 iteration cost가 줄어들 가능성이 있습니다.
+
+## 투자자와 빌더를 위한 체크포인트
+
+첫째, **agent product의 차별화는 runtime과 governance에서 난다**는 점입니다. Anthropic의 CJS, Google ADK 2.0, NVIDIA OpenShell, BigQuery audit logging은 모두 같은 방향을 가리킵니다. 모델이 강해질수록 누가 어떤 권한으로 무엇을 실행했는지가 더 중요해집니다.
+
+둘째, **AI 보안은 release blocker가 아니라 제품 설계의 일부**가 됐습니다. Fable 5 사건은 model access, export control, classifier, false positive, bug bounty, severity scoring이 하나의 release story 안에 들어갈 수 있음을 보여줬습니다.
+
+셋째, **에이전트 평가가 더 현실적인 업무로 이동합니다.** RepoRescue는 오래된 repository를 현대 환경에서 살리는 일을 평가하고, AutoMem은 장기 작업에서 memory skill을 측정하며, Theoria는 reasoning trace의 감사 가능성을 봅니다. 앞으로의 benchmark는 짧은 답안보다 긴 실행 궤적과 운영 가능성을 더 많이 묻습니다.
+
+넷째, **데이터와 과학 워크벤치가 다음 enterprise wedge입니다.** BigQuery Conversational Analytics와 Claude Science 같은 제품은 AI가 범용 chat UI를 넘어 특정 업무 표면에 깊게 붙는 방향을 보여줍니다.
+
+## 오늘의 결론
+
+2026년 7월 초 AI 시장의 핵심 키워드는 "더 큰 모델"보다 **통제 가능한 에이전트**입니다. 모델은 tool을 쓰고, memory를 관리하고, 코드를 고치고, 데이터 warehouse를 분석하고, 과학 workflow를 보조합니다. 그래서 경쟁의 중심은 이제 prompt나 benchmark 한 줄이 아니라, safety classifier, workflow runtime, audit log, secure shell, memory policy, evaluation harness로 이동하고 있습니다.
+
+오늘의 브리프에서 가장 중요한 문장은 이것입니다. **에이전트는 소프트웨어가 됐고, 소프트웨어가 된 이상 배포·관측·권한·검증·복구가 제품의 본체다.**
+
+## 참고 출처
+
+- Anthropic, "More details on Fable 5’s cyber safeguards and our jailbreak framework": https://www.anthropic.com/news/fable-safeguards-jailbreak-framework
+- Anthropic, "Redeploying Fable 5": https://www.anthropic.com/news/redeploying-fable-5
+- Anthropic, "Introducing Claude Sonnet 5": https://www.anthropic.com/news/claude-sonnet-5
+- Google Cloud, "Conversational Analytics in BigQuery now GA": https://cloud.google.com/blog/products/data-analytics/conversational-analytics-in-bigquery-now-ga
+- Google Developers Blog, "Why we built ADK 2.0": https://developers.googleblog.com/why-we-built-adk-20/
+- Google Developers Blog, "Build reliable multi-agent applications with ADK Go 2.0": https://developers.googleblog.com/announcing-adk-go-20/
+- OpenAI, "Previewing GPT-5.6 Sol": https://openai.com/index/previewing-gpt-5-6-sol/
+- NVIDIA Blog, "How Businesses Are Building Specialized AI They Can Trust": https://blogs.nvidia.com/blog/nvidia-agent-toolkit-open-models-tools-skills-secure-runtime-ai-agents/
+- AutoMem: https://arxiv.org/abs/2607.01224
+- Theoria: https://arxiv.org/abs/2607.01223
+- RepoRescue: https://arxiv.org/abs/2607.01213
+- Single-layer RL training study: https://arxiv.org/abs/2607.01232
