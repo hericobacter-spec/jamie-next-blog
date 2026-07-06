@@ -195,7 +195,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   const all = getAllPosts()
-  const posts = all.slice(0, 6)
+  const posts = all.filter((p: any) => p.category !== 'News').slice(0, 6)
 
   return (
     <div>
