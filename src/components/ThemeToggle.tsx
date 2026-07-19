@@ -23,19 +23,19 @@ export default function ThemeToggle() {
   return (
     <button
       id="theme-toggle"
-      aria-label="Toggle theme"
+      aria-label={mode === 'dark' ? '밝은 화면으로 전환' : '어두운 화면으로 전환'}
       onClick={toggle}
       style={{
         marginLeft: 4,
         padding: "6px 10px",
         borderRadius: "var(--radius-button, 999px)",
-        border: "none",
-        background: "transparent",
+        border: "1px solid var(--border)",
+        background: "var(--card-bg)",
         cursor: "pointer",
         fontSize: 14,
         lineHeight: 1,
         opacity: 0.7,
-        color: "var(--color-ink, #1d1d1f)",
+        color: "var(--color-ink)",
         transition: "opacity 0.15s ease",
       }}
     >

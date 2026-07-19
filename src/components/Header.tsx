@@ -6,50 +6,63 @@ const Wrap = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(245, 245, 247, 0.72);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background: color-mix(in srgb, var(--background) 86%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border);
 `
 
 const Inner = styled.div`
-  max-width: 1200px;
+  width: min(100% - 40px, 1280px);
+  min-height: 64px;
   margin: 0 auto;
-  padding: 0 24px;
-  height: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
+  gap: 24px;
 
-const Nav = styled.nav`
-  display: flex;
-  gap: 4px;
-  align-items: center;
-`
-
-const NavLink = styled(Link)`
-  padding: 8px 12px;
-  border-radius: var(--radius-button, 999px);
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--color-ink, #1d1d1f);
-  transition: opacity 0.15s ease;
-
-  &:hover {
-    opacity: 0.65;
-    color: var(--color-ink, #1d1d1f);
+  @media (max-width: 640px) {
+    width: min(100% - 28px, 1280px);
+    min-height: 58px;
   }
 `
 
 const Logo = styled(Link)`
-  font-weight: 600;
-  font-size: 18px;
-  letter-spacing: -0.015em;
-  color: var(--color-ink, #1d1d1f);
+  color: var(--color-ink);
+  font-family: var(--font-serif), serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
 
   &:hover {
-    color: var(--color-ink, #1d1d1f);
+    color: var(--forest);
+  }
+`
+
+const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`
+
+const NavLink = styled(Link)<{ $secondary?: boolean }>`
+  padding: 8px 11px;
+  border-radius: var(--radius-button);
+  color: var(--color-ink);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+
+  &:hover {
+    color: var(--forest);
+    background: var(--card-muted);
+  }
+
+  @media (max-width: 680px) {
+    display: ${(props) => (props.$secondary ? 'none' : 'inline-flex')};
+    padding-inline: 9px;
+    font-size: 13px;
   }
 `
 
@@ -58,14 +71,11 @@ export default function Header() {
     <Wrap>
       <Inner>
         <Logo href="/">Jamie Next</Logo>
-        <Nav>
-          <NavLink href="/posts">Posts</NavLink>
-          <NavLink href="/about">About</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
-          <NavLink href="/privacy-policy">Privacy</NavLink>
-          <NavLink href="/rss.xml" target="_blank" rel="noopener noreferrer" aria-label="RSS Feed">
-            RSS
-          </NavLink>
+        <Nav aria-label="주요 메뉴">
+          <NavLink href="/posts">글</NavLink>
+          <NavLink href="/about">소개</NavLink>
+          <NavLink href="/contact" $secondary>연락</NavLink>
+          <NavLink href="/privacy-policy" $secondary>개인정보</NavLink>
           <ThemeToggle />
         </Nav>
       </Inner>

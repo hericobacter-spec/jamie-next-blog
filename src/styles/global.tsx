@@ -16,10 +16,10 @@ const GlobalStyle = createGlobalStyle`
   body {
     background: var(--background);
     color: var(--foreground);
-    font-family: var(--font-cosmica, 'Plus Jakarta Sans', system-ui, sans-serif);
+    font-family: var(--font-sans, system-ui, sans-serif);
     font-size: 17px;
-    line-height: 1.47;
-    letter-spacing: -0.006em;
+    line-height: 1.7;
+    letter-spacing: -0.018em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -35,7 +35,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .container {
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 0 24px;
   }

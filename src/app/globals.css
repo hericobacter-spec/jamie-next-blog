@@ -1,63 +1,45 @@
 @import "tailwindcss";
 
-/* ────────────────────────────────────────────
-   Apple Design System (from design2.md)
-   Gallery wall at natural light — flat, luminous
-   ──────────────────────────────────────────── */
-
 :root {
-  /* Colors */
-  --color-ink: #1d1d1f;
-  --color-graphite: #707070;
-  --color-slate: #474747;
-  --color-ash: #333333;
-  --color-fog: #f5f5f7;
-  --color-snow: #ffffff;
-  --color-obsidian: #000000;
-  --color-silver-mist: #e8e8ed;
-  --color-azure: #0071e3;
-  --color-cobalt-link: #0066cc;
-  --color-caution: #b64400;
+  --font-sans: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-serif: "Iowan Old Style", "Noto Serif KR", "Noto Serif CJK KR", AppleMyungjo, Batang, serif;
+  --paper: #f7f4ec;
+  --paper-deep: #eee8da;
+  --ink: #1d2922;
+  --ink-soft: #536159;
+  --forest: #1f5a43;
+  --forest-bright: #2f7658;
+  --sage: #a8b9a3;
+  --sand: #d8c9a5;
+  --white: #fffdf8;
+  --line: rgba(29, 41, 34, 0.15);
+  --line-strong: rgba(29, 41, 34, 0.28);
 
-  /* Typography */
-  --font-sf-pro-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-sf-pro-text: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-cosmica: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card-bg: var(--white);
+  --card-muted: var(--paper-deep);
+  --muted: var(--ink-soft);
+  --border: var(--line);
+  --border-strong: var(--line-strong);
+  --primary: var(--forest);
+  --primary-foreground: var(--white);
+  --code-bg: #ebe7dc;
 
-  /* Type Scale */
-  --text-caption: 12px;
-  --text-body-sm: 14px;
-  --text-body: 17px;
-  --text-subheading: 20px;
-  --text-heading-sm: 24px;
-  --text-heading: 40px;
-  --text-heading-lg: 56px;
-  --text-display: 96px;
+  --color-ink: var(--ink);
+  --color-graphite: var(--ink-soft);
+  --color-slate: #445249;
+  --color-ash: #344139;
+  --color-fog: var(--paper);
+  --color-snow: var(--white);
+  --color-silver-mist: var(--line);
+  --color-azure: var(--forest);
+  --color-cobalt-link: var(--forest);
 
-  /* Semantic mapping */
-  --background: var(--color-fog);
-  --foreground: var(--color-ink);
-  --card-bg: var(--color-snow);
-  --card-muted: var(--color-fog);
-  --muted: var(--color-graphite);
-  --code-bg: var(--color-silver-mist);
-  --border: var(--color-silver-mist);
-  --border-strong: #d2d2d7;
-  --primary: var(--color-azure);
-  --primary-foreground: var(--color-snow);
-
-  /* Radii */
-  --radius-card: 28px;
-  --radius-card-compact: 20px;
-  --radius-badge: 10px;
-  --radius-input: 10px;
+  --radius-card: 24px;
+  --radius-card-compact: 18px;
   --radius-button: 999px;
-  --radius-pill: 999px;
-
-  /* Shadows — none for cards (Apple principle) */
-  --shadow-subtle: none;
-  --shadow-md: none;
-  --shadow-primary-button: none;
+  --shadow-card: 0 18px 48px rgba(37, 48, 40, 0.08);
 }
 
 @theme inline {
@@ -67,63 +49,90 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --font-sans: var(--font-cosmica);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
+  background-image: radial-gradient(rgba(31, 90, 67, 0.09) 0.7px, transparent 0.7px);
+  background-size: 18px 18px;
   color: var(--foreground);
-  font-family: var(--font-cosmica);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   font-size: 17px;
-  line-height: 1.47;
-  letter-spacing: -0.006em;
+  line-height: 1.7;
+  letter-spacing: -0.018em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  color: var(--white);
+  background: var(--forest);
+}
+
 a {
-  color: var(--color-cobalt-link);
+  color: var(--forest);
   text-decoration: none;
-  transition: color 0.15s ease;
+  text-underline-offset: 0.2em;
 }
 
 a:hover {
-  color: var(--color-azure);
+  color: var(--forest-bright);
 }
 
-* {
-  box-sizing: border-box;
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Dark theme — high-contrast for readability ── */
+img {
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(47, 118, 88, 0.42);
+  outline-offset: 3px;
+}
+
 :root[data-theme="dark"],
 html[data-theme="dark"] {
-  --color-ink: #f5f5f7;
-  --color-graphite: #a1a1a6;
-  --color-slate: #c7c7cc;
-  --color-ash: #e5e5ea;
-  --color-fog: #1d1d1f;
-  --color-snow: #2c2c2e;
-  --color-obsidian: #000000;
-  --color-silver-mist: #3a3a3c;
-  --color-azure: #2997ff;
-  --color-cobalt-link: #64b5f6;
-  --color-caution: #ff9800;
-
-  --background: #000000;
-  --foreground: #f5f5f7;
-  --card-bg: #1d1d1f;
-  --card-muted: #2c2c2e;
-  --muted: #a1a1a6;
-  --code-bg: #2c2c2e;
-  --border: #3a3a3c;
-  --border-strong: #48484a;
-  --primary: #2997ff;
-  --primary-foreground: #ffffff;
+  --paper: #131915;
+  --paper-deep: #1b241e;
+  --ink: #f0eee7;
+  --ink-soft: #aeb8b1;
+  --forest: #8bc6a2;
+  --forest-bright: #a8d8b8;
+  --sage: #50685a;
+  --sand: #6b624d;
+  --white: #1c241f;
+  --line: rgba(240, 238, 231, 0.14);
+  --line-strong: rgba(240, 238, 231, 0.28);
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card-bg: var(--white);
+  --card-muted: var(--paper-deep);
+  --muted: var(--ink-soft);
+  --border: var(--line);
+  --border-strong: var(--line-strong);
+  --primary: var(--forest);
+  --primary-foreground: #112016;
+  --code-bg: #232d26;
+  --shadow-card: 0 20px 55px rgba(0, 0, 0, 0.24);
 }
 
-:root[data-theme="dark"] body {
-  background: #000000;
-  color: #f5f5f7;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

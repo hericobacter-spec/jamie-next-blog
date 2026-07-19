@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'Jamie Next Blog 개인정보처리방침. 방문자 정보, 쿠키, 분석 도구, 광고 서비스 사용 가능성에 대한 안내입니다.',
+  description: 'Jamie Next Blog 개인정보처리방침. 방문 기록, 쿠키, Google AdSense와 외부 서비스의 데이터 처리에 대해 안내합니다.',
   alternates: {
     canonical: '/privacy-policy',
   },
@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage() {
 
       <p>
         Jamie Next Blog는 AI, 기술, 맛집, 여행 등 다양한 주제의 콘텐츠를 제공하는 개인 블로그입니다.
-        본 페이지는 방문자 정보 처리와 쿠키 사용, 향후 광고 서비스 연동 가능성에 대해 안내하기 위해 작성되었습니다.
+        본 페이지는 방문자 정보 처리, 쿠키 사용, 광고 및 외부 서비스 연동에 대해 안내하기 위해 작성되었습니다.
       </p>
 
       <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>1. 수집할 수 있는 정보</h2>
@@ -45,7 +45,7 @@ export default function PrivacyPolicyPage() {
       <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>3. 쿠키(Cookies) 사용</h2>
       <p>
         이 블로그는 서비스 품질 향상 및 방문 통계 확인을 위해 쿠키를 사용할 수 있습니다.
-        또한 향후 Google AdSense 등 제3자 광고 서비스를 사용할 경우, 해당 서비스가 맞춤형 광고 제공 및 성과 측정을 위해 쿠키를 사용할 수 있습니다.
+        Google AdSense 등 제3자 광고 서비스는 광고 제공, 빈도 제한, 성과 측정 및 관련성 향상을 위해 쿠키 또는 유사 기술을 사용할 수 있습니다.
       </p>
       <p>
         방문자는 브라우저 설정을 통해 쿠키 저장을 거부하거나 삭제할 수 있습니다.
@@ -57,7 +57,7 @@ export default function PrivacyPolicyPage() {
       <ul>
         <li>Vercel (호스팅 및 배포)</li>
         <li>Google Search Console (검색 성능 확인)</li>
-        <li>Google AdSense (광고 서비스, 향후 적용 가능)</li>
+        <li>Google AdSense (광고 제공 및 성과 측정)</li>
         <li>기타 웹 분석 또는 검색 최적화 도구</li>
       </ul>
       <p>
@@ -78,11 +78,10 @@ export default function PrivacyPolicyPage() {
 
       <h2 style={{ marginTop: 48, fontSize: 28, fontWeight: 600, letterSpacing: '-0.01em' }}>7. 문의</h2>
       <p>
-        블로그 운영 또는 본 정책 관련 문의는 현재 블로그 소개 페이지를 통해 확인할 수 있으며,
-        별도의 연락 수단이 추가될 경우 본 페이지에도 반영될 예정입니다.
+        블로그 운영 또는 본 정책 관련 문의는 hericobacter1@gmail.com으로 연락할 수 있습니다.
       </p>
 
-      <p style={{ marginTop: 48, color: 'var(--muted, #707070)', fontSize: 14 }}>최종 업데이트: 2026-03-21</p>
+      <p style={{ marginTop: 48, color: 'var(--muted, #707070)', fontSize: 14 }}>최종 업데이트: 2026-07-19</p>
     </main>
   )
 }

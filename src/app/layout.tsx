@@ -4,15 +4,13 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import GlobalStyle from '@/styles/global'
 import React from 'react'
-import { Plus_Jakarta_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
-import Script from 'next/script'
-
-const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-cosmica', weight: ['300','400','500','600','700','800'] })
+import AdSenseScript from '@/components/AdSenseScript'
+import { getAllPosts, isIndexablePost } from '@/lib/posts'
 
 const siteUrl = 'https://jamie-next-blog.vercel.app'
 const siteName = 'Jamie Next Blog'
-const siteDescription = 'OpenClaw와 Next.js로 운영하는 개인 블로그. AI, 맛집, 여행, 블로그 제작 기록을 다룹니다.'
+const siteDescription = 'AI를 직접 써보고, 가족과 여행하고, 동네의 맛을 기록하는 Jamie의 개인 저널입니다.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -63,10 +61,10 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: '/images/hero-main.jpg',
+        url: '/og-journal.png',
         width: 1200,
         height: 630,
-        alt: 'Jamie Next Blog',
+        alt: 'Jamie Next — 직접 경험한 AI, 여행, 맛의 기록',
       },
     ],
   },
@@ -74,29 +72,28 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteName,
     description: siteDescription,
-    images: ['/images/hero-main.jpg'],
+    images: ['/og-journal.png'],
   },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }){
+  const excludedAdSlugs = getAllPosts({ includeUnpublished: true })
+    .filter((post) => post.published === false || !isIndexablePost(post))
+    .map((post) => post.slug)
+
   return (
-    <html lang="ko" className={`${jakarta.variable}`} suppressHydrationWarning>
+    <html lang="ko" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`,
           }}
         />
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4030752098152003"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
       </head>
       <body>
         <Providers>
           <GlobalStyle />
+          <AdSenseScript excludedSlugs={excludedAdSlugs} />
           <Header />
           <main>{children}</main>
           <Footer />

@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/posts'
+import { getPublicPosts } from '@/lib/posts'
 
 const siteUrl = 'https://jamie-next-blog.vercel.app'
 const siteTitle = 'Jamie Next Blog'
@@ -14,7 +14,7 @@ function escapeXml(str: string) {
 }
 
 export async function GET() {
-  const posts = getAllPosts()
+  const posts = getPublicPosts()
 
   const items = posts
     .map((post: any) => {

@@ -1,247 +1,316 @@
-import React from 'react'
-import type { Metadata } from 'next'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
 import styled from 'styled-components'
-import { getAllPosts } from '@/lib/posts'
+import type { Metadata } from 'next'
 import PostCard from '@/components/PostCard'
-import CategoriesClient from '@/components/CategoriesClient'
+import { getPostImage, getPublicPosts } from '@/lib/posts'
 
-const Hero = styled.section`
-  padding: 80px 24px 60px;
-  text-align: center;
+const Shell = styled.div`
+  width: min(100% - 40px, 1280px);
+  margin: 0 auto;
+
+  @media (max-width: 640px) {
+    width: min(100% - 28px, 1280px);
+  }
 `
 
-const HeroEyebrow = styled.p`
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--color-azure, #0071e3);
-  letter-spacing: -0.01em;
-  margin: 0 0 8px;
+const Hero = styled.section`
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.55fr);
+  gap: 72px;
+  align-items: end;
+  padding: clamp(76px, 10vw, 148px) 0 68px;
+  border-bottom: 1px solid var(--border);
+
+  @media (max-width: 820px) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 70px 0 48px;
+  }
 `
 
 const HeroTitle = styled.h1`
-  font-size: clamp(2.5rem, 8vw, 4rem);
-  font-weight: 700;
-  line-height: 1.04;
-  letter-spacing: -0.022em;
+  max-width: 850px;
   margin: 0;
-  color: var(--color-ink, #1d1d1f);
+  color: var(--color-ink);
+  font-family: var(--font-serif), serif;
+  font-size: clamp(3rem, 7.2vw, 6.8rem);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.07em;
+  text-wrap: balance;
 `
 
-const HeroSubtitle = styled.p`
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 1.4;
-  color: var(--color-graphite, #707070);
-  max-width: 600px;
-  margin: 16px auto 0;
-  letter-spacing: -0.01em;
+const HeroNote = styled.div`
+  padding-bottom: 10px;
 `
 
-const CTAs = styled.div`
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  margin-top: 28px;
+const Eyebrow = styled.p`
+  margin: 0 0 12px;
+  color: var(--forest);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 `
 
-const PrimaryButton = styled(Link)`
-  padding: 8px 20px;
-  border-radius: var(--radius-button, 999px);
-  font-size: 17px;
-  font-weight: 400;
-  background: var(--color-azure, #0071e3);
-  color: #ffffff;
-  text-decoration: none;
-  transition: opacity 0.15s ease;
-
-  &:hover {
-    opacity: 0.88;
-    color: #ffffff;
-  }
+const Intro = styled.p`
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.7vw, 1.18rem);
+  line-height: 1.8;
 `
 
-const GhostButton = styled(Link)`
-  padding: 8px 20px;
-  font-size: 17px;
-  font-weight: 400;
-  color: var(--color-cobalt-link, #0066cc);
-  text-decoration: none;
-
-  &:hover {
-    color: var(--color-azure, #0071e3);
-  }
-`
-
-const Section = styled.section`
-  padding: 0 24px 80px;
-`
-
-const SectionInner = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-`
-
-const SectionHeader = styled.div`
+const AuthorLine = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 28px;
-`
-
-const SectionTitle = styled.h2`
-  font-size: 40px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin: 0;
-  color: var(--color-ink, #1d1d1f);
-`
-
-const PostCount = styled.span`
-  color: var(--muted, #707070);
+  gap: 28px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
   font-size: 14px;
+
+  strong {
+    color: var(--color-ink);
+  }
+
+  a {
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
 `
 
-const PostGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 0;
-  background: var(--border);
-  gap: 1px;
-  border-radius: var(--radius-card, 28px);
-  overflow: hidden;
+const Categories = styled.nav`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 34px 0;
+`
 
-  @media (max-width: 768px) {
+const Category = styled(Link)`
+  padding: 9px 17px;
+  color: var(--color-ink);
+  background: color-mix(in srgb, var(--card-bg) 70%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+
+  &:first-child,
+  &:hover {
+    color: var(--primary-foreground);
+    background: var(--forest);
+    border-color: var(--forest);
+  }
+`
+
+const SectionHeading = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 34px 0 24px;
+
+  h2 {
+    margin: 0;
+    font-family: var(--font-serif), serif;
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: -0.055em;
+  }
+
+  span {
+    color: var(--muted);
+    font-size: 13px;
+  }
+`
+
+const Featured = styled.article`
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+`
+
+const FeaturedVisual = styled(Link)`
+  position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  background: linear-gradient(140deg, var(--sand), var(--sage));
+
+  img {
+    object-fit: cover;
+    transition: transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  &:hover img {
+    transform: scale(1.025);
+  }
+
+  @media (max-width: 860px) {
+    min-height: auto;
+    aspect-ratio: 4 / 3;
+  }
+`
+
+const FeaturedBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(34px, 5vw, 72px);
+`
+
+const FeatureMeta = styled.p`
+  margin: 0 0 18px;
+  color: var(--forest);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+`
+
+const FeatureTitle = styled(Link)`
+  color: var(--color-ink);
+  font-family: var(--font-serif), serif;
+  font-size: clamp(2rem, 4.6vw, 3.65rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.06em;
+
+  &:hover {
+    color: var(--forest);
+  }
+`
+
+const FeatureDescription = styled.p`
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+`
+
+const FeatureRead = styled(Link)`
+  align-self: flex-start;
+  margin-top: 42px;
+  padding-bottom: 4px;
+  color: var(--forest);
+  border-bottom: 1px solid currentColor;
+  font-weight: 700;
+`
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+
+  @media (max-width: 920px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 640px) {
     grid-template-columns: 1fr;
   }
 `
 
-const PostGridItem = styled.div`
-  background: var(--card-bg);
+const Latest = styled.section`
+  padding: 86px 0 24px;
 `
 
-const ContactSection = styled.section`
-  padding: 0 24px 120px;
-`
-
-const ContactPanel = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 48px;
-  background: var(--card-bg);
-  border-radius: var(--radius-card, 28px);
-  text-align: center;
-
-  @media (max-width: 768px) {
-    padding: 40px 28px;
-  }
-`
-
-const ContactTitle = styled.h3`
-  font-size: 40px;
-  font-weight: 600;
-  margin: 0 0 12px;
-  letter-spacing: -0.01em;
-  color: var(--color-ink, #1d1d1f);
-`
-
-const ContactText = styled.p`
-  color: var(--muted, #707070);
-  font-size: 20px;
-  font-weight: 300;
-  margin: 0;
-`
-
-const ContactLinks = styled.div`
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 28px;
-`
-
-const ContactButton = styled.a`
+const AllPosts = styled(Link)`
   display: inline-flex;
-  align-items: center;
-  padding: 8px 20px;
-  border-radius: var(--radius-button, 999px);
-  border: 1px solid var(--border-strong, #d2d2d7);
-  color: var(--color-ink, #1d1d1f);
-  text-decoration: none;
-  font-size: 17px;
-  font-weight: 400;
-  transition: opacity 0.15s ease;
+  margin-top: 34px;
+  padding: 12px 20px;
+  color: var(--primary-foreground);
+  background: var(--forest);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
 
   &:hover {
-    opacity: 0.65;
-    color: var(--color-ink, #1d1d1f);
+    color: var(--primary-foreground);
+    background: var(--forest-bright);
   }
 `
 
 export const metadata: Metadata = {
-  title: 'Jamie Next Blog',
-  description:
-    'OpenClaw와 Next.js로 운영하는 개인 블로그. AI 실험, 맛집 후기, 여행 기록, 블로그 제작 과정을 담습니다.',
+  title: 'Jamie Next — 직접 경험한 AI, 여행, 맛의 기록',
+  description: 'AI를 직접 써보고, 가족과 여행하고, 동네의 맛을 기록하는 Jamie의 개인 저널입니다.',
   alternates: { canonical: '/' },
-  openGraph: {
-    title: 'Jamie Next Blog',
-    description:
-      'OpenClaw와 Next.js로 운영하는 개인 블로그. AI 실험, 맛집 후기, 여행 기록, 블로그 제작 과정을 담습니다.',
-    url: 'https://jamie-next-blog.vercel.app',
-    type: 'website',
-  },
 }
 
 export default function Home() {
-  const all = getAllPosts()
-  const posts = all.filter((p: any) => p.category !== 'News').slice(0, 6)
+  const posts = getPublicPosts()
+  const featured = posts.find((post) => getPostImage(post)) ?? posts[0]
+  const latest = posts.filter((post) => post.slug !== featured?.slug).slice(0, 6)
+  const featuredImage = featured ? getPostImage(featured) : null
 
   return (
-    <div>
+    <Shell>
       <Hero>
-        <HeroEyebrow>Personal Blog</HeroEyebrow>
-        <HeroTitle>Jamie Next</HeroTitle>
-        <HeroSubtitle>
-          MDX-driven, fast, and minimal. AI experiments, food, travel, and engineering notes.
-        </HeroSubtitle>
-        <CTAs>
-          <PrimaryButton href="/posts">Browse Posts</PrimaryButton>
-          <GhostButton href="/about">Learn more ›</GhostButton>
-        </CTAs>
+        <HeroTitle>일상을 직접 지나며 다음의 감각을 기록합니다.</HeroTitle>
+        <HeroNote>
+          <Eyebrow>Jamie&apos;s field journal</Eyebrow>
+          <Intro>AI를 직접 써보고, 가족과 여행하고, 동네의 맛을 기록합니다. 검색을 위한 요약보다 경험에서 나온 구체적인 이야기를 남깁니다.</Intro>
+        </HeroNote>
       </Hero>
 
-      <Section>
-        <SectionInner>
-          <SectionHeader>
-            <SectionTitle>Recent Posts</SectionTitle>
-            <PostCount>{all.length} total</PostCount>
-          </SectionHeader>
-          <PostGrid>
-            {posts.map((p: any) => (
-              <PostGridItem key={p.slug}>
-                <PostCard post={p} />
-              </PostGridItem>
-            ))}
-          </PostGrid>
-        </SectionInner>
-      </Section>
+      <AuthorLine>
+        <span><strong>Jamie</strong> · 직접 경험하고 확인한 기록</span>
+        <Link href="/about">이 블로그의 작성 원칙 보기 ↗</Link>
+      </AuthorLine>
 
-      <ContactSection>
-        <ContactPanel>
-          <ContactTitle>Connect</ContactTitle>
-          <ContactText>Always happy to talk.</ContactText>
-          <ContactLinks>
-            <ContactButton href="https://github.com/hericobacter-spec" target="_blank" rel="noopener noreferrer">
-              GitHub
-            </ContactButton>
-            <ContactButton href="mailto:hericobacter1@gmail.com">Email</ContactButton>
-            <ContactButton href="https://www.instagram.com/jamiesuyong/" target="_blank" rel="noopener noreferrer">
-              Instagram
-            </ContactButton>
-          </ContactLinks>
-        </ContactPanel>
-      </ContactSection>
-    </div>
+      <Categories aria-label="글 카테고리">
+        <Category href="/posts">전체</Category>
+        <Category href="/posts?category=A.I">AI &amp; Tech</Category>
+        <Category href="/posts?category=Life">일상 &amp; 여행</Category>
+        <Category href="/posts?category=Foodie">맛집</Category>
+        <Category href="/posts?category=Blog">블로그 제작</Category>
+      </Categories>
+
+      {featured ? (
+        <section>
+          <SectionHeading>
+            <h2>이번 주의 기록</h2>
+            <span>Featured story</span>
+          </SectionHeading>
+          <Featured>
+            <FeaturedVisual href={`/posts/${featured.slug}`}>
+              {featuredImage ? <Image src={featuredImage} alt="" fill priority sizes="(max-width: 860px) 100vw, 55vw" /> : null}
+            </FeaturedVisual>
+            <FeaturedBody>
+              <FeatureMeta>{featured.category} · {featured.date}</FeatureMeta>
+              <FeatureTitle href={`/posts/${featured.slug}`}>{featured.title}</FeatureTitle>
+              {featured.description ? <FeatureDescription>{featured.description}</FeatureDescription> : null}
+              <FeatureRead href={`/posts/${featured.slug}`}>이야기 읽기 ↗</FeatureRead>
+            </FeaturedBody>
+          </Featured>
+        </section>
+      ) : null}
+
+      <Latest>
+        <SectionHeading>
+          <h2>최근 기록</h2>
+          <span>{posts.length}개의 공개 글</span>
+        </SectionHeading>
+        <Grid>
+          {latest.map((post, index) => <PostCard key={post.slug} post={post} priority={index < 2} />)}
+        </Grid>
+        <AllPosts href="/posts">모든 기록 보기 ↗</AllPosts>
+      </Latest>
+    </Shell>
   )
 }

@@ -1,85 +1,108 @@
-export const dynamic = 'force-dynamic'
-
 import React from 'react'
+import styled from 'styled-components'
 import type { Metadata } from 'next'
-import { getAllPosts } from '@/lib/posts'
+import { getPublicPosts } from '@/lib/posts'
 import PostCard from '@/components/PostCard'
 import CategoriesClient from '@/components/CategoriesClient'
 
 export const metadata: Metadata = {
-  title: 'Posts',
-  description:
-    'Jamie Next Blog의 전체 포스트 목록. AI, 맛집, 여행, 블로그 제작 기록을 카테고리별로 볼 수 있습니다.',
+  title: '모든 기록',
+  description: 'Jamie가 직접 경험하고 확인한 AI 실험, 블로그 제작, 가족 여행, 맛집 기록을 카테고리별로 살펴보세요.',
   alternates: { canonical: '/posts' },
-  openGraph: {
-    title: 'Posts | Jamie Next Blog',
-    description:
-      'AI, 맛집, 여행, 블로그 제작 기록을 카테고리별로 볼 수 있습니다.',
-    url: 'https://jamie-next-blog.vercel.app/posts',
-    type: 'website',
-  },
 }
 
-type Category = 'All' | 'Blog' | 'Foodie' | 'A.I' | 'Life' | 'News'
-
+type Category = 'All' | 'Blog' | 'Foodie' | 'A.I' | 'Life'
 type SearchParamsInput = { category?: string } | Promise<{ category?: string }> | undefined
 
+const Shell = styled.main`
+  width: min(100% - 40px, 1280px);
+  margin: 0 auto;
+  padding: clamp(64px, 9vw, 116px) 0 80px;
+
+  @media (max-width: 640px) {
+    width: min(100% - 28px, 1280px);
+  }
+`
+
+const Intro = styled.header`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
+  gap: 52px;
+  align-items: end;
+  margin-bottom: 42px;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+`
+
+const Title = styled.h1`
+  margin: 0;
+  font-family: var(--font-serif), serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.07em;
+`
+
+const Description = styled.p`
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+`
+
+const Count = styled.p`
+  margin: 28px 0 20px;
+  color: var(--muted);
+  font-size: 13px;
+`
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+
+  @media (max-width: 920px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+`
+
 function normalizeCategory(input?: string): Category {
-  const value = (input ?? '').toString().trim().toLowerCase()
-  if (!value || value === 'all') return 'All'
+  const value = (input ?? '').trim().toLowerCase()
   if (value === 'blog') return 'Blog'
   if (value === 'foodie') return 'Foodie'
   if (value === 'life') return 'Life'
-  if (value === 'news') return 'News'
-  const aiVariants = ['a.i', 'ai', 'a.i.', 'a i']
-  if (aiVariants.includes(value)) return 'A.I'
+  if (['a.i', 'ai', 'a.i.', 'a i'].includes(value)) return 'A.I'
   return 'All'
 }
 
-function filterPostsByCategory(posts: any[], category: Category) {
-  if (category === 'All') return posts
-  return posts.filter((p) => normalizeCategory(p.category ?? p?.meta?.category) === category)
-}
-
 export default async function PostsPage({ searchParams }: { searchParams?: SearchParamsInput }) {
-  const resolvedSearchParams = await Promise.resolve(searchParams)
-  const allPosts = getAllPosts()
-  const rawCategory = resolvedSearchParams?.category
-  const currentCategory = normalizeCategory(rawCategory)
-  const filteredPosts = filterPostsByCategory(allPosts, currentCategory)
+  const resolved = await Promise.resolve(searchParams)
+  const currentCategory = normalizeCategory(resolved?.category)
+  const allPosts = getPublicPosts()
+  const posts = currentCategory === 'All'
+    ? allPosts
+    : allPosts.filter((post) => normalizeCategory(post.category) === currentCategory)
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px 120px' }}>
-      <h1
-        style={{
-          fontSize: 40,
-          fontWeight: 600,
-          letterSpacing: '-0.01em',
-          margin: '0 0 24px',
-          color: 'var(--color-ink, #1d1d1f)',
-        }}
-      >
-        Posts
-      </h1>
-      <React.Suspense fallback={<div />}>
+    <Shell>
+      <Intro>
+        <Title>모든 기록</Title>
+        <Description>직접 써본 도구, 가족과 지나온 장소, 다시 찾고 싶은 맛을 오래 읽을 수 있는 글로 남깁니다.</Description>
+      </Intro>
+      <React.Suspense fallback={null}>
         <CategoriesClient />
       </React.Suspense>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
-          gap: 1,
-          background: 'var(--border)',
-          borderRadius: 'var(--radius-card, 28px)',
-          overflow: 'hidden',
-        }}
-      >
-        {filteredPosts.map((post: any) => (
-          <div key={post.slug} style={{ background: 'var(--card-bg)' }}>
-            <PostCard post={post} />
-          </div>
-        ))}
-      </div>
-    </div>
+      <Count>{posts.length}개의 기록</Count>
+      <Grid>
+        {posts.map((post, index) => <PostCard key={post.slug} post={post} priority={index < 3} />)}
+      </Grid>
+    </Shell>
   )
 }
