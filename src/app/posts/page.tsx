@@ -5,6 +5,9 @@ import { getPublicPosts } from '@/lib/posts'
 import PostCard from '@/components/PostCard'
 import CategoriesClient from '@/components/CategoriesClient'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export const metadata: Metadata = {
   title: '모든 기록',
   description: 'Jamie가 직접 경험하고 확인한 AI 실험, 블로그 제작, 가족 여행, 맛집 기록을 카테고리별로 살펴보세요.',
