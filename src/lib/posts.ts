@@ -80,13 +80,23 @@ export function getRelatedPosts(post: any, limit = 3) {
 import readingTime from 'reading-time'
 
 export function getPostBySlug(slug:string): any {
-  const full = path.join(postsDir, `${slug}.mdx`)
-  if(!fs.existsSync(full)) return null
+  let decodedSlug = slug
+  try {
+    decodedSlug = decodeURIComponent(slug)
+  } catch {
+    // Keep the original value when a malformed URL segment reaches the route.
+  }
+  const normalizedSlug = decodedSlug.normalize('NFC')
+  const fileName = getPostSlugs().find(file =>
+    file.replace(/\.mdx?$/, '').normalize('NFC') === normalizedSlug
+  )
+  if(!fileName) return null
+  const full = path.join(postsDir, fileName)
   const raw = fs.readFileSync(full,'utf8')
   const { data, content } = matter(raw)
   const rt = readingTime(content)
   return {
-    slug,
+    slug: fileName.replace(/\.mdx?$/, ''),
     meta: {
       ...data,
       description: data.description ?? data.summary ?? '',
