@@ -1,0 +1,269 @@
+---
+title: "[NEWS] 최신 AI 연구 동향 2026년 11월 13일"
+description: "ArXiv, Hugging Face Daily Papers, Meta, Apple 등 최신 AI 뉴스와 연구 논문을 정리합니다."
+date: "2026-11-13"
+category: "A.I"
+tags: ["AI", "Machine Learning", "Research", "ArXiv", "Daily Brief"]
+---
+
+# 최신 AI 연구 동향 (2026년 11월 13일)
+
+## 📊 RL 훈련 최적화: GRPO와 밀도 보상 비교
+
+**발행일:** 2026년 11월 12일
+
+**연구 주제:**
+RLVR(Reinforcement Learning with Verifiable Rewards)에서 몬테카를로 밀도 과정 보상의 효용성 연구
+
+**주요 발견:**
+- 밀도 보상 방식은 훈련 스텝당 성능 향상을 보일 수 있으나, **동일 토큰 사용** 또는 **동일 훈련 시간**에서는 GRPO(Generalized Reinforcement Policy Optimization)보다 성능이 떨어짐
+- 4개의 밀도 보상 변형 중 GRPO보다 우수한 결과가 없음
+- 예측 성공 확률 1/2에 가까운 프롬프트 선택 시 약 1~2점 향상
+
+**중요성:**
+- RL 논문들이 주로 훈련 스텝당 성능을 보고하지만, 실제 비용(토큰, 시간) 고려 필요
+- 계산 맞춤(compute-matched) 비교가 결과를 반전시킬 수 있음
+
+**데이터:**
+- 6개 모델, 1,668회 실행 대상
+- Qwen2.5-1.5B: 밀도 보상은 갱신 시 우수하지만 동일 토큰에서 GRPO보다 14.3점 낮음
+
+---
+
+## 🗑️ LLM 후-훈련: 가중치 삭제의 놀라운 효과
+
+**발행일:** 2026년 11월 12일
+
+**연구 주제:**
+사전 훈련된 LLM의 얼마나 적은 양의 가중치를 변경해야 새로운 능력을 얻을 수 있는지
+
+**발견:**
+- **삭제 튜닝(Deletion Tuning)**: 트랜스포머 블록의 게이트 투영을 위한 바이너리 마스크 학습
+- **0.05% 미만의 가중치 삭제**: 전체 미세 조정과 동등한 성능 달성
+- 마스크 크기: 수백~수천 개 (전체 체크포인트 대비 훨씬 작음)
+- 사전 작업 정확도 유지, 전체 미세 조정 및 LoRA는 최대 5.4점 손실
+
+**효용:**
+- 후-훈련은 대부분 이미 존재하는 능력을 선택하는 것이지 새로운 능력을 추가하는 것이 아님
+- 매우 작은 마스크를 통해 여러 전문화 버전을 저장하고 서비스하는 비용 절감 가능
+- 잊어버리기(forgetting) 감소
+
+**벤치마크:**
+- RLVR, SFT, 온-정책 디스틸레이션에서 전체 미세 조정과 동등 성능
+
+---
+
+## 💻 코드 에이전트 평가: ExpertCrowd-SWE 벤치마크
+
+**발행일:** 2026년 11월 12일
+
+**새로운 벤치마크:**
+실제 엔지니어가 작성한 다중 파일 과제를 다루는 전방(최신) 코드 에이전트 측정
+
+**데이터 구성:**
+- 100개의 다중 파일 과제
+- 87개 오픈소스 프로젝트에서 실제 엔지니어 작성
+- 11개 언어
+- 각 과제: 밀봉된 참조 솔루션, 부분-크리딩 그레이더
+- 참조 변경 중앙값: 471줄
+- 거의 절반의 과제: 게으른, 대안적, 적대적 패치 포함 (그레이더 검증)
+
+**성과:**
+- 7개 최신 모델, 3,495개 평가 실행
+- Claude Opus 5.5: 67.3% (1위)
+- GPT-6 Astra: 63.7%
+- Claude Fable 5.1: 46.5%
+- Gemini 3.8 Flash: 40.0%
+- Qwen 3.8 Max, DeepSeek V4.1 Flash, Grok 4.6: 32~34%
+
+**중요성:**
+- 단순 버그 수정이 아닌, 실제 병합 품질의 작업에서 에이전트 평가
+- 홀드아웃 분할과 검증된 그레이더를 통해 벤더 주장의 신뢰성 확보
+
+---
+
+## 🤖 시스템-1 의사결정 모델: MMDM 벤치마크
+
+**발행일:** 2026년 11월 12일
+
+**개요:**
+에이전트 상태 추적, 도구 및 스킬 선택, 선호도 판단, 리더보드 점수와 같은 **시스템-1 의사결정 모델**을 측정하는 벤치마크
+
+**데이터:**
+- 5,448개 질문, 16개 과제 카테고리
+- 옵션 공간: 2~1,024
+- 입력 최대: 64,817 토큰
+
+**성과:**
+- 28개 모델 테스트
+- 전체 지식(Qwen3): 78.75%
+- 옵션 논리: 53.95%
+- 제약 계획: 47.95%
+- 최고 하드 멀티-선택 정확도: 36.81%
+
+**발견:**
+- 많은 모델이 상식 지식은 처리하지만 상호 의존 옵션, 제약 의사결정, 멀티-선택에서 어려움 겪음
+
+---
+
+## 🦙 Meta Muse Ember: 가장 효율적인 Muse 모델
+
+**발행일:** 2026년 11월 12일
+
+**새 모델:**
+Meta가 발표한 가장 작고 저렴한 Muse 모델
+
+**특징:**
+- 텍스트, 이미지, 오디오, 비디오 입력 지원
+- OpenAI 호환 Meta Model API 제공
+- 비용: 입력 0.10달러/백만 토큰, 출력 0.50달러/백만 토큰
+- 최대 200,000 입력 토큰 지원
+
+**성과:**
+- Artificial Intelligence Index (36): Claude Haiku 5.5와 동률
+- Terminal-Bench 4.0: 40.9점
+- OSWorld 2.1: 69.5점
+- FrontierCode 2.0-AA: 27.2점 (Haiku 5.5 34.9점보다 낮음)
+
+**용도:**
+- 대량 에이전트 작업(코드 서브태스크, 도구 호출, 라우팅, 문서 분석)
+- 큰 플래너(예: Muse Wonder)의 작업자(worker)로 활용
+- 오픈 가중치 미제공
+
+---
+
+## 🎙️ ElevenLabs Scribe v3: 음성-텍스트 변환 모델
+
+**발행일:** 2026년 11월 12일
+
+**새 모델:**
+Scribe v3 (녹음 오디오) 및 Scribe v3 Live (실시간) 발표
+
+**성과:**
+- Scribe v2 대비 **27% 감소한 단어 오류율**(WER)
+- Scribe v3 Live: **43% 감소한 의미 변경 오류**(semantic WER), **31% 낮은 WER**
+- 첫 번째 실시간 화자 디아리제이션(turn detection) 지원
+- 영어 내부 데이터셋에서 **3.1% 오류율**
+- 기타 실시간 모델 대비 **5.9~7.3% 낮은 오류율**
+
+**기능:**
+- 대화 문맥 기반 턴 감지(침묵 의존 x)
+- 최대 1,000개 키워드 지원
+- 코드 스위칭 멀티링구얼 모드
+
+---
+
+## 📹 AVCC: 멀티파티 대화에서의 차례 간섭 예측
+
+**발행일:** 2026년 11월 12일
+
+**연구 주제:**
+멀티파티 대화에서 다음 화자 예측(예측적으로 대기하여 말하기)
+
+**데이터:**
+- 31시간 두 세션, 세 사람 온라인 대화
+- 단일 카메라 + 마이크로녹음
+- 화자 분리 테스트셋: 865 홀드, 865 시프트 이벤트
+
+**특징:**
+- 기존 연구는 화자별 센서 의존
+- 로봇은 일반적으로 단일 카메라+마이크로 제한
+
+**중요성:**
+- 대화형 에이전트와 소셜 로봇이 대기 없이 턴을 적절히 취하는 데 필요
+
+---
+
+## 📝 추가 논문 요약 (Hugging Face Daily Papers - 2026-W46)
+
+**11월 8~14일 주요 논문:**
+
+### Learning Heterogeneous Tactile Representation for General Dexterous Manipulation
+- 일반적인 덜렁거림 조작을 위한 다양한 촉각 표현 학습
+
+### Confucius4-R2T2: Stable-Prefix Streaming ASR Model for Real Real-Time Transcription
+- NetEase Youdao의 실시간 ASR 모델
+
+### Tree-Ising: Repairing Language Models with Bit-Level Ising Edits
+- 비트 레벨 Ising 수정으로 LLM 복구
+
+### Few-Step Streaming Video Generation via Condition Shifting
+- Tsinghua University의 단계형 스트리밍 비디오 생성
+
+### SplatAnything: Gaussian Spacing Normalization for Feed-forward 3GS across Arbitrary Scenes
+- 임의 장면에 대한 포워드 3D 그리기 최적화
+
+### World In-Context Learning for Agentic Robot Manipulation
+- 에이전트 로봇 조작을 위한 월드 인컨텍스트 학습
+
+### P^2-MOPD: Accelerating Multi-Teacher On-Policy Distillation via Parameter Priors
+- 다중-강사 온-정책 디스틸레이션 가속화
+
+### Don't Just Trust Your Memory: Evidence-Linked Memory Reduces Memory-Induced Degradation in LLM Agents
+- 증거 연결 메모리로 LLM 에이전트의 메모리 유도 저하 감소
+
+---
+
+## 💵 HeteroGrad-DT: 이질적 멀티태스크 오프라인 RL
+
+**발행일:** 2026년 11월 11일
+
+**개요:**
+여러 태스크 간의 기울기 간섭 문제를 해결하는 프레임워크
+
+**특징:**
+- 태스크별 토크나이저 및 분리 예측 헤드 사용
+- 그라디언트 흐름 트랜스포머: 고정 차원 태스크 통계 기반 교차 태스크 동기화
+- 학습률 배가 시 -0.5점 차이
+
+**성과:**
+- DeepMind Control Suite (30개 태스크)
+- 32.3% 상대적 개선 (공유 백본 + 표준 훈련 대비)
+- 8.6% 개선 (그라디언트 충돌 완화 기준 대비)
+
+---
+
+## 🔍 LLM을 활용한 오픈월드 AutoML: NCode
+
+**발행일:** 2026년 11월 9일
+
+**개요:**
+LLM 기반 범용 AutoML 프레임워크 제안
+
+**주요 기능:**
+- NCode: 다양한 AutoML 설계 선택을 통일된 이산 시퀀스로 변환
+- 숫자 인코딩 방식(numercial encoding)
+- 옵티마이제이션을 통합 순위 과제로 재프레이밍
+
+**성과:**
+- 단일 도메인 비전 태스크에서만 훈련
+- 이미지 분류, 세그멘테이션, 화자 확인, 텍스트-이미지 생성에서 최신 성과
+- 10억 파라미터 Diffusion Transformer 최적화: **896 GPU-days**, **GenEval 0.91**
+
+**발견:**
+- 강화 학습으로 체인-오브-생각 추론 통합
+- 최적화 전략: 초기 다양성 우선 탐색에서 후기 앵커 활용으로 전환
+
+---
+
+## 🎯 키워드 및 주제
+
+- **RL 최적화**: GRPO, 밀도 보상, 계산 맞춤 비교
+- **후-훈련**: 가중치 삭제, 0.05% 미만 변경, 전문화 저장
+- **코드 에이전트**: ExpertCrowd-SWE, 병합 품질 과제
+- **에이전트 의사결정**: MMDM, 시스템-1 모델, 상호 의존 옵션
+- **Meta**: Muse Ember, 최소 모델, OpenAI 호환
+- **음성-텍스트**: ElevenLabs Scribe v3, 실시간, 화자 디아리제이션
+- **대화 에이전트**: AVCC, 다음 화자 예측, 턴 취하기
+- **오프라인 RL**: HeteroGrad-DT, 이질적 멀티태스크, 그라디언트 조정
+- **AutoML**: LLM 기반 범용, NCode, 제너럴화 가능성
+
+---
+
+## 📝 참고자료
+
+- NHỊP Paper Roundup: https://nhip.verai.vn/en/papers/2026-11-12
+- Hugging Face Daily Papers (2026-W46): https://huggingface.co/papers/week/2026-W46
+- Weighted State Souping: https://machinelearning.apple.com/research/weighted-state-souping
+- HeteroGrad-DT: https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0362298
+- NCode (arXiv): https://arxiv.org/abs/2611.12791
