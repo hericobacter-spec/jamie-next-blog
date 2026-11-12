@@ -1,0 +1,164 @@
+---
+title: "[NEWS] 최신 AI 연구 동향 2026년 11월 12일"
+description: "ArXiv, MIT News, Google DeepMind 등 최신 AI 뉴스와 연구 논문을 정리합니다."
+date: "2026-11-12"
+category: "A.I"
+tags: ["AI", "Machine Learning", "Research", "ArXiv", "Daily Brief"]
+---
+
+# 최신 AI 연구 동향 (2026년 11월 12일)
+
+## 📊 금융 & 비즈니스: OpenAI 분기 수익 100억 달러 돌파
+
+**발행일:** 2026년 11월 12일
+
+OpenAI의 분기 수익이 첫 100억 달러를 돌파하며 전 분기 대비 약 50% 성장했습니다.
+
+**주요 내용:**
+- 분기 수익 100억 달러 (전 분기 67억 달러 대비 +50%)
+- 엔터프라이즈 판매가 성장의 주된 원인
+- ChatGPT 구독자 수 1억 명 도달
+
+**비즈니스 영향:**
+- 109억 달러의 조정된 운영 손실 발생
+- 다음 IPO를 위해 가격 인상 및 엔터프라이즈 제품 확대 계획
+- Anthropic보다는 수익은 낮지만 성장세 유지 중
+
+**핵심 메시지:**
+OpenAI의 수익 성장이 지속되지만, 계산 비용 대비 수익의 격차가 여전히 해결해야 할 핵심 과제입니다.
+
+---
+
+## 💊 Google DeepMind: AlphaGenome 2 - 세포별 DNA 영향 예측
+
+**발행일:** 2026년 11월 12일
+
+Google DeepMind이 DNA 변이가 특정 인간 세포 유형 및 상태에 미치는 영향을 예측하는 모델인 **AlphaGenome 2**를 발표했습니다.
+
+**주요 특징:**
+- 1억 개 이상의 세포 프로필 데이터로 훈련
+- 68개 조직을 커버
+- 이전 버전보다 약 두 배 더 많은 발현 변이 변이 식별
+
+**활용 분야:**
+- 유전적 변이 우선순위 지정 (연구실 및 신약 개발)
+- 조직별 유의미한 효과 파악
+- 모델에서 본 적 없는 세포 상태 식별
+
+**상용화:**
+- AlphaGenome API를 통해 비상업 연구에 제공
+- 상업적 사용을 위한 프리뷰 접근 가능
+
+**기술적 의의:**
+세포 유형별 정밀한 예측은 연구원이 어떤 유전적 변이를 실험실 작업에 우선순위로 고려할지 결정하는 데 도움을 줍니다.
+
+---
+
+## 🤖 NVIDIA: FOVI-Dex 및 ScheduleGen 연구 발표
+
+**발행일:** 2026년 11월 12일
+
+NVIDIA가 로봇 학습 및 다중-arm 아이메이션 학습 관련 두 가지 새로운 연구를 발표했습니다.
+
+### FOVI-Dex: Foveation을 활용한 덜렁거림 조작 학습
+
+**핵심 개념:**
+- 초점화(foveation)를 활용한 효율적인 퍼서티브 학습
+- 새로운 초점화 렌더링 솔루션과 초점화 퍼서티브 결합
+
+**성과:**
+- 고해상도 고정 카메라 제어 대비 8.9배 적은 비전 토큰 사용
+- 6개 더 많은 병렬 환경 지원
+- 4.4배 더 높은 훈련 처리량
+
+**실제 세계 적용:**
+초점화 샘플링으로 실제 평면 카메라의 훈련 시 이전 속도를 통해 시뮬레이션 및 실제 세계 모두에서 더 나은 성능 달성
+
+**저자:**
+Nicholas Blauch, Nicolas Moënne-Loccoz, Jayjun Lee, Patrick Yin, Mohak Bhardwaj, Muhammad Asif Rana, Jessica Yin, Sam Mady, Karl Van Wyk, Nathan D. Ratliff, Jae-Hyun Jung, Ruth Rosenholtz, Ankur Handa, Gavriel State
+
+### ScheduleGen: 다중-arm 아이메이션 학습을 위한 데모 생성
+
+**핵심 기능:**
+- 스킬 스케줄링을 통한 데모 생성
+- 다중-arm 아이메이션 학습 지원
+
+**저자:**
+Neel Jawale, Stephan Pleines, Soha Pouya, Yuke Zhu, Ajay Mandlekar, Caelan Garrett
+
+**출처:**
+NVIDIA Research, Dex-CoRL 2026 Workshop
+
+---
+
+## 📱 Apple: Weighted State Souping - 효율적인 긴 문맥 검색
+
+**발행일:** 2026년 11월 10일
+
+Apple Machine Learning Research가 **Weighted State Souping** 기법을 통해 효율적인 긴 문맥 검색을 제안했습니다.
+
+**주요 문제:**
+- 상태 공간 모델(SSM)은 빠른 추론과 고정된 상태 크기로 경쟁력 있는 성능 제공
+- State souping: SSM이 토큰 청크를 독립적으로 인코딩하고 캐시된 상태를 재결합하여 문맥 구성
+- 하지만 긴, 혼잡한 문맥에서 성능 저하 발생
+
+**해결책:**
+**Weighted State Souping**: 캐시된 상태를 조합할 때 쿼리 의존적 가중치를 학습하는 간단한 방법
+
+**성과:**
+- 단일 및 다중 문서 질의 응답에서 긴 문맥 성능 크게 향상
+- 바늘 속 바늘 검색, 변수 추적, 도구 사용
+- 희소한 변형으로 적응하여 문맥 길이에 대해 거의 상수 인코딩 비용 유지
+
+**이론적 기반:**
+- 왜 souping이 작동하는지에 대한 단순한 이론적 논증
+- 언제 실패할 수 있는지 설명
+- 가중치 souping의 이점 논의
+
+**적용 분야:**
+문서, 도구 및 기타 구조화된 문맥의 언어 모델링 효율적 접근법
+
+---
+
+## 🌐 인터넷 뉴스 요약
+
+### AI 투자 동향
+
+**TSMC의 AI 베팅:**
+- TSMC의 이사회가 Anthropic 및 OpenAI에 최대 10억 달러 투자 승인
+
+**OpenAI의 IPO 준비:**
+- 정기 수익 100억 달러 돌파 후 IPO 준비 단계 진입
+- 가격 인상 및 엔터프라이즈 제품 확대
+
+### 연구 및 개발
+
+**AI 교육 트렌드:**
+- 영국의 대학 당국자들이 전통적인 시험과 인면 발표로의 복귀 촉구
+
+**보안 및 책임감:**
+- 철도 노동자의 도난된 AI 키가 약 74만 달러의 미승인 청구로 이어짐
+
+**미국 데이터 중개업자:**
+- 중국 AI 연구소에 RL 환경을 포함한 약 5억 달러의 훈련 데이터 판매
+
+---
+
+## 🎯 키워드 및 주제
+
+- **Finance:** OpenAI quarterly revenue, TSMC investment, IPO preparation
+- **Genomics:** AlphaGenome 2, DNA variants, cell type prediction
+- **Robotics:** FOVI-Dex, foveation, dexterous manipulation
+- **Efficient ML:** Weighted state souping, long-context retrieval
+- **Business:** AI adoption, enterprise sales, market growth
+
+---
+
+## 📝 참고자료
+
+- OpenAI Revenue: https://www.thecoder.com/openai-quarterly-revenue-tops-10-billion
+- AlphaGenome 2: https://deepmind.google/discover/blog/alphagenome-2/
+- FOVI-Dex: https://research.nvidia.com/publication/2026-11_fovi-dex-foveation-enables-efficient-perceptive-learning-dexterous-manipulation
+- ScheduleGen: https://research.nvidia.com/publication/2026-11_schedulegen-demonstration-generation-skill-scheduling-multi-arm-imitation
+- Weighted State Souping: https://machinelearning.apple.com/research/weighted-state-souping
+- Kill The AI Summary: https://killtheai.com/news/top-10-ai-news-today-november-12-2026/
