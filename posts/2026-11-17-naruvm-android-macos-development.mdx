@@ -1,7 +1,7 @@
 ---
 title: "안드로이드 태블릿에서 macOS를 띄워 보기: Codex와 함께 만든 NaruVM"
 date: "2026-11-17"
-description: "내 태블릿에서 시작한 macOS 실행 실험이 NaruVM이라는 공개 프로젝트가 됐다. Henge의 Android 포팅, 느린 입력과 충돌을 고친 과정, 에뮬레이터에서 측정한 개선과 아직 남은 한계를 기록한다."
+description: "내 태블릿에서 시작한 macOS 실행 실험, NaruVM. GitHub와 APK 다운로드 주소, Java·NDK·ARM64 JIT·Vulkan 기술 스택, 앱과 macOS 설치 순서, 성능 개선과 남은 한계를 정리했다."
 category: "A.I"
 tags: ["NaruVM", "Codex", "AI개발", "Android", "macOS", "Henge", "오픈소스"]
 image: "/images/posts/naruvm/macos-vscode.png"
@@ -11,6 +11,12 @@ published: true
 ## 내 태블릿에서 macOS를 실행할 수 있을까
 
 시작은 내가 가진 안드로이드 태블릿에서 macOS를 실행해 보고 싶다는 생각이었다. Codex와 함께 기존 프로젝트를 살펴보고, Android에서 동작하도록 코드를 고치고, 기기에서 확인한 결과를 다시 개발에 반영했다. 그렇게 만든 프로젝트에 **NaruVM**이라는 이름을 붙이고 [GitHub에 소스를 공개했다](https://github.com/hericobacter-spec/NaruVM).
+
+**GitHub 주소: [github.com/hericobacter-spec/NaruVM](https://github.com/hericobacter-spec/NaruVM)**
+
+- **앱 받기:** [v0.1.2-preview 릴리스와 다운로드 파일](https://github.com/hericobacter-spec/NaruVM/releases/tag/v0.1.2-preview)
+- **사용 안내:** [한국어 README](https://github.com/hericobacter-spec/NaruVM/blob/main/README.ko.md) · [전체 설치 안내](https://github.com/hericobacter-spec/NaruVM/blob/main/docs/installation.ko.md)
+- **개발 참여:** [변경 내역](https://github.com/hericobacter-spec/NaruVM/blob/main/CHANGELOG.md) · [오류 제보와 논의](https://github.com/hericobacter-spec/NaruVM/issues)
 
 현재까지의 결과는 제한적이지만 분명하다. 한 대의 연구용 태블릿에서 macOS 15의 초기 설정과 바탕화면에 진입했고, Safari와 VS Code가 열린 화면을 남겼다. 동시에 느린 반응, 앱 종료, 태블릿 재부팅도 겪었다. 내가 원하는 수준은 로그인 후에도 안정적으로 쓸 수 있는 속도지만, 아직 그 수준에 도달했다고 말할 수는 없다.
 
@@ -26,6 +32,39 @@ NaruVM은 [Henge](https://github.com/Leviidev/Henge)를 바탕으로 만든 독�
 같은 ARM64 명령어 체계를 쓴다고 곧바로 네이티브 속도가 나오지는 않는다. 게스트 명령어 처리와 메모리 변환이 남아 있고, 그래픽도 게스트 Metal 명령을 Reims와 metal2vulkan을 거쳐 Vulkan으로 전달하는 실험 경로를 사용한다. CPU 렌더링 경로도 있다. 따라서 현재 구조만 보고 병목을 CPU 하나 또는 GPU 하나로 단정할 수는 없다(unknown: 실제 macOS 작업별 병목 비중).
 
 Android 쪽에는 실행·설치 서비스, CPU와 메모리 설정, 터치와 외부 입력 처리, 네트워크 연결, 진단과 다운로드·복원 절차를 더했다. 앱은 밝은 민트·청록색의 실행 중심 화면으로 바꾸고 한국어와 영어 UI를 넣었다. Henge와 의존 라이브러리의 저작권·라이선스 표시는 유지했다(observed, [한국어 안내서](https://github.com/hericobacter-spec/NaruVM/blob/main/README.ko.md)).
+
+## 어떤 기술로 만들었나
+
+화면을 담당하는 Android 앱, 게스트를 실행하는 네이티브 엔진, 그래픽 변환과 복구 설치 도구를 여러 언어로 연결했다. 아래는 **2026년 11월 17일 공개 main 소스에서 확인한 구성**이다(observed). 표의 “역할”은 구현된 경로이며 모든 기기에서의 동작을 뜻하지 않는다.
+
+| 영역 | 기술 스택 | 프로젝트에서 맡은 일 |
+| --- | --- | --- |
+| Android 앱 | Java, Android SDK, 네이티브 Views | 실행 화면, 한국어·영어 UI, 자원 설정과 입력. [MainActivity 등 앱 코드](https://github.com/hericobacter-spec/NaruVM/tree/main/android/src/dev/henge/research) |
+| 실행 수명 관리 | Android Foreground Service, WakeLock | VmService가 VM 프로세스·입력 전달을 관리하고 InstallService가 다운로드·복구 설치를 관리. 화면 Activity와 실행 주체를 분리 |
+| CPU·메모리 | C, AArch64 어셈블리, Henge JIT·소프트웨어 MMU | ARM64 게스트 명령어 변환, 가상 주소 처리, 예외와 가상 장치. [core](https://github.com/hericobacter-spec/NaruVM/tree/main/core) · [host](https://github.com/hericobacter-spec/NaruVM/tree/main/host) |
+| Java↔네이티브·표시 | JNI, 공유 메모리 프레임 전달, Bitmap, ARM NEON | 네이티브 프레임 읽기와 픽셀 변환, Android 화면 표시. 최신 FramePump에서 작업 스레드와 UI 버퍼 소유권을 구분 |
+| 그래픽 | Rust 기반 Reims, metal2vulkan, Vulkan, Mesa | 게스트 Metal 작업을 Vulkan 백엔드로 전달. CPU 렌더링과 실험용 Mali PanVK 경로 포함. Turnip은 별도 준비가 필요하며 공개 APK에 기본 포함되지 않음 |
+| 네트워크 | libslirp, Android DNS 연동, 가상 NIC | Android 인터넷 연결을 이용한 게스트 NAT·DNS. macOS에는 가상 유선 네트워크로 보이는 구조. [Android 네이티브 코드](https://github.com/hericobacter-spec/NaruVM/tree/main/android/native) |
+| 다운로드·복구 설치 | Java 다운로드·설치 서비스, C 복구 코드, libcurl·mbedTLS·libplist·libimobiledevice·idevicerestore 계열 | 이미지 이어받기·해시 확인, Apple 복구 프로토콜과 새 디스크 설치. 전체 자동 설치 완료는 아직 미검증 |
+| 빌드·검사 | Python, CMake, Android NDK/Clang, JDK, Android SDK 도구, GitHub Actions | 의존성 준비, 네이티브·Java 컴파일, APK 포장·서명, 호스트·소스 검사. [빌드 스크립트](https://github.com/hericobacter-spec/NaruVM/blob/main/android/build.py) · [CI](https://github.com/hericobacter-spec/NaruVM/actions/workflows/android-source.yml) |
+
+빌드 도구는 **JDK 21, Android SDK/API 36, build-tools 36.0.0, NDK 30.0.16248370**으로 고정되어 있다(observed, [도구 잠금 파일](https://github.com/hericobacter-spec/NaruVM/blob/main/tools/android-toolchain.lock.json)). 이 프로젝트의 빌드 진입점은 Python 스크립트이며, Java 컴파일과 APK 포장 도구를 직접 호출한다. Android Studio·Gradle 프로젝트를 열어 빌드하는 절차와는 다르다.
+
+### 버튼을 누른 뒤 화면에 나오기까지
+
+실행 서비스는 NDK/Bionic 어댑터를 통해 엔진을 시작한다. 그래픽 작업이 Reims와 Vulkan 경로를 거쳐 완성되면 프레임 전송 계층이 이를 Android 쪽으로 전달하고, JNI와 FramePump를 통해 Bitmap에 표시한다(observed: 소스 구조).
+
+```text
+Java 실행 화면 → VmService → NDK/Bionic 어댑터
+                               ↓
+                  ARM64 JIT + 소프트웨어 MMU + 가상 장치
+                               ↓
+                  Reims → metal2vulkan → Vulkan 백엔드
+                               ↓
+                  프레임 전송 → JNI / FramePump → Bitmap 표시
+```
+
+CPU에서 게스트가 실행되는 시간, GPU 작업 시간, 완성된 화면을 읽어 Android에 표시하는 시간은 구분해서 봐야 한다. 최신 수정은 그중 입력 전달과 프레임 준비 작업을 다뤘다. 실제 macOS 작업에서 각 단계가 차지하는 비중은 추가 측정이 필요하다(unknown). 더 자세한 경계와 소스 위치는 [아키텍처 문서](https://github.com/hericobacter-spec/NaruVM/blob/main/docs/architecture.md)에 정리했다.
 
 ## 바탕화면 다음에 생긴 문제들
 
@@ -75,13 +114,117 @@ UI 스레드에 남는 작업은 이 시험에서 줄었다. 하지만 전체 ma
 
 AI가 변경을 제안하거나 빌드가 성공했다는 것만으로 사용자 기기의 문제가 해결됐다고 볼 수는 없다. 그래서 화면 캡처, 소스 검사, 합성 프레임 시험, 실제 macOS 실행 결과를 따로 기록하고 있다.
 
-## 지금 사용해 보려면
+## 설치 방법 1: 공개 APK로 시작하기
 
-출발점은 [NaruVM 저장소](https://github.com/hericobacter-spec/NaruVM)와 [한국어 안내서](https://github.com/hericobacter-spec/NaruVM/blob/main/README.ko.md)다. 빌드하지 않고 살펴볼 때는 [v0.1.2-preview 릴리스](https://github.com/hericobacter-spec/NaruVM/releases/tag/v0.1.2-preview)의 APK와 [설치·서명 확인 안내](https://github.com/hericobacter-spec/NaruVM/blob/main/docs/apk-release.md)를 함께 읽으면 된다(observed: 게시 시점 공개 자료).
+설치는 **Android에 NaruVM 앱 설치 → 앱에서 macOS 게스트 설치 → macOS 초기 설정**의 세 단계다. APK를 설치하는 것만으로 macOS가 함께 설치되지는 않는다. 아래는 공개 APK와 구현된 앱 흐름에 맞춘 안내이며, 새 자동 설치를 처음부터 끝까지 완료한 실기기 재현 결과는 아직 없다(observed: 안내·구현, unknown: 전체 자동 설치 완료).
 
 **이 글에서 설명한 최신 입력·화면 개선은 main 소스에 반영되어 있고, 공개 APK v0.1.2-preview에는 아직 포함되지 않았다.** APK와 최신 소스의 검증 범위를 혼동하지 않도록 변경 내역은 [CHANGELOG](https://github.com/hericobacter-spec/NaruVM/blob/main/CHANGELOG.md)에 구분해 두었다.
 
-초기 자원 설정은 안내서의 보수적인 시작값인 **2 vCPU / 게스트 RAM 2048 MiB**를 기준으로 삼는다. 빠른 기기라고 코어와 메모리를 크게 할당하는 것이 최선이라는 측정은 아직 없다(assumed: 시작 설정 권고, unknown: 기기별 최적값). 과거 연구용 앱과 공개 APK는 서명 키가 다르므로, 기존 게스트 데이터가 있다면 앱을 삭제해 덮어 설치하지 말고 안내서의 별도 기기·에뮬레이터 경로를 따라야 한다.
+### 1. 먼저 기기와 빈 공간 확인
+
+| 확인할 항목 | 시작 전 확인할 내용 |
+| --- | --- |
+| Android·ABI | ARM64, 최소 Android 9 / API 28은 앱 Manifest의 조건. 실제 CPU 명령어·JIT·GPU 호환성은 별도 사전 검사를 통과해야 함 |
+| 메모리 | macOS 설치 진입 조건은 Android가 보고하는 전체 메모리 4 GiB 이상이고 low-memory 상태가 아닐 것. 게스트 RAM 할당량과는 다른 값 |
+| 내부 저장 공간 | 소스의 macOS 15.6.1 카탈로그 기준 이미지 약15.66 GiB, 빈 캐시에서 설치 전 내부 여유 약49.7 GiB 추정. 앱이 표시하는 필요 공간을 우선 확인 |
+| 인터넷·전원 | Android에서 Apple 다운로드·복구 서버에 접속할 수 있어야 함. 큰 다운로드와 설치를 감당할 전원 확보 |
+| 실기기 근거 | 과거 macOS 실행은 TB373FU 한 대. Y700·Snapdragon Galaxy 등 다른 모델의 실제 호환성은 미검증 |
+
+위 조건과 공간 수치는 [설치 안내의 조건·카탈로그](https://github.com/hericobacter-spec/NaruVM/blob/main/docs/installation.ko.md)에 기록된 값이다(observed). 다운로드 캐시, 부분 설치와 실제 디스크 쓰기에 따라 공간은 달라진다. “64 GB 기기”라는 전체 용량 표기는 필요한 **빈 내부 공간**을 뜻하지 않는다.
+
+### 2. APK 다운로드·확인·설치
+
+**기존 연구용 NaruVM이 설치된 기기는 여기서 멈춰야 한다.** 연구용 디버그 키와 공개 APK의 배포 키가 달라 업데이트가 거절될 수 있다. 앱을 지우거나 저장 공간을 초기화해서 강제로 설치하면 기존 게스트 데이터를 잃을 수 있다. 해당 경우에는 [서명 안내](https://github.com/hericobacter-spec/NaruVM/blob/main/docs/apk-release.ko.md)에 따라 별도 기기나 일회용 에뮬레이터를 사용한다(observed: 서명 구성).
+
+1. [v0.1.2-preview 릴리스](https://github.com/hericobacter-spec/NaruVM/releases/tag/v0.1.2-preview)의 Assets에서 **NaruVM-v0.1.2-preview-arm64-v8a.apk**를 받는다. [APK 직접 다운로드](https://github.com/hericobacter-spec/NaruVM/releases/download/v0.1.2-preview/NaruVM-v0.1.2-preview-arm64-v8a.apk)도 가능하다. 게시 시점 파일 크기는 85,770,545바이트, 약85.8 MB다(observed).
+2. 같은 릴리스의 [SHA256SUMS.txt](https://github.com/hericobacter-spec/NaruVM/releases/download/v0.1.2-preview/SHA256SUMS.txt)와 [릴리스 기록 JSON](https://github.com/hericobacter-spec/NaruVM/releases/download/v0.1.2-preview/NaruVM-v0.1.2-preview-release.json)에서 해시·서명 정보를 확인한다. 아래는 Mac에서 받은 APK의 SHA-256을 구하는 명령이다. 출력값을 SHA256SUMS.txt의 **APK 파일 행**과 대조한다. Android SDK 도구를 쓴 인증서 확인은 [한국어 APK 안내](https://github.com/hericobacter-spec/NaruVM/blob/main/docs/apk-release.ko.md)를 따른다.
+3. Android에서 받은 APK를 열고, 설치에 사용한 브라우저나 파일 앱에 대해 시스템의 출처별 앱 설치 권한을 허용한 뒤 설치한다. 설치가 끝나면 **NaruVM**을 연다.
+
+```sh
+shasum -a 256 NaruVM-v0.1.2-preview-arm64-v8a.apk
+```
+
+USB로 설치하려면 Android SDK platform-tools의 adb를 준비하고, 기기 잠금을 푼 뒤 개발자 옵션·USB 디버깅과 해당 컴퓨터의 연결을 허용한다. 받은 APK가 있는 폴더에서 아래 명령을 실행한다. 먼저 목록에서 상태가 **device**인 정확한 시리얼을 고르고, 두 번째 명령의 **DEVICE_SERIAL**을 그 값으로 바꾼다. 여러 기기 중 대상을 명확히 선택하기 위한 절차다.
+
+```sh
+adb devices -l
+adb -s DEVICE_SERIAL install NaruVM-v0.1.2-preview-arm64-v8a.apk
+```
+
+성공하면 터미널에 **Success**가 표시된다. unauthorized 상태에서는 태블릿의 허용 창부터 확인한다. 기존 앱의 서명이 맞지 않는 오류는 삭제로 해결하지 않는다. 앱 설치와 macOS 실행의 성공은 별도다.
+
+### 3. 자원 설정과 기기 호환성 검사
+
+NaruVM 홈의 실행 영역에서 아래 값을 시작점으로 삼고, 진단 영역의 **기기 호환성 검사**를 실행한다. 검사 항목과 선택지는 현재 구현에 따른 안내다(observed). 권장 시작값이 각 기기의 최적값이라는 측정은 없다(assumed: 시작 설정).
+
+| 설정 | 시작점 | 주의할 점 |
+| --- | --- | --- |
+| 게스트 CPU | 2 vCPU | 선택 범위1–4. 더 많이 할당한 효과는 실제 작업에서 비교해야 함 |
+| 게스트 RAM | 2048 MiB | 2048 / 3072 / 4096 MiB. Android가 쓸 메모리도 남겨야 함 |
+| 그래픽 | 해당 드라이버가 포함된 자동 선택 | 공개 APK에는 소프트웨어와 PanVK 경로가 포함. 시스템 Vulkan은 실제 공유 메모리 조건까지 충족해야 함 |
+| 외부 마우스 감도 | 1× | 이동 거리가 짧으면 조절. 설정 범위0.5×–3× |
+| JIT 캐시 | 런타임 기본384 MiB | 홈의 CPU·RAM처럼 사용자가 바꾸는 항목은 아님 |
+
+검사는 게스트 디스크를 열기 전에 CPU/JIT·페이지 조건과 공유 메모리 픽셀 경로를 확인한다. **검사 실패 시 게스트 설치·실행을 강행하지 말고 선택된 백엔드와 오류를 확인한다.** TB373FU의 자동 선택은 관측된 PanVK 경로를 유지하며, 명시적으로 고른 백엔드가 실패했다고 실행 중 다른 방식으로 바뀌지는 않는다. 검사 통과만으로 macOS 전체 호환성이나 장시간 안정성이 입증되지는 않는다(unknown).
+
+### 4. 앱 안에서 macOS 다운로드·설치
+
+실행 영역에서 **macOS 버전 → 다운로드·설치 후 실행**을 선택한다. 이미 게스트가 있다면 **다른 Mac 설치**를 펼친다. 과거 실행 근거가 있는 macOS 15 계열부터 살펴보되, 그 기록도 새 자동 설치기의 완료 검증은 아니라는 점을 구분해야 한다.
+
+구현된 흐름은 **ROM·복구 이미지 받기 → 크기·SHA-256 검증 → 별도 새 디스크 생성 → 복구 설치 → 성공 후 첫 부팅** 순서다(observed: 소스). 기존 게스트는 별도로 유지하고, 새 설치 성공 전에는 기존 선택을 유지하도록 구성했다. **다운로드 100%는 설치 완료가 아니다.** 복구 설치와 첫 부팅이 남아 있으며 Apple 서명·네트워크·가상 장치 문제로 중단될 수 있다.
+
+현재 복구 설치 자체는 **1코어 / 2 GiB**로 실행하고, 사용자가 홈에서 저장한 자원 설정은 설치 뒤 그래픽 부팅에 적용한다(observed). 설치 중에는 앱을 앞에 두고 진행 상황을 확인한다. 설치 시간은 측정하지 않았고 일반 VM 세션에는 자동 실행 시간 제한을 두지 않았다. macOS 26·27은 실험용 선택 항목이며 설치·부팅 결과는 unknown이다.
+
+### 5. 첫 부팅과 종료
+
+macOS 설정 도우미에서 한국어·대한민국 등 원하는 언어·국가를 고르고 새 Mac으로 설정한 뒤 본인의 로컬 계정을 만든다. 준비된 공용 계정·암호는 없다. 이 단계는 macOS 안에서 진행한다.
+
+게스트 네트워크는 Android의 NAT·DNS를 쓰는 **가상 유선 NIC**다(observed: 구현). macOS에 Wi-Fi 선택 목록이 없을 수 있으며, 바탕화면 진입 후 Safari에서 웹 페이지를 열어 통신을 확인한다. 네트워크가 실제로 되는지는 해당 실행에서 별도로 확인해야 한다.
+
+USB·Bluetooth 마우스와 키보드는 Android에 연결한다. 마우스는 **외부 마우스 잠금 · Esc로 해제**로 상대 이동을 사용하며, 영문 입력이 필요하면 macOS 입력 소스를 **ABC**로 바꾼다. Android 키보드의 한/영 변경과 게스트 입력 소스는 별개다. 이 설명은 구현된 입력 경로이며 실제 물리 HID→게스트 전체 검증은 unknown이다.
+
+마칠 때는 앱의 **Mac 종료**를 눌러 쓰기 종료를 기다린 뒤 앱을 닫는다. 다음에는 **Mac 실행**으로 선택된 게스트를 연다. 설치·화면·서명 문제별 설명은 [전체 설치 안내와 문제 해결](https://github.com/hericobacter-spec/NaruVM/blob/main/docs/installation.ko.md)을 참고한다.
+
+## 설치 방법 2: 개발자가 소스에서 빌드하기
+
+최신 입력·프레임 수정을 시험하거나 코드를 바꾸려면 공개 main 소스에서 별도로 빌드해야 한다. 아래는 **Apple Silicon Mac에서 그래픽 + CPU 렌더링 구성을 준비하는 예시**이며, 공개 APK의 PanVK 포함 구성 전체를 똑같이 만드는 명령은 아니다. Windows·Linux·Intel Mac에서의 전체 APK 빌드와 새 컴퓨터의 전체 재현은 미검증이다(observed: 기존 도구·절차, unknown: 해당 환경 재현).
+
+준비물은 Git, Python 3.12+, C 컴파일러·Make, CMake 3.22+, Metal 컴파일러가 있는 전체 Xcode와 PATH의 **glslangValidator**다. Command Line Tools만 준비한 환경은 그래픽 빌드에 충분하지 않을 수 있다. 먼저 다음 도구가 실제로 실행되는지 확인한다.
+
+```sh
+python3 --version
+cmake --version
+xcodebuild -version
+xcrun -sdk macosx --find metal
+glslangValidator --version
+```
+
+기본 도구가 갖춰졌다면 터미널에서 다음을 실행한다. 이후 명령은 모두 복제한 **NaruVM 저장소 루트** 기준이다. 도구·의존성 다운로드와 빌드 출력용으로 Mac에도 여러 GB 여유가 필요하며 최대 사용량과 총 빌드 시간은 측정하지 않았다.
+
+```sh
+git clone https://github.com/hericobacter-spec/NaruVM.git
+cd NaruVM
+python3 tools/bootstrap_android.py
+export JAVA_HOME="$PWD/.tools/jdk-21/Contents/Home"
+export ANDROID_SDK_ROOT="$PWD/.tools/android-sdk"
+python3 android/fetch_restore_deps.py
+```
+
+이어서 같은 터미널에서 그래픽 의존성과 CPU 렌더링 APK를 준비한다. 새 터미널을 열었다면 앞의 도구 환경 변수부터 다시 설정한다. 내부의 HENGE 접두어는 기존 빌드 도구와의 호환을 위해 남아 있는 실제 환경 변수 이름이다.
+
+```sh
+export HENGE_REIMS_SOURCE="$PWD/.tools/reims-android"
+export HENGE_REIMS_TARGET="$PWD/android/build/reims-target"
+export CARGO_BUILD_JOBS=4
+python3 android/fetch_gpu_deps.py --reims
+python3 android/build.py --reims --software
+```
+
+성공 시 생성되는 로컬 파일은 **android/artifacts/NaruVM-arm64-debug.apk**다(observed: 빌드 스크립트). 앞의 USB 설치 절차에서 APK 경로를 이 파일로 바꾸어 별도 시험 기기에 설치한다. 이 빌드는 **PanVK·Turnip을 포함하지 않으므로**, 앱에서 **CPU 렌더링**을 명시적으로 선택한 뒤 사전 검사를 해야 한다. 특히 TB373FU의 자동 모드는 이 구성에 들어 있지 않은 PanVK를 요구하므로 그대로 두면 안 된다. CPU 렌더링은 매우 느릴 수 있다.
+
+기본 **python3 android/build.py**만 실행한 진단 구성에는 그래픽 Mac 실행기가 없다. TB373FU의 PanVK 구성에는 별도 Docker/Linux ARM64 빌드 단계가 필요하므로 [한국어 설치 안내의 구성 B·C](https://github.com/hericobacter-spec/NaruVM/blob/main/docs/installation.ko.md)와 [개발자 빌드 문서](https://github.com/hericobacter-spec/NaruVM/blob/main/docs/building.md)를 따라야 한다. 로컬 디버그 APK도 공개 APK와 서명 키가 다르며, 키 파일이나 개인 게스트 디스크를 GitHub에 올리지 않는다.
+
+## 지금까지 확인한 범위
 
 | 항목 | 게시 시점 상태 |
 | --- | --- |
