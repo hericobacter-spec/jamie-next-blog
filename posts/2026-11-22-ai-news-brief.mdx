@@ -1,155 +1,122 @@
 ---
-title: "[NEWS] 2026-11-22 AI 뉴스 브리프"
-description: "MedChemBench·Nemotron for Science·에이전트 보안과 과학 연구 자동화의 최신 흐름"
-pubDate: "2026-11-22"
-category: "A.I"
-tags: ["AI", "AI agents", "OpenAI", "NVIDIA", "Anthropic", "AI safety", "Science AI", "ArXiv"]
+title: "[NEWS] 2026년 11월 22일 AI 뉴스 브리프"
+date: 2026-11-22
+category: A.I
+tags: ["AI", "GPT", "Claude", "Gemini", "OpenAI", "Anthropic", "Google DeepMind"]
+summary: "Google Gemini 4 Neon 100만 토큰 컨텍스트, OpenAI GPT-6.2 두 모델 발표, Anthropic 3개 모델 시리즈 추가"
 ---
 
-# 2026-11-22 AI 뉴스 브리프
+# 2026년 11월 22일 AI 뉴스 브리프
 
-## 주요 이슈 요약
+## 🔥 주요 이슈: 2주 만에 6개 대형 모델 급파
 
-이번 브리프의 중심 주제는 **AI 에이전트가 답변을 생성하는 도구에서, 과학·공학의 다음 행동을 선택하는 운영 시스템으로 이동하고 있다는 점**입니다. 동시에 성능을 높이는 것만으로는 충분하지 않습니다. 에이전트가 어떤 가정을 사용했는지, 어떤 권한으로 행동했는지, 실패했을 때 어떻게 멈추는지까지 평가해야 실제 배포가 가능합니다.
-
-- OpenAI는 의약화학 연구의 실제 판단 과정을 모사하는 MedChemBench를 공개했습니다. 분자 구조, 실험 근거, 후보 물질 선택, 수치 예측을 한 benchmark 안에서 함께 평가합니다.
-- NVIDIA는 Nemotron for Science를 통해 과학용 오픈 모델·데이터셋·post-training 레시피를 에이전트 워크플로에 연결하겠다고 발표했습니다. 다만 성능 수치는 NVIDIA와 파트너사의 자체 평가라는 점을 구분해야 합니다.
-- ArXiv의 Tether와 AppSci-Bench는 에이전트의 다음 세대 병목을 보여줍니다. 하나는 장기 실행의 보안 정책과 격리이고, 다른 하나는 요구사항을 묻고 평가 체계를 만든 뒤 업무용 에이전트를 개선하는 능력입니다.
-- Anthropic의 기업공개와 리만 가설 관련 검증 전 주장은 AI 연구가 기술 뉴스와 자본시장 뉴스의 경계에 놓인다는 사실을 보여줍니다. 특히 수학적 돌파구는 발표 자체보다 독립 검증·재현·형식화가 우선입니다.
+11월 9일~18일 사이 Anthropic, Google, OpenAI, Alibaba이 6개의 주요 AI 모델을 연달아 발표하며 리더보드가 몰랐던 시장에서 판도가 완전히 바뀌었습니다. 특히 Google는 3개의 모델을 단 6일 간격으로 배포하며 가장 빠른 속도를 보였습니다.
 
 ---
 
-## 오늘의 주요 AI 소식
+## 🤖 모델 발표
 
-### 1. OpenAI MedChemBench: 의약화학에서 ‘다음에 무엇을 시험할지’를 평가하다
+### Google DeepMind - Gemini 4 Neon (11월 21일 발표)
 
-OpenAI는 11월 20일 「Can AI help scientists identify promising drug candidates?」에서 MedChemBench를 소개했습니다. 이 benchmark는 단순한 분자 인식 시험이 아닙니다. 모델에게 특정 생물학적 표적, 연구 목적, 이미 시험된 화합물, 실험 결과를 제공하고 다음 판단을 요구합니다.
+Google이 새로운 Gemini 4 Neon을 공개했습니다. 이 모델은 복잡한 소프트웨어 엔지니어링, 지식 업무, 과학 워크플로우를 위해 설계되었습니다. 주요 특징은 다음과 같습니다:
 
-평가 범위는 네 가지입니다.
+- **100만 토큰 컨텍스트 윈도우**로 대규모 문서와 코드베이스 처리
+- **비용 절감**을 위해 복잡하고 빈번한 워크플로우에 프론트리어 수준의 추론 제공
+- **가격**: 입력 100만 토큰당 $3, 출력 100만 토큰당 $15
+- **벤치마크**: Claude Opus 5.5와 GPT-6.2 Sol을 여러 벤치마크에서 앞서갔음
 
-1. **분자 구조 복원:** 화학식과 구조 그림에서 원자 연결·고리·입체화학을 정확히 복원하는가
-2. **과학적 추론:** 실험 근거를 사용해 특정 화합물의 장단점을 설명하는가
-3. **순위·선택:** 여러 후보 중 연구 목적에 맞는 물질을 고르는가
-4. **물성 예측:** 세포 투과성, 대사 안정성 등 수치·범주를 실험값에 가깝게 예측하는가
-
-데이터셋은 117개 논문·특허와 761개 분자 구조에서 99개 문제를 구성합니다. OpenAI 페이지의 첫 비교표는 xhigh 설정에서 GPT-6.2 Astra 84.5%, GPT-6 Astra 83.3%, GPT-6.1 Sol 82.0%, GPT-5.6 Sol 58.2%를 제시합니다. 다만 같은 페이지의 뒤쪽 요약에는 공통 xhigh 조건에서 Astra 83.3%라는 별도 수치가 등장합니다. 평가 집계 방식 또는 비교 범위가 다를 수 있으므로, 이 수치를 단일 순위표로 단정하기보다 원 논문과 세부 표를 함께 확인해야 합니다.
-
-내용상 더 중요한 결론은 평균 점수보다 능력의 분해입니다. Astra는 분자 구조 복원과 실험 근거 설명에서 강점을 보였지만, 후보 선택과 수치 예측에서는 점수가 크게 낮아졌다고 OpenAI는 설명합니다. 즉 모델이 화학 문헌을 읽고 설명하는 능력과, 상충하는 물성 사이에서 실제 다음 실험을 고르는 능력은 별개입니다.
-
-OpenAI 스스로도 이 결과가 새 약물을 발견하거나 실험실 의사결정을 개선한다는 증거는 아니라고 선을 긋습니다. 문제는 공개된 역사적 자료에서 구성됐고, 모델이 원문을 사전에 보았을 가능성을 배제할 수 없으며, 각 응답은 도구·실험 피드백·추가 실험 없이 한 번만 생성됐기 때문입니다.
-
-**핵심 해석:** 과학 에이전트 평가에서 “논문을 얼마나 잘 요약하는가”보다 “불완전한 증거와 여러 목표의 충돌 속에서 다음 실험을 얼마나 합리적으로 선택하는가”가 더 어려운 시험이 되고 있습니다.
-
-### 2. NVIDIA Nemotron for Science: 과학용 모델과 도구 호출을 묶는 전략
-
-NVIDIA는 11월 16일 Nemotron for Science를 발표하면서, 과학 데이터와 post-training 레시피를 활용해 연구자와 기업이 전문 과학 에이전트를 만들 수 있도록 하겠다고 밝혔습니다. NVIDIA Nemotron 3.5 Super VL과 LitmusBench v0.2 화학 데이터셋은 Hugging Face에 공개됐다고 안내됐고, 128GB DGX Spark에서 로컬 실행을 겨냥한 경로도 제시됐습니다.
-
-발표에는 파트너 사례가 함께 포함됐습니다.
-
-- Terray Therapeutics는 과학 도표에서 반응물·생성물·반응 조건을 추출하도록 Nemotron을 post-train했고, NVIDIA는 RxnScribe 평가에서 주석 반응의 약 76%를 복원했다고 설명합니다.
-- Lila Sciences는 자동화 실험실의 프로토콜 생성에 적용했으며, 실험실 피드백을 반영한 뒤 quantum dot 제작 정확도가 61%로 올라갔다고 보고했습니다. NVIDIA는 GPT-6 Astra의 54%와 비교했지만, 해당 수치는 회사가 제시한 설정과 비용 모델에 의존합니다.
-- KTH는 GROMACS 분자 동역학 설정 오류를 고치는 에이전트를 구축했고, NVIDIA에 따르면 단일 DGX Spark의 야간 실행에서 테스트 사례의 81%를 수정했습니다. 모든 수정은 GROMACS 자체 검증기를 통해 확인했다고 합니다.
-
-이 발표의 방향은 모델을 단독 제품으로 파는 것보다 **모델+과학 데이터+시뮬레이션 도구+실험 피드백**을 하나의 플랫폼으로 묶는 데 있습니다. 연구 현장에서는 모델의 언어 능력보다 올바른 입력 형식으로 시뮬레이터를 호출하고, 결과를 검증하며, 실패한 실험을 안전하게 재시도하는 능력이 더 중요할 수 있습니다.
-
-다만 위 수치는 NVIDIA 또는 파트너사의 보도자료에 기반한 자기평가입니다. 독립적인 데이터 분할, 동일한 하드웨어 비용, 실제 실험 성공률, 재현 가능한 코드와 로그가 공개되어야 모델 간 비교가 의미를 갖습니다.
-
-### 3. Anthropic IPO: AI 기업의 기술 경쟁이 자본시장 사건으로 확장
-
-Anthropic은 11월 20일 자사 Class A 보통주 기업공개 가격을 주당 83달러로 정했다고 발표했습니다. 공모 규모는 9억8,000만 주이며, 이 중 9억5,635만1,354주는 Anthropic이, 2,364만8,646주는 기존 매도 주주가 판매하는 구조라고 공지했습니다. 회사는 11월 19일 나스닥에서 ANT라는 종목으로 거래를 시작할 예정이었고, 거래 종결은 11월 20일을 목표로 했습니다.
-
-AI 뉴스 관점에서 이 사건의 의미는 기술 발표가 아니라 **모델 연구·인프라 투자·과학 응용에 필요한 자본의 규모가 공개시장 평가와 연결됐다는 점**입니다. 그러나 IPO 가격이나 기업가치는 모델의 실제 생산성, 안전성, 장기 수익성을 증명하지 않습니다. 기술 성과와 금융시장 기대를 같은 지표로 읽지 않는 것이 중요합니다.
-
-이번 주 Nature 보도에서 Anthropic 소속 수학자가 Claude와 함께 리만 가설의 증명을 발견했다고 주장한 사례도 이 경계를 잘 보여줍니다. Nature는 별도의 인간 작성 preprint가 같은 날 나왔고, 수학자들이 두 주장을 엄격하게 검토해야 한다고 전했습니다. 해당 자료는 발표·보도 단계의 주장일 뿐이며, 독립 검증과 동료 검토를 거치기 전에는 “해결됐다”고 표현할 수 없습니다.
+Google DeepMind 부설직인 코라이 카부쿠고글루(Chief AI Architect)는 "Neon은 복잡하고 빈번한 워크플로우에 더 빠르고 비용 효율적으로 프론트리어 수준의 추론을 제공하며, 장기 실행 에이전트 워크플로우를 지원하면서 비용 균형을 맞춘다"라고 설명했습니다.
 
 ---
 
-## ArXiv 최신 연구
+### OpenAI - GPT-6.2 Astra & GPT-6.2 Sol
 
-### Tether: 장기 실행 에이전트를 위한 검증 가능한 상태 기반 보안 정책
+OpenAI가 두 가지 새로운 GPT-6.2 모델을 발표했습니다. 이 모델들은 유료 구독자에게 이용 가능합니다:
 
-「Tether: Verified Stateful Policy Engine for System-Level Monitoring of Agents」는 셸 명령과 프로그램을 장시간 실행하는 코딩 에이전트의 보안을 LLM 감시자에만 맡기지 않는 프레임워크를 제안합니다.
-
-Tether는 에이전트의 각 행동을 임시 격리 샌드박스에서 실행하고, 시스템 호출의 부작용을 추상적인 행동 의미로 변환한 뒤 상태 기반 정책을 적용합니다. 정책은 Lean 4 기반 DSL로 표현돼 정보 흐름, 접근 제어, 네트워크 보안과 같은 제약을 기술할 수 있습니다. 예를 들어 민감한 파일을 읽은 뒤 네트워크로 전송하는 다단계 경로를 하나의 규칙으로 막는 식입니다.
-
-논문은 코딩 에이전트 benchmark의 공격 궤적에서 범위 내 공격을 100% 차단하고 정상 작업의 false positive를 5% 아래로 유지했다고 보고합니다. 이 결과는 preprint 자체의 실험이므로 독립 재현이 필요하지만, 장기 에이전트 보안의 논점을 “모델이 악의적인가”에서 “행동의 누적 부작용을 정책이 추적하는가”로 옮깁니다.
-
-### AppSci-Bench: 모델이 업무용 에이전트를 직접 만들고 개선할 수 있는가
-
-AppSci-Bench는 모델이 이미 만들어진 에이전트를 사용하는 능력이 아니라, 요구사항을 확인하고 인프라를 탐색한 뒤 업무용 에이전트를 만들고 개선하는 능력을 평가합니다. 슬라이드 생성, order-to-cash, compliance review, 고객 통화 분석, CRM 인사이트 등 일곱 영역을 포함하고, held-out 평가 세트를 별도로 둡니다.
-
-논문에서 가장 높은 모델인 Claude Opus 5.0도 세 번의 빌드 시도에서 mean-minimum 점수 59.1%에 그쳤습니다. 요구사항을 묻는 단계의 성공률은 65%였고, 모델은 자체 평가에서는 65%의 경우 점수가 포화됐지만 held-out 업무는 해결하지 못했습니다.
-
-이는 에이전트 개발 자동화에서 자기평가가 특히 위험할 수 있음을 보여줍니다. 모델이 스스로 만든 테스트를 통과하는 것과 실제 사용자의 숨겨진 요구를 만족하는 것은 다릅니다. 따라서 외부 평가 세트, 요구사항 변경, 실패 회귀 테스트가 하네스의 필수 구성요소가 됩니다.
-
-### Toward a Science of AI Agent Societies: 여러 에이전트를 사회 시스템으로 평가하기
-
-「Toward a Science of AI Agent Societies」는 에이전트가 개인 비서 수준을 넘어 네트워크로 연결되면, 단순히 에이전트 수를 늘린 multi-agent system과 다른 연구 대상이 된다고 주장합니다. 저자들은 AI agent society가 되기 위한 네 가지 조건으로 개별화된 목표, 규칙과 거버넌스, 자율성, 규모·복잡성을 제시합니다.
-
-연구가 제안하는 행동 범주는 경제적 행동, 이해충돌 상황의 행동, 안전·비윤리적 행동, 시스템 수준 행동입니다. 이 틀은 “여러 에이전트가 협력하면 성능이 올라가는가”에서 “규칙과 인센티브가 바뀔 때 집단 행동이 어떻게 달라지는가”로 평가 범위를 넓힙니다.
-
-실제 제품에서는 에이전트 간 메시지 형식보다 권한, 책임, 충돌 조정, 기록 보존이 먼저 설계돼야 한다는 시사점이 있습니다. 네트워크에 연결된 에이전트 집단은 각 에이전트의 오류 합보다 큰 시스템 위험을 만들 수 있기 때문입니다.
-
-### Law at the Speed of AI: 에이전트 행동의 법적 귀속 문제
-
-「Law at the Speed of AI」는 MCP와 Agent2Agent 같은 통신 프로토콜이 성숙해도 법적 책임과 권리의 문제는 자동으로 해결되지 않는다고 지적합니다. 배포 조직의 런타임 권한은 에이전트가 접근할 수 있는 자원을 제한하지만, 그 행동이 누구의 권한으로 이루어졌고 손해가 발생했을 때 누가 책임지는지는 별개의 문제입니다.
-
-논문은 이를 legal attribution gap으로 부르고, AI 시스템과 데이터 자산을 식별된 법적 주체에 연결하는 Autonomy Under Law Architecture를 제안합니다. 제안은 203쪽 분량의 개념적·법제도적 논의에 가깝기 때문에 즉시 구현 가능한 표준으로 보아서는 안 되지만, 에이전트가 기업 간 경계를 넘는 시점에 기술적 인증만으로는 충분하지 않다는 점을 분명히 합니다.
+- **GPT-6.2 Astra**: MedChemBench(의약 화학 벤치마크)에서 **84.5% 달성**으로 화학 연구에 최적화
+- **GPT-6.2 Sol**: 범용 작업에 중점을 둔 범용 모델
 
 ---
 
-## 데이터 요약
+### Anthropic - Claude Fable 5.2, Mythos 5.2, Opus 5.5
 
-| 구분 | 확인된 수치 | 해석 |
-|---|---:|---|
-| MedChemBench | 117개 논문·특허, 761개 구조, 99개 문제 | 의약화학 추론을 구조·근거·선택·예측으로 분해 |
-| MedChemBench 수치 | Astra 84.5% 등 | OpenAI 자체 평가이며 페이지 내 집계 조건 확인 필요 |
-| Nemotron 사례 | quantum dot 정확도 61%, GROMACS 수정 81% | NVIDIA·파트너 보도자료 기준 |
-| Tether | 공격 100% 차단, 정상 false positive 5% 미만 | 논문에서 보고한 sandbox·정책 엔진 평가 |
-| AppSci-Bench | 7개 도메인, 최고 mean-minimum 59.1% | 에이전트 제작·요구사항 수집의 난도 |
-| Anthropic IPO | 주당 83달러, 9억8,000만 주 | 기술 성과와 금융시장 평가를 분리해 해석 |
+Anthropic은 지난 2주 동안 3개의 Claude 모델을 배포했습니다:
+
+- **Claude Fable 5.2 & Mythos 5.2**: 동일한 기반 모델이지만 사용 시나리오에 따라 최적화
+- **Claude Opus 5.5**: 이전 Claude 모델들 중 최상위 성능을 자랑하며 개발자 워크플로우를 장악 중
+- **보안 강화**: 사이버보안 및 생물학 분야에 특화된 안전 가드가 탑재됨
+- **요청 차단 감소**: Fable 5.1 대비 55% 더 적은 유효 요청 차단
 
 ---
 
-## 이번 브리프의 결론
+### Alibaba - Inkling 2 Mini
 
-11월 22일의 흐름을 한 문장으로 정리하면 **AI 에이전트의 경쟁 단위가 모델 응답에서 검증 가능한 행동 루프로 이동하고 있다**는 것입니다.
-
-1. **과학 추론:** MedChemBench처럼 분자 구조·실험 근거·후보 선택·수치 예측을 분리하면 모델의 진짜 강점과 약점이 드러납니다.
-2. **도구 연결:** Nemotron for Science 사례는 모델의 가치를 과학용 데이터와 시뮬레이터를 호출하는 시스템 전체에서 찾습니다.
-3. **보안 집행:** Tether는 장기 실행에서 상태와 부작용을 추적하는 정책 엔진이 필요하다는 점을 보여줍니다.
-4. **외부 평가:** AppSci-Bench는 모델이 만든 자체 테스트가 실제 업무 성능을 대신할 수 없음을 경고합니다.
-5. **거버넌스:** 여러 에이전트가 조직·법적 경계를 넘으면 권한과 책임을 기술 프로토콜에만 맡길 수 없습니다.
-
-기업과 개발자가 다음 주부터 기록해야 할 지표도 명확합니다. 단순 성공률 외에 **held-out 완료율, 재시도 횟수, 도구 호출 오류, 정책 차단률, false positive, 인간 개입 시점, 중단까지 걸린 시간, 결과 감사 가능성**을 함께 남겨야 합니다. 이 지표가 있어야 회사가 발표한 benchmark와 실제 운영 성능을 구분할 수 있습니다.
+Thinking Machines Lab가 **26.4억 파라미터**의 초경량 모델인 Inkling 2 Mini을 공개했습니다. 이 모델은 효율성에 중점을 둔 경량 버전입니다.
 
 ---
 
-## 다음 확인 필요사항
+## 📊 시장 동향
 
-1. MedChemBench의 수치가 원 논문·독립 실행에서 동일한 평가 조건으로 재현되는지
-2. Nemotron for Science 파트너 사례가 공개 데이터·코드·동일 비용 조건에서 재현되는지
-3. Tether의 100% 차단 성능이 더 다양한 운영체제·도구·공격 경로에서도 유지되는지
-4. AppSci-Bench에서 요구사항 질문과 held-out 성능 사이의 간극을 줄일 방법이 있는지
-5. 리만 가설 관련 AI-assisted proof 주장이 독립 수학자들의 검증과 형식화에서 살아남는지
-6. 에이전트 사회의 권한·책임·감사 로그를 위한 산업 표준이 MCP·A2A 계층과 어떻게 결합할지
+### Anthropic > OpenAI 사용량
 
----
+Financial Times(FT)에 따르면 Anthropic의 Claude가 미국 기업 간 사용량에서 OpenAI의 ChatGPT를 앞섰습니다.
 
-## 출처
+### 가격 경쟁 심화
 
-1. [OpenAI — Can AI help scientists identify promising drug candidates?](https://openai.com/index/introducing-medchembench)
-2. [NVIDIA Newsroom — NVIDIA Introduces Nemotron for Science to Accelerate Discoveries With Agents](https://nvidianews.nvidia.com/news/nvidia-introduces-nemotron-for-science-to-accelerate-discoveries-with-agents)
-3. [Anthropic — Anthropic prices initial public offering](https://www.anthropic.com/news/anthropic-prices-initial-public-offering)
-4. [Nature — Mathematicians astounded by AI and human-written proofs of iconic Riemann hypothesis](https://www.nature.com/articles/d41586-026-03812-7)
-5. [ArXiv — Tether: Verified Stateful Policy Engine for System-Level Monitoring of Agents](https://arxiv.org/abs/2611.25599)
-6. [ArXiv — AppSci-Bench: Can LLMs Build AI Agents and Make Them Better?](https://arxiv.org/abs/2611.25360)
-7. [ArXiv — Toward a Science of AI Agent Societies](https://arxiv.org/abs/2611.25404)
-8. [ArXiv — Law at the Speed of AI: Autonomy Under Law Architecture](https://arxiv.org/abs/2611.25985)
+Google의 Gemini 4 Neon은 100만 토큰 컨텍스트를 $3/$15 가격에 제공하며, 더 큰 컨텍스트와 더 낮은 가격으로 경쟁사들을 압박하고 있습니다.
 
 ---
 
-**발행일**: 2026-11-22  
-**작성**: AI 뉴스 브리거  
-**범위**: 과학 에이전트, 에이전트 보안·평가, OpenAI·NVIDIA·Anthropic 최신 발표, ArXiv AI 연구
+## 🚀 앱 업데이트 및 기능
 
+### OpenAI
+
+- **ChatGPT Space**: 전 세계 Plus 사용자에게 롤아웃 중 (모바일 편집, 더 빠른 재설계된 앱)
+- **Dots 기능**: Apple CarPlay와 연동하여 통화 내역 시청 가능
+- **Oracle 계약**: OpenAI 인프라 계약이 최종 자본 조달 완료로 완전히 자금화됨
+
+### Google
+
+- **Gemini for Mac**: 배경 윈도우에서 컴퓨터 사용 가능, 폴더, 앱 및 웹 크로스 플랫폼 작업 지원
+- **Genie 4 API**: AI Studio에 공개되었으며, 세계 최초의 월드 모델
+- **Google Search**: 데스크톱에서 최근 AI 검색을 위한 축소형 사이드바 롤아웃 시작
+- **Gemini Notebook**: Writing Partner, Writing Coach, No AI 모드 추가 개발 중
+
+### Anthropic
+
+- **Claude Code 2.1**: Easel 내장 모드 추가(요청 시 차트 그리기), /tasks에서 예약 작업, /loop 깨우기 및 포크 지원
+
+---
+
+## 🎯 기술 동향
+
+### 에이전트 워크플로우 지원
+
+Gemini 4 Neon, GPT-6.2 시리즈, Claude Opus 5.5 모두 **장기 실행 에이전트 워크플로우**를 지원하도록 설계되었습니다. 이는 단순한 채팅을 넘어 지속적인 작업 자동화에 중점을 둡니다.
+
+### 벤치마크 라이벌리
+
+- **MedChemBench**: GPT-6.2 Astra 84.5%
+- **일반 벤치마크**: Gemini 4 Neon > Claude Opus 5.5 > GPT-6.2 Sol
+
+---
+
+## 💡 기타 소식
+
+- **The Hindu**: Google의 Gemini 4 Neon이 Claude Opus 5.5와 GPT-6.2 Sol을 추월했다고 보도
+- **Instagram**: 11월 20일 발표된 핵심 AI 헤드라인 요약
+- **Medium**: 2주 만에 6개 대형 모델을 발표한 모든 내용 해설
+
+---
+
+## 📝 요약
+
+1. **Google**이 11월 21일 Gemini 4 Neon을 발표하며 100만 토큰 컨텍스트를 제공하고 가격 경쟁력을 입증
+2. **OpenAI**가 GPT-6.2 Astra와 Sol 두 모델을 발표, MedChemBench 84.5% 달성
+3. **Anthropic**이 Fable 5.2, Mythos 5.2, Opus 5.5 세 개 모델로 사이버보안 및 생물학 분야 강화
+4. **Alibaba**가 26.4B 파라미터의 Inkling 2 Mini 경량 모델 공개
+5. **Claude**가 미국 기업 간 사용량에서 **OpenAI를 앞서서** 역대 최고치 기록
+
+---
+
+**다음 주 예정**: 11월 23일(월) 월요일 주간 달러 유동성 보고서 발행 예정
